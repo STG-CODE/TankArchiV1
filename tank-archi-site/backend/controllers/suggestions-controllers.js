@@ -1,6 +1,8 @@
 // This controller is focused on middle ware functions
 //that happen at the related route file and also contain the logic.
 
+const fs = require('fs');
+
 //we add this function so that when we call it we can use it to check if there were any validation errors
 const { validationResult } = require("express-validator");
 //
@@ -84,13 +86,16 @@ const getSuggestionsByUserId = async (req, res, next) => {
 
 //here we are extracting data from incoming request
 const createSuggestion = async (req, res, next) => {
-  
-    //checks and returns errors depending on the predefined checking at
+  //checks and returns errors depending on the predefined checking at
   // the call of this function at the related route file.
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
-    throw new HttpError("Invalid Input Detected, Check Your Input Data!", 422);
+    const errorMassage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!", 
+      422
+    );
+    return next(errorMassage);
   }
 
   //the expected data
@@ -114,8 +119,17 @@ const createSuggestion = async (req, res, next) => {
     creatorEmail,
     userDescription } = req.body;
 
+  if(!creator.toString() === req.userData.userId){
+    const errorMessage = new HttpError(
+      "You Are Not Allowed To Create A Suggestion!",
+      401
+    );
+    return next(errorMessage);
+  }
+  
   const createdSuggestion = new Suggestion({
     suggestionTitle,
+    suggestionPfp: req.file.path || "uploads/stockImages/stockSuggestionPic.png",
     tankName,
     nation,
     combatRole,
@@ -177,8 +191,104 @@ const createSuggestion = async (req, res, next) => {
   res.status(201).json({ suggestion: createdSuggestion.toObject({ getters: true }) });
 };
 
-//
+//here we update the suggestion's details
 const updateSuggestion = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage)
+  }
+
+  //the expected data
+  const { 
+    suggestionTitle,
+    tankName,
+    nation,
+    combatRole,
+    era,
+    age,
+    startDate,
+    endDate,
+    tankHistory,
+    tankServiceHistory,
+    tankProductionHistory,
+    tankArmamentAndArmour,
+    userDescription
+  } = req.body;
+
+  const suggestionToUpdateId = req.params.sid;
+  
+  let suggestion;
+  try{
+    suggestion = await Suggestion.findById(suggestionToUpdateId);
+  } catch(err){
+    const errorMessage = new HttpError(
+      'Could Find Suggestion By Id, Please Try Again!',
+      500
+    );
+    return next(errorMessage);
+  }
+
+  if(!req.adminState.isAdmin){
+    if(!suggestion.creator.toString() === req.userData.userId){
+      const errorMessage = new HttpError(
+        "You Are Not Allowed To Update/Edit This Suggestion!",
+        401
+      );
+      return next(errorMessage);
+    }
+  }
+
+  //here we update our suggestion details
+  const prevSuggestionPfp = suggestion.suggestionPfp || null;
+  suggestion.suggestionTitle = suggestionTitle;
+  suggestion.tankName = tankName;
+  suggestion.nation = nation;
+  suggestion.combatRole = combatRole;
+  suggestion.era = era;
+  suggestion.age = age;
+  suggestion.servicePeriod = {startDate,endDate};//!find out about objects
+  suggestion.tankHistory = tankHistory;
+  suggestion.tankServiceHistory = tankServiceHistory;
+  suggestion.tankProductionHistory = tankProductionHistory;
+  suggestion.tankArmamentAndArmour = tankArmamentAndArmour;
+  suggestion.userDescription = userDescription;
+  suggestion.lastUpdatedDate = new Date;//?make sure that this gets us the current time and date
+  
+  try {
+    suggestion.suggestionPfp = req.file.path;
+    console.log("Prev = " + prevSuggestionPfp);
+    if (prevSuggestionPfp !== null) {
+      if (prevSuggestionPfp !== "uploads/stockImages/stockSuggestionPic.png") {
+        console.log("- - - Deleting Prev Image - - -");
+        fs.unlink(prevSuggestionPfp, (errorMessage) => {
+          console.log("Image Delete Result : " + errorMessage);
+        });
+      }
+    }
+  } catch (err) {
+    console.log("No New Image Submitted!");
+    suggestion.suggestionPfp = prevSuggestionPfp;
+  }
+  try {
+    await suggestion.save();
+  } catch (err) {
+    const errorMessage = new HttpError(
+      'Could Not Update And Save The Given Changes, Please Try Again Later!',
+      500
+    );
+    return next(errorMessage);
+  }
+
+  res.status(200).json({ suggestion: suggestion.toObject({ getters: true }) });
+};
+
+//!TODO: need to finish this function so that user's information is not out of date for admin when reviewing it
+const updateSuggestionUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
@@ -201,7 +311,8 @@ const updateSuggestion = async (req, res, next) => {
     tankHistory,
     tankServiceHistory,
     tankProductionHistory,
-    tankArmamentAndArmour } = req.body;
+    tankArmamentAndArmour 
+  } = req.body;
 
   const suggestionToUpdateId = req.params.sid;
   
@@ -215,8 +326,9 @@ const updateSuggestion = async (req, res, next) => {
     );
     return next(errorMessage);
   }
-  
   //here we update our suggestion details
+  const prevSuggestionPfp = suggestion.suggestionPfp || null;
+  
   suggestion.tankName = tankName;
   suggestion.nation = nation;
   suggestion.combatRole = combatRole;
@@ -228,7 +340,22 @@ const updateSuggestion = async (req, res, next) => {
   suggestion.tankProductionHistory = tankProductionHistory;
   suggestion.tankArmamentAndArmour = tankArmamentAndArmour;
   suggestion.lastUpdatedDate = new Date;//?make sure that this gets us the current time and date
-
+  
+  try {
+    suggestion.suggestionPfp = req.file.path;
+    console.log("Prev = " + prevSuggestionPfp);
+    if (prevSuggestionPfp !== null) {
+      if (prevSuggestionPfp !== "uploads/stockImages/stockSuggestionPic.png") {
+        console.log("- - - Deleting Prev Image - - -");
+        fs.unlink(prevSuggestionPfp, (errorMessage) => {
+          console.log("Image Delete Result : " + errorMessage);
+        });
+      }
+    }
+  } catch (err) {
+    console.log("No New Image Submitted!");
+    suggestion.suggestionPfp = prevSuggestionPfp;
+  }
   try {
     await suggestion.save();
   } catch (err) {
@@ -240,7 +367,8 @@ const updateSuggestion = async (req, res, next) => {
   }
 
   res.status(200).json({ suggestion: suggestion.toObject({ getters: true }) });
-};
+
+}
 
 //
 const deleteSuggestion = async (req, res, next) => {
@@ -262,11 +390,23 @@ const deleteSuggestion = async (req, res, next) => {
 
   if(!suggestion){
     const errorMessage = new HttpError(
-      'Could Not Find Suggestion For This Id.',
+      'Could not find the suggestion with that given id!',
       404
     );
     return next(errorMessage);
   }
+
+  if(!req.adminState.isAdmin){
+    if(!suggestion.creator.id === req.userData.userId){
+      const errorMessage = new HttpError(
+        "You Are Not Allowed To Delete This Suggestion!",
+        401
+      );
+      return next(errorMessage);
+    }
+  }
+
+  const prevSuggestion = suggestion.suggestionPfp; 
 
   try{
     const session = await mongoose.startSession();
@@ -275,6 +415,14 @@ const deleteSuggestion = async (req, res, next) => {
     suggestion.creator.submittedSuggestions.pull(suggestion);
     await suggestion.creator.save({session: session});
     await session.commitTransaction();
+    if (prevSuggestion !== null) {
+      if (prevSuggestion !== "uploads/stockImages/stockSuggestionPic.png") {
+        console.log("- - - Deleting Prev Image - - -");
+        fs.unlink(prevSuggestion, (errorMessage) => {
+          console.log("Image Delete Result : " + errorMessage);
+        });
+      }
+    }
   } catch(err) {
     const errorMessage = new HttpError(
       'Could Not Delete Suggestion, Please Try Again!',
@@ -289,7 +437,8 @@ const deleteSuggestion = async (req, res, next) => {
 //do same for other functions
 exports.getSuggestions = getSuggestions;
 exports.getSuggestionById = getSuggestionById;
-exports.getSuggestionsByUserId = getSuggestionsByUserId; ;
+exports.getSuggestionsByUserId = getSuggestionsByUserId;
 exports.createSuggestion = createSuggestion;
 exports.updateSuggestion = updateSuggestion;
+exports.updateSuggestionUser = updateSuggestionUser;
 exports.deleteSuggestion = deleteSuggestion;

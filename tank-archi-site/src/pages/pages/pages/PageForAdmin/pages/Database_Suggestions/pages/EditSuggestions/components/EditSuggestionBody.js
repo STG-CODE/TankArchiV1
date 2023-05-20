@@ -1,29 +1,43 @@
+//basic imports
 import React, { useContext, useEffect, useState } from "react";
 //we use this("useParams") for using the actual given "userId".
 //we use this("useHistory") for directing or redirecting the user to prev pages or others after a function is done.
-//
 import { useParams, useHistory } from "react-router-dom";
+//context import
 import { LoginContext } from "../../../../../../../../Shared/Context/login-context";
+//util import
 import { VALIDATOR_REQUIRE } from "../../../../../../../../Shared/Util/validators";
+//hook imports
 import { useForm } from "../../../../../../../../Shared/Hooks/form-hook";
 import { useHttpClient } from "../../../../../../../../Shared/Hooks/http-hook";
-//
+//component imports
 import Button from "../../../../../../../../Shared/components/Form-Elements/Button";
 import Input from "../../../../../../../../Shared/components/Form-Elements/Input";
 import ErrorModal from "../../../../../../../../Shared/components/UI-Elements/ErrorModal";
 import LoadingSpinner from "../../../../../../../../Shared/components/UI-Elements/LoadingSpinner";
-
-
+import Text from "../../../../../../../../Shared/components/Visual-Elements/Text";
+import ImageUpload from "../../../../../../../../Shared/components/Form-Elements/ImageUpload";
+import Avatar from "../../../../../../../../Shared/components/UI-Elements/Avatar";
 
 function EditSuggestionBody() {
+  //login context
   const loginContext = useContext(LoginContext);
+  //deconstruction of the http client hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  //loaded suggestion state
   const [loadedSuggestion, setLoadedSuggestion] = useState();
+  //extraction of the suggestion id from the url
   const suggestionId = useParams().suggestionId;
+  //implementing "useHistory" into a variable
   const history = useHistory();
 
+  //initial form state
   const [formState, inputHandler, setFormData] = useForm(
     {
+      suggestionPfp: {
+        value: null, 
+        isValid: false 
+      },
       suggestionTitle: {
         value: "",
         isValid: false,
@@ -80,15 +94,23 @@ function EditSuggestionBody() {
     false
   );
 
+  //useEffect - fetches for the user \ admin the suggestion and fills in the current suggestion information
   useEffect(() => {
     const fetchSuggestion = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/MainPage/Admin/SuggestionsDatabase/EditSuggestion/${suggestionId}`
+          `http://localhost:5000/MainPage/Admin/SuggestionsDatabase/EditSuggestion/${suggestionId}`,
+          "GET",
+          null,
+          {Authorization: "Bearer " + loginContext.token}
         );
         setLoadedSuggestion(responseData.suggestion);
         setFormData(
           {
+            suggestionPfp: {
+              value: responseData.suggestion.suggestionPfp, 
+              isValid: true,
+            },
             suggestionTitle: {
               value: responseData.suggestion.suggestionTitle,
               isValid: true,
@@ -146,44 +168,38 @@ function EditSuggestionBody() {
         );
       } catch (err) {}
     };
-
     console.log("Fetching The Suggestion");
     fetchSuggestion();
     console.log("Done Fetching The Suggestion");
   }, [sendRequest, setLoadedSuggestion]);
 
+  //handles the update of suggestion information
   const suggestionUpdateSubmitHandler = async (event) => {
     event.preventDefault();
     try {
+      const formData = new FormData();
+      formData.append('suggestionPfp',formState.inputs.suggestionPfp.value);
+      formData.append('suggestionTitle',formState.inputs.suggestionTitle.value);
+      formData.append('tankName',formState.inputs.tankName.value);
+      formData.append('nation',formState.inputs.nation.value);
+      formData.append('combatRole',formState.inputs.combatRole.value);
+      formData.append('era',formState.inputs.era.value);
+      formData.append('age',formState.inputs.age.value);
+      formData.append('startDate',formState.inputs.startDate.value);
+      formData.append('endDate',formState.inputs.endDate.value);
+      formData.append('tankHistory',formState.inputs.tankHistory.value);
+      formData.append('tankServiceHistory',formState.inputs.tankServiceHistory.value);
+      formData.append('tankProductionHistory',formState.inputs.tankProductionHistory.value);
+      formData.append('tankArmamentAndArmour',formState.inputs.tankArmamentAndArmour.value);
+      formData.append('userDescription',formState.inputs.userDescription.value);
       await sendRequest(
         `http://localhost:5000/MainPage/Admin/SuggestionsDatabase/EditSuggestion/${suggestionId}`,
-        "PATCH",
-        JSON.stringify({
-          suggestionTitle: formState.inputs.suggestionTitle.value,
-          tankName: formState.inputs.tankName.value,
-          nation: formState.inputs.nation.value,
-          combatRole: formState.inputs.combatRole.value,
-          era: formState.inputs.era.value,
-          age: formState.inputs.age.value,
-          startDate: formState.inputs.startDate.value,
-          endDate: formState.inputs.endDate.value,
-          tankHistory: formState.inputs.tankHistory.value,
-          tankServiceHistory: formState.inputs.tankServiceHistory.value,
-          tankProductionHistory: formState.inputs.tankProductionHistory.value,
-          tankArmamentAndArmour: formState.inputs.tankArmamentAndArmour.value,
-          userDescription: formState.inputs.userDescription.value,
-        }),
-        {
-          "Content-Type": "application/json",
-        }
+        'PATCH',
+        formData,
+        {Authorization: "Bearer " + loginContext.token}
       );
       //!change to suit both admins and users
-
-      history.push(
-        !loginContext.isAdmin
-          ? "/MainPage/User"
-          : "/MainPage/Admin/SuggestionsDatabase"
-      );
+      history.push(!loginContext.isAdmin ? "/MainPage/User" : "/MainPage/Admin/SuggestionsDatabase");
       //?Consider:
       //TODO: implement when can distinguish between admin and user!
       //history.push("/MainPage/User/" + loginContext.suggestionId + "/suggestion");
@@ -204,12 +220,17 @@ function EditSuggestionBody() {
       {!isLoading && loadedSuggestion && (
         <div className="Container">
           <form onSubmit={suggestionUpdateSubmitHandler}>
+            <Avatar
+              image={`http://localhost:5000/${loadedSuggestion.creatorPfp}`}
+              alt="- No Creator Profile Picture Found -"
+              style={{ width: "100px", hight: "50px" }}
+            />
             {/* For "suggestionTitle" */}
             <Input
               id="suggestionTitle"
               element="input"
               type="text"
-              label="Suggestion Title"
+              label="Suggestion Title:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Suggestion Title"
               onInput={inputHandler}
@@ -221,7 +242,7 @@ function EditSuggestionBody() {
               id="tankName"
               element="input"
               type="text"
-              label="Tank Name"
+              label="Tank Name:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Tank Name"
               onInput={inputHandler}
@@ -233,7 +254,7 @@ function EditSuggestionBody() {
               id="nation"
               element="input"
               type="text"
-              label="Nation"
+              label="Nation:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Nation"
               onInput={inputHandler}
@@ -245,7 +266,7 @@ function EditSuggestionBody() {
               id="combatRole"
               element="input"
               type="text"
-              label="Combat Role"
+              label="Combat Role:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Combat Role"
               onInput={inputHandler}
@@ -257,7 +278,7 @@ function EditSuggestionBody() {
               id="era"
               element="input"
               type="text"
-              label="Era"
+              label="Era:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Era"
               onInput={inputHandler}
@@ -269,7 +290,7 @@ function EditSuggestionBody() {
               id="age"
               element="input"
               type="text"
-              label="Age"
+              label="Age:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Age"
               onInput={inputHandler}
@@ -281,7 +302,7 @@ function EditSuggestionBody() {
               id="startDate"
               element="input"
               type="text"
-              label="Service Period : Start Date"
+              label="Service Period - Start Date:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Start Date"
               onInput={inputHandler}
@@ -293,7 +314,7 @@ function EditSuggestionBody() {
               id="endDate"
               element="input"
               type="text"
-              label="Service Period : End Date"
+              label="Service Period - End Date:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid End Date"
               onInput={inputHandler}
@@ -303,9 +324,8 @@ function EditSuggestionBody() {
             {/* For "tankHistory" */}
             <Input
               id="tankHistory"
-              element="input"
               type="text"
-              label="Tank History"
+              label="Tank History:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Tank History"
               onInput={inputHandler}
@@ -315,9 +335,8 @@ function EditSuggestionBody() {
             {/* For "tankServiceHistory" */}
             <Input
               id="tankServiceHistory"
-              element="input"
               type="text"
-              label="Tank Service History"
+              label="Tank Service History:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Tank Service History"
               onInput={inputHandler}
@@ -327,9 +346,8 @@ function EditSuggestionBody() {
             {/* For "tankProductionHistory" */}
             <Input
               id="tankProductionHistory"
-              element="input"
               type="text"
-              label="Tank Production History"
+              label="Tank Production History:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Tank Production History"
               onInput={inputHandler}
@@ -339,28 +357,33 @@ function EditSuggestionBody() {
             {/* For "tankArmamentAndArmour" */}
             <Input
               id="tankArmamentAndArmour"
-              element="input"
               type="text"
-              label="Tank Armament And Armour"
+              label="Tank Armament And Armour:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid Tank Armament And Armour"
               onInput={inputHandler}
               initialValue={loadedSuggestion.tankArmamentAndArmour}
               initialValid={true}
             />
+            <Text element="text" value="Change Suggestion Profile Picture:"/>
+            <ImageUpload 
+              id="suggestionPfp"
+              onInput={inputHandler}
+              errorText="Please Pick A Valid Replacement Picture"
+              initialValue={loadedSuggestion.suggestionPfp}
+              initialValid={true}
+            />
             {/* For "userDescription" */}
             <Input
               id="userDescription"
-              element="input"
               type="text"
-              label="User Description"
+              label="User Description:"
               validators={[VALIDATOR_REQUIRE()]}
               errorText="Please Enter A Valid User Description"
               onInput={inputHandler}
               initialValue={loadedSuggestion.userDescription}
               initialValid={true}
             />
-
             {loginContext.isAdmin && (
               <div>
                 <Button to="/MainPage/Admin/SuggestionsDatabase">Cancel</Button>

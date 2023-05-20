@@ -1,29 +1,38 @@
+//basic import
 import React, { useState, useEffect, useContext } from "react";
-//
+import { useParams } from "react-router-dom";
+//context import
 import { LoginContext } from "../../../../../../../../Shared/Context/login-context";
+//hook import
 import { useHttpClient } from "../../../../../../../../Shared/Hooks/http-hook";
-import { useParams, useHistory } from "react-router-dom";
-//
+//component imports
 import Button from "../../../../../../../../Shared/components/Form-Elements/Button";
 import ErrorModal from "../../../../../../../../Shared/components/UI-Elements/ErrorModal";
 import LoadingSpinner from "../../../../../../../../Shared/components/UI-Elements/LoadingSpinner";
 import Text from "../../../../../../../../Shared/components/Visual-Elements/Text";
 import Avatar from "../../../../../../../../Shared/components/UI-Elements/Avatar";
 import Card from "../../../../../../../../Shared/components/UI-Elements/Card";
-//
+import Image from "../../../../../../../../Shared/components/Visual-Elements/Image";
 
 function ReviewSuggestionBody() {
+  //login context
   const loginContext = useContext(LoginContext);
+  //deconstruction of http client hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  //loaded suggestion state
   const [loadedSuggestion, setLoadedSuggestion] = useState();
+  //extraction of suggestion id from the url
   const suggestionId = useParams().suggestionId;
-  const history = useHistory();
 
+  //useEffect - is used to load the suggestion
   useEffect(() => {
     const fetchSuggestion = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/MainPage/Admin/SuggestionsDatabase/EditSuggestion/${suggestionId}`
+          `http://localhost:5000/MainPage/Admin/SuggestionsDatabase/EditSuggestion/${suggestionId}`,
+          "GET",
+          null,
+          {Authorization: "Bearer " + loginContext.token}
         );
         setLoadedSuggestion(responseData.suggestion);
       } catch (err) {}
@@ -52,14 +61,12 @@ function ReviewSuggestionBody() {
             />
             <Text
               label="Submission Last Updated:"
-              value={
-                loadedSuggestion.lastUpdatedDate || "- Was Not Updated Yet -"
-              }
+              value={loadedSuggestion.lastUpdatedDate || "- Was Not Updated Yet -"}
             />
             <Card>
               <Avatar
-                image={loadedSuggestion.creatorPfp}
-                alt="- Missing Creator Pfp -"
+                image={`http://localhost:5000/${loadedSuggestion.creatorPfp}`}
+                alt="- No Creator Profile Picture Found -"
                 style={{ width: "100px", hight: "50px" }}
               />
             </Card>
@@ -143,6 +150,13 @@ function ReviewSuggestionBody() {
                 label="Tank's Armament And Armour:"
                 element="textarea"
                 value={loadedSuggestion.tankArmamentAndArmour}
+              />
+              <Text element="text" value="Suggestion's Profile Picture:"/>
+              <Image
+                image={`http://localhost:5000/${loadedSuggestion.suggestionPfp 
+                || "uploads/stockImages/tankStockIcon.jpg"}`}
+                alt={"- No Suggestion Profile Picture Found -"}
+                style={{width:"25%", hight:"20%"}}
               />
             </Card>
           </Card>

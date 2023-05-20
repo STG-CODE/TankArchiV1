@@ -1,20 +1,22 @@
+//basic imports
 import React from "react";
-
+//component import
 import UserItem from "./components/UserItem";
 
 function UsersList(props) {
+  //if there isn't any users in the list then present the following massage
   if (props.items.length === 0)
     return (
       <div className="Container">
         <h1>No Users Found!</h1>
       </div>
     );
-  //here we return each item in the users list as the following parameters :
-  // "key" = (the users id as a key) , "id" =  (the users actual id as an id) ,
-  // "username" = (the user's username) , "email" = (the user's email') ,
-  // "firstName" = (the user's first name) , "lastName" = (the user's last name) ,
-  // "age" = (the user's age) , "country" = (the user's country) ,
-  // "votesCount" = (the user's counted votes)
+  ////here we return each item in the users list as the following parameters :
+  //// "key" = (the users id as a key) , "id" =  (the users actual id as an id) ,
+  //// "username" = (the user's username) , "email" = (the user's email') ,
+  //// "firstName" = (the user's first name) , "lastName" = (the user's last name) ,
+  //// "age" = (the user's age) , "country" = (the user's country) ,
+  //// "votesCount" = (the user's counted votes)
   return (
     <div className="Container">
       <table>

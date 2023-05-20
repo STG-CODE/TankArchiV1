@@ -11,6 +11,7 @@ const ImageUpload = props => {
     const[currentPfp,setCurrentPfp] = useState();
     const[isValid,setIsValid] = useState(false);
 
+
     
     const filePickerRef = useRef();
 
@@ -63,7 +64,7 @@ const ImageUpload = props => {
             <div className={`image-upload ${props.center && 'center'}`}>
                 <div className="image-upload__preview">
                     {previewUrl && <img src={previewUrl} alt="Preview"/>}
-                    {!previewUrl && <img src={`http://localhost:5000/${currentPfp}`} alt={ props.placeholder || "Current Profile Pic"}/>}
+                    {!previewUrl && <img src={`http://localhost:5000/${currentPfp || props.initialValue}`} alt={ props.placeholder || "Current Profile Pic"}/>}
                 </div>
                 <Button type="button" onClick={pickImageHandler}  className="">
                     Pick An Image

@@ -1,15 +1,20 @@
+//basic import
 import React, { useContext } from "react";
-
+//context import
 import { LoginContext } from "../../../../Shared/Context/login-context";
-
+//component imports
 import Button from "../../../../Shared/components/Form-Elements/Button";
 import Card from "../../../../Shared/components/UI-Elements/Card";
 import Text from "../../../../Shared/components/Visual-Elements/Text";
 
 function UserOptions() {
+  //login context
   const loginContext = useContext(LoginContext);
+  //the current suggestion amount
   const currentSuggestionCount = loginContext.currentUser.submittedSuggestions.length;
+  //current boolean statues of the limit
   const isLimit = currentSuggestionCount < 3 ? true : false;
+  
   return (
     <React.Fragment>
       <div className="Container">
@@ -37,9 +42,6 @@ function UserOptions() {
               </Button>
             </React.Fragment>
           )}
-          
-          
-          
         </Card>
       </div>
     </React.Fragment>

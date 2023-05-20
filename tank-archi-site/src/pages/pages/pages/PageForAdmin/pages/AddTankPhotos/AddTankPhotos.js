@@ -1,25 +1,34 @@
-import React, { useEffect, useState } from "react";
-//
+//basic imports
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
+//hook imports
 import { useHttpClient } from "../../../../../Shared/Hooks/http-hook";
 import { useForm } from "../../../../../Shared/Hooks/form-hook";
-
-//
+//component imports
 import Button from "../../../../../Shared/components/Form-Elements/Button";
 import ImageUpload from "../../../../../Shared/components/Form-Elements/ImageUpload";
 import Card from "../../../../../Shared/components/UI-Elements/Card";
 import Text from "../../../../../Shared/components/Visual-Elements/Text";
 import ErrorModal from "../../../../../Shared/components/UI-Elements/ErrorModal";
 import LoadingSpinner from "../../../../../Shared/components/UI-Elements/LoadingSpinner";
+//context import
+import { LoginContext } from "../../../../../Shared/Context/login-context";
 
 //TODO: Add boxes for dragging and adding pics to the specified tank!
 
 function AddTankPhotos() {
+  //login context
+  const loginContext = useContext(LoginContext);
+  //deconstruction of the http client hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  //loaded tank state
   const [loadedTank, setLoadedTank] = useState();
+  //extraction of the tank id from the url
   const tankId = useParams().tankId;
+  //declaration of "useHistory"
   const pages = useHistory();
 
+  //form's initial state
   const [formState, inputHandler, setFormData] = useForm(
     {
       slot1: {
@@ -62,12 +71,16 @@ function AddTankPhotos() {
     false
   );
 
+  //useEffect - fetches tank and also sets the form to its updated state
   useEffect(() => {
     const fetchTank = async () => {
       console.log(`Fetching Tank By ID = ${tankId}.`);
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/MainPage/Admin/TanksDatabase/EditTank/${tankId}`
+          `http://localhost:5000/MainPage/Admin/TanksDatabase/EditTank/${tankId}`,
+          "GET",
+          null,
+          {Authorization: "Bearer " + loginContext.token}
         );
         setLoadedTank(responseData.tank);
         setFormData(
@@ -119,51 +132,12 @@ function AddTankPhotos() {
     fetchTank();
   }, [sendRequest, setLoadedTank]);
 
+  //handles the photos that the admin submitted and sends them to the backend for processing
   const adminPhotosUploadHandler = async (event) => {
     event.preventDefault();
     try {      
       console.log("Current Tank Image From Tank Photo Set = " + formState.inputs.slot1.value);
       const formData = new FormData();
-      // const tankPhotoSet = [
-      //   {
-      //     id: "slot1",
-      //     value: formState.inputs.slot1
-      //   },
-      //   {
-      //     id: "slot2",
-      //     value: formState.inputs.slot2.value
-      //   },
-      //   {
-      //     id: "slot3",
-      //     value: formState.inputs.slot3.value
-      //   },
-      //   {
-      //     id: "slot4",
-      //     value: formState.inputs.slot4.value
-      //   },
-      //   {
-      //     id: "slot5",
-      //     value: formState.inputs.slot5.value
-      //   },
-      //   {
-      //     id: "slot6",
-      //     value: formState.inputs.slot6.value
-      //   },
-      //   {
-      //     id: "slot7",
-      //     value: formState.inputs.slot7.value
-      //   },
-      //   {
-      //     id: "slot8",
-      //     value: formState.inputs.slot8.value
-      //   },
-      //   {
-      //     id: "slot9",
-      //     value: formState.inputs.slot9.value
-      //   },
-        
-      // ]
-      // formData.append("tankPhotoSet",tankPhotoSet);
       console.log(" - Appended Files - ")
       formData.append("tankPhotoSet", formState.inputs.slot1.value);
       formData.append("tankPhotoSet", formState.inputs.slot2.value);
@@ -179,13 +153,15 @@ function AddTankPhotos() {
       await sendRequest(
         `http://localhost:5000/MainPage/Admin/TanksDatabase/UpdateTankPhotos/${tankId}`,
         "PATCH",
-        formData
+        formData,
+        {Authorization: "Bearer " + loginContext.token}
       );
       pages.push("/MainPage/Admin");
     } catch (err) {
       console.log("Problem Detected With Uploading New Tank Photos!");
     }
   };
+  
   return (
     <React.Fragment>
       <div className="Container">

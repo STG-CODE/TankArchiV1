@@ -10,6 +10,7 @@ const { check } = require('express-validator')
 //our controller imports
 const usersControllers = require('../controllers/users-controllers');
 const fileUpload = require('../middleware/file-upload');
+const checkAuth = require('../middleware/check-auth');
 
 //custom error message and code import
 const HttpError = require('../models/http-error-model');
@@ -26,6 +27,7 @@ router.get('/',usersControllers.getUsers);
 //(this route is used for signing up)
 router.post(
     '/Signup',
+    fileUpload.single('image'),
     [
         check('username').not().isEmpty(),
         check('email').normalizeEmail().isEmail(),
@@ -37,6 +39,8 @@ router.post(
 //(this route is used for logging in)
 router.post('/Login',usersControllers.login);
 
+router.use(checkAuth);
+
 router.patch('/UpdateDetails/:uid',usersControllers.updateUserDetails);
 
 router.patch('/UpdateOptionalDetails/:uid',usersControllers.updateUserOptionalDetails)
@@ -45,6 +49,16 @@ router.patch(
     '/UpdateUserProfilePic/:uid',
     fileUpload.single('image'),
     usersControllers.updateUserProfilePic
+);
+
+router.patch(
+    '/ChangeEmail/:uid',
+    usersControllers.changeUserEmail
+);
+
+router.patch(
+    '/ChangePassword/:uid',
+    usersControllers.changeUserPassword
 );
 
 module.exports = router;

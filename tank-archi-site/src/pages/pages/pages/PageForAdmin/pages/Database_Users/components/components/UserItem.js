@@ -1,32 +1,43 @@
-import React, { useState } from "react";
-//
+//basic imports
+import React, { useContext, useState } from "react";
+//hook import
 import { useHttpClient } from "../../../../../../../Shared/Hooks/http-hook";
-//
+//component imports
 import Button from "../../../../../../../Shared/components/Form-Elements/Button";
 import Avatar from "../../../../../../../Shared/components/UI-Elements/Avatar";
 import ErrorModal from "../../../../../../../Shared/components/UI-Elements/ErrorModal";
 import LoadingSpinner from "../../../../../../../Shared/components/UI-Elements/LoadingSpinner";
 import Modal from "../../../../../../../Shared/components/UI-Elements/Modal";
-
+//context import
+import { LoginContext } from "../../../../../../../Shared/Context/login-context";
 
 function UserItem(props) {
+  //login context
+  const loginContext = useContext(LoginContext);
+  //contains state of the "confirm window" that would show in case of deletion
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  //deconstruction of the http client hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
+  //changes the state of the "confirm window" to true
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
   };
 
+  //changes the state of the "confirm window" to false
   const cancelDeleteWarningHandler = () => {
     setShowConfirmModal(false);
   };
 
+  //handles the case in which the admin decides to delete a tank from the database
   const confirmDeleteWarningHandler = async () => {
     setShowConfirmModal(false);
     try {
       await sendRequest(
         `http://localhost:5000/MainPage/Admin/UsersDatabase/${props.id}`,
-        "DELETE"
+        "DELETE",
+        null,
+        {Authorization: "Bearer " + loginContext.token}
       );
       console.log("Confirmed ,Deleting User!");
       props.onDelete(props.id);
@@ -40,7 +51,7 @@ function UserItem(props) {
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteWarningHandler}
-        header="Are You Sure?"
+        header="Confirm User Deletion:"
         footerClass=""
         footer={
           <React.Fragment>
@@ -53,7 +64,7 @@ function UserItem(props) {
           </React.Fragment>
         }
       >
-        <p>Do you wish to delete this user?</p>
+        <p>Are you sure that you want to delete <strong>{props.username}</strong> from the database?</p>
       </Modal>
       {isLoading && <LoadingSpinner asOverlay />}
       <tr>
@@ -61,7 +72,11 @@ function UserItem(props) {
           <h4>{props.id}</h4>
         </th>
         <th>
-          <Avatar image={props.imagePfp} alt={props.username} style={{width:"100px", hight:"50px"}}/>
+          <Avatar
+           image={`http://localhost:5000/${props.imagePfp}`} 
+           alt={props.username} 
+           style={{width:"100px", hight:"50px"}}
+          />
         </th>
         <th>
           <h4>{props.username}</h4>

@@ -1,7 +1,7 @@
+//basic import
 import React from "react";
-//
+//component imports
 import AddUserBody from "./components/AddUserBody";
-//
 import Text from "../../../../../../../Shared/components/Visual-Elements/Text";
 
 function AddUser() {

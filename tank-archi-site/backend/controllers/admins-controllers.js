@@ -68,11 +68,15 @@ const createUser = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.log(errors);
-    throw new HttpError("Invalid Input Detected, Check Your Input Data!", 422);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!", 
+      422
+    );
+    return next(errorMessage);
   }
 
   //the expected data
-  const { 
+  const {
     username,
     email,
     password,
@@ -84,7 +88,7 @@ const createUser = async (req, res, next) => {
   const createdUser = new User({
     isAdmin: false,
     adminKey: null,
-    imagePfp:'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+    imagePfp: req.file.path || "uploads/stockImages/stockPfpPicture.jpg",
     username,
     email,
     password,
@@ -101,7 +105,8 @@ const createUser = async (req, res, next) => {
     await createdUser.save();
   } catch (err) {
     const errorMessage = new HttpError(
-        'Saving Created User Failed, Please Try Again.',500
+        'User Creation Failed, Please Try Again.',
+        500
     );
     return next(errorMessage);
   }
@@ -152,8 +157,9 @@ const updateUser = async (req, res, next) => {
     );
     return next(errorMessage);
   }
-  
   //here we update our user\admin details
+  const prevUserPfp = user.imagePfp || null;
+
   user.username = username;
   user.firstName = firstName;
   user.lastName = lastName;
@@ -164,7 +170,21 @@ const updateUser = async (req, res, next) => {
   user.publisher = publisher;
   user.association = association;
   user.socialGroup = {socialType,socialName};
-
+  try {
+    user.imagePfp = req.file.path;
+    console.log("Prev = " + prevUserPfp);
+    if (prevUserPfp !== null) {
+      if (prevUserPfp !== "uploads/stockImages/stockPfpPicture.jpg") {
+        console.log("- - - Deleting Prev Image - - -");
+        fs.unlink(prevUserPfp, (errorMessage) => {
+          console.log("Image Delete Result : " + errorMessage);
+        });
+      }
+    }
+  } catch (err) {
+    console.log("No New Image Submitted!");
+    tank.tankImagePfp = prevTankPfp;
+  }
   try {
     await user.save();
   } catch (err){
@@ -184,11 +204,9 @@ const deleteUser = async (req, res, next) => {
   const userId = req.params.uid;
 
   
-  let imagePath;
   let user;
   try {
     user = await User.findById(userId);
-    imagePath = user.imagePfp;
   } catch (err){
     const errorMessage = new HttpError(
       'Something Went Wrong While Fetching The User, Could Not Delete User!',
@@ -197,8 +215,18 @@ const deleteUser = async (req, res, next) => {
     return next(errorMessage)
   }
 
+  const prevUserPfp = user.imagePfp;
+
   try{
     await user.remove();
+    if (prevUserPfp !== null) {
+      if (prevUserPfp !== "uploads/stockImages/stockPfpPicture.jpg") {
+        console.log("- - - Deleting Prev Image - - -");
+        fs.unlink(prevUserPfp, (errorMessage) => {
+          console.log("Image Delete Result : " + errorMessage);
+        });
+      }
+    }
   } catch(err) {
     const errorMessage = new HttpError(
       'Something Went Wrong While Deleting User, Please Try Again Later!',
@@ -207,11 +235,6 @@ const deleteUser = async (req, res, next) => {
     return next(errorMessage)
   }
   
-  fs.unlink(imagePath, errorMessage => {
-    console.log("Image Delete Result : " + errorMessage
-    );
-  })
-
   res.status(200).json({ message: "User Was Deleted" });
 };
 

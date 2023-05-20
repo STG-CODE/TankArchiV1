@@ -1,5 +1,6 @@
+//basic imports
 import React from "react";
-
+//component imports
 import Card from "../../../Shared/components/UI-Elements/Card";
 import Text from "../../../Shared/components/Visual-Elements/Text";
 

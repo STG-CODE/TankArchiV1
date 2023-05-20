@@ -1,49 +1,40 @@
-import React, { useState, useContext ,useCallback } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-
-//The components of "SignUpPage"
+//basic imports
+import React from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+//component imports
 import Welcome from "./components/Welcome";
 import SignUp from "./components/Sign-Up";
 import Login from "./components/Login";
-
-//Routes used in the page
+//route imports
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import MainPage from "./pages/MainPage";
-
-//
+//context import
 import { LoginContext } from "./pages/Shared/Context/login-context";
+//hook import
+import { useAuth } from "./pages/Shared/Hooks/auth-hook";
 
 function App() {
-  const [isLoggedIn,setIsLoggedIn] = useState(false);
-  const [currentUser,setCurrentUser] = useState(false);
-  const [isAdmin,setIsAdmin] = useState(false);
-
-  const refreshUser = useCallback((user) =>{
-    console.log("Refreshing User Information!");
-    setCurrentUser(user);
-  },[]);
-
-  const login = useCallback((user) => {
-    console.log("User logged in!");
-    setIsLoggedIn(true);
-    setCurrentUser(user);
-    setIsAdmin(user.isAdmin);
-  },[]);
-
-  const logout = useCallback(() => {
-    console.log("User logged out!");
-    setIsLoggedIn(false);
-    setCurrentUser(null);
-    setIsAdmin(null);
-  },[]);
-
+  //deconstruct our hook to all different states and data that the site needs
+  const {
+    token,
+    login,
+    logout,
+    currentUser,
+    isAdmin,
+    tankNamesArray,
+    tankNationsArray,
+    tankAllNationsArray,
+    tankCombatRolesArray,
+    tankErasArray,
+    tankServiceStatesArray,
+    tankGenerationsArray, 
+    refreshUser
+  } = useAuth();
+  
+  //the optional routes
   let routes;
-  if(isLoggedIn) {
+  if(token) {
+    //if user is recognized and is logged in
     console.log("Directing Logged In User!");
     routes=(
       <Switch>
@@ -55,10 +46,11 @@ function App() {
       </Switch>
     );
   } else {
+    //other wise direct to welcome page
     routes=(
       <Switch>
             {/* Routes to the starting page / login or sign up and welcome */}
-            <Route path="/" exact>
+            <Route path="/WelcomePage" exact>
               <Welcome />
               <Login />
               <SignUp />
@@ -70,7 +62,7 @@ function App() {
             </Route>
 
             {/* Redirects to starting page if there is no other url */}
-            <Redirect to="/" />
+            <Redirect to="/WelcomePage" />
       </Switch>
     );
   }
@@ -78,9 +70,17 @@ function App() {
   return (
     <LoginContext.Provider
      value={{
-      isLoggedIn: isLoggedIn,
+      isLoggedIn: !!token,
+      token: token,
       currentUser: currentUser,
       isAdmin: isAdmin,
+      tankNamesArray: tankNamesArray,
+      tankNationsArray: tankNationsArray,
+      allNationsArray: tankAllNationsArray,
+      tankCombatRolesArray: tankCombatRolesArray,
+      tankErasArray: tankErasArray,
+      tankServiceStatesArray: tankServiceStatesArray,
+      tankGenerationsArray: tankGenerationsArray,
       refreshUser: refreshUser,
       login: login,
       logout: logout

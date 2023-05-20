@@ -1,52 +1,71 @@
-import React from "react";
-import {Link} from "react-router-dom";
+//basic imports
+import React, { useEffect, useState } from "react";
+//hook import
+import { useHttpClient } from "../Shared/Hooks/http-hook";
+//component imports
+import TankCatalogueTable from "../Shared/components/Extra-Elements/TankCatalogueTable";
+import Button from "../Shared/components/Form-Elements/Button";
 import Card from "../Shared/components/UI-Elements/Card";
+import Text from "../Shared/components/Visual-Elements/Text";
+import LoadingSpinner from "../Shared/components/UI-Elements/LoadingSpinner";
+import ErrorModal from "../Shared/components/UI-Elements/ErrorModal";
 
 function Catalogue() {
+  //http clint hook destructuring
+  const {isLoading,error,sendRequest,clearError} = useHttpClient();
+  //loaded tank state
+  const [loadedTanks,setLoadedTanks] = useState();
+
+  //loaded tank use effect
+  useEffect(() => {
+    const fetchedTanks = async () => {
+      try {
+        const responseData = await sendRequest(
+          "http://localhost:5000/MainPage/Admin/TanksDatabase/getNineRandomTanks"
+        );
+        setLoadedTanks(responseData.tanks);
+      } catch (err) {}
+    };
+    fetchedTanks();
+  },[sendRequest]);
+
+  //the catalogue refresh handler that brings a new list of tanks
+  const catalogueRefreshHandler = async () => {
+    try {
+      const responseData = await sendRequest(
+        "http://localhost:5000/MainPage/Admin/TanksDatabase/getNineRandomTanks"
+      );
+      setLoadedTanks(responseData.tanks);
+    } catch (err) {}
+  }
+
   return (
-    <Card className="Container">
-      <div>
-        <h2>4.This Is The Catalogue!</h2>
-      </div>
-      <div>
-        <h3>Lorem Ipsum, Lorem Ipsum Lorem ipsum dolor sit amet.</h3>
-      </div>
-      <div>
-        <button>Refresh</button>
-      </div>
+    <React.Fragment>
+      <ErrorModal error={error} onClear={clearError}/>
       <Card>
-        <table>
-          <tbody>
-          <tr>
-            <th>
-              <Link to="/MainPage/TankPage">1</Link>
-            </th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-          </tr>
-          <tr>
-            <th>5</th>
-            <th>6</th>
-            <th>7</th>
-            <th>8</th>
-          </tr>
-          <tr>
-            <th>9</th>
-            <th>10</th>
-            <th>11</th>
-            <th>12</th>
-          </tr>
-          <tr>
-            <th>13</th>
-            <th>14</th>
-            <th>15</th>
-            <th>16</th>
-          </tr>
-          </tbody>
-        </table>
+        <Text element="h3" value="Welcome To Our Tank Catalogue:"/>
+        <Text element="text" value="Lorem Ipsum, Lorem Ipsum Lorem ipsum dolor sit amet."/>
+        <Button onClick={catalogueRefreshHandler}>Refresh</Button>
+      <Card>
+        {isLoading && !loadedTanks && (
+          <div>
+            <LoadingSpinner/>
+          </div>
+        )}
+        {!isLoading && !loadedTanks && (
+          <div>
+            <Text element="h1" value="No Tanks Found!"/>
+          </div>
+        )}
+        {!isLoading && loadedTanks && (
+          <div>
+            <TankCatalogueTable tanks={loadedTanks}/>
+          </div>
+        )}
       </Card>
     </Card>
+    </React.Fragment>
+    
   );
 }
 

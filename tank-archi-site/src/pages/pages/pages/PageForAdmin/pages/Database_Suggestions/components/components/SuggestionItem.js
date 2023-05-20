@@ -1,36 +1,44 @@
+//basic imports
 import React, { useState , useContext } from "react";
-//
+//context import
 import { LoginContext } from "../../../../../../../Shared/Context/login-context";
+//hook import
 import { useHttpClient } from "../../../../../../../Shared/Hooks/http-hook";
-//
+//component imports
 import Button from "../../../../../../../Shared/components/Form-Elements/Button";
 import Avatar from "../../../../../../../Shared/components/UI-Elements/Avatar";
 import ErrorModal from "../../../../../../../Shared/components/UI-Elements/ErrorModal";
 import LoadingSpinner from "../../../../../../../Shared/components/UI-Elements/LoadingSpinner";
 import Modal from "../../../../../../../Shared/components/UI-Elements/Modal";
-
-
+import Image from "../../../../../../../Shared/components/Visual-Elements/Image";
 
 function SuggestionItem(props) {
+  //login context
   const loginContext = useContext(LoginContext);
+  //"confirm action" window state
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  //deconstruction of http client hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   
-
+  //sets it to show the "confirm action" window
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
   };
 
+  //sets it to hide the "confirm action" window
   const cancelDeleteWarningHandler = () => {
     setShowConfirmModal(false);
   };
 
+  //handles confirmation of deletion when admin clicks
   const confirmDeleteWarningHandler = async () => {
     setShowConfirmModal(false);
     try {
       await sendRequest(
         `http://localhost:5000/MainPage/Admin/SuggestionsDatabase/${props.id}`,
-        'DELETE'
+        'DELETE',
+        null,
+        {Authorization: "Bearer " + loginContext.token}
       );
       console.log("Confirmed ,Deleting Suggestion!");
       props.onDelete(props.id);
@@ -43,7 +51,7 @@ function SuggestionItem(props) {
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteWarningHandler}
-        header="Are You Sure?"
+        header="Confirm Suggestion Deletion:"
         footerClass=""
         footer={
           <React.Fragment>
@@ -56,12 +64,20 @@ function SuggestionItem(props) {
           </React.Fragment>
         }
       >
-        <p>Do you wish to delete this suggestion?</p>
+        <p>Are you sure you want to delete <strong>{props.creatorName}'s "{props.tankName}"</strong> tank suggestion?</p>
       </Modal>
       {isLoading && <LoadingSpinner asOverlay />}
       <tr>
         <th>
           <h4>{props.id}</h4>
+        </th>
+        <th>
+          <Image
+           image={`http://localhost:5000/${props.suggestionPfp || 
+            "uploads/stockImages/stockSuggestionPic.png"}`} 
+           alt={"No Suggestion Profile Image!"} 
+           style={{width:"100px", hight:"50px"}}
+          />
         </th>
         <th>
           <h4>{props.tankName}</h4>
@@ -73,7 +89,12 @@ function SuggestionItem(props) {
           <h4>{props.nation}</h4>
         </th>
         <th>
-          <Avatar image={props.creatorPfp} alt={props.creatorName} style={{width:"100px", hight:"50px"}}/>
+          <Avatar
+           image={`http://localhost:5000/${props.creatorPfp ||
+           "uploads/stockImages/stockPfpPicture.jpg"}`} 
+           alt={props.creatorName} 
+           style={{width:"100px", hight:"50px"}}
+          />
         </th>
         <th>
           <h4>{props.creatorName}</h4>
@@ -104,7 +125,7 @@ function SuggestionItem(props) {
           )}
           {loginContext.isAdmin && (
             <th>
-              <Button inverse to={`/MainPage/Admin/SuggestionsDatabase/EditSuggestion/${props.id}`}>
+          <Button inverse to={`/MainPage/Admin/SuggestionsDatabase/EditSuggestion/${props.id}`}>
             Edit
           </Button>
           /

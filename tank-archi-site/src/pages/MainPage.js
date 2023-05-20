@@ -1,16 +1,7 @@
-import React, { useCallback, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-  Link,
-} from "react-router-dom";
-
-//the components that are imported
-import Catalogue from "./components/Catalogue";
-
-//the different site page imports
+//basic imports
+import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route, Redirect,} from "react-router-dom";
+//page imports:
 import Search from "./pages/TankSearch/TankSearch";
 import Rankings from "./pages/Rankings/Rankings";
 import TankFest from "./pages/TankFest/TankFest";
@@ -20,8 +11,8 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import TankPage from "./pages/TankPage/TankPage";
 import UserPage from "./pages/pages/PageForUser/User";
 import AdminPage from "./pages/pages/PageForAdmin/Admin";
-
-//the shared components of the site
+// --- component imports --- //
+//shared imports:
 import Title from "./Shared/components/UI-Elements/Title";
 import Profile from "./Shared/components/UI-Elements/Profile";
 import MainNavigation from "./Shared/components/Navigation/MainNavigation";
@@ -29,24 +20,24 @@ import ShortAboutUs from "./Shared/components/UI-Elements/ShortAboutUs";
 import ShortTankFest from "./Shared/components/UI-Elements/ShortTankFest";
 import ShortRecommended from "./Shared/components/UI-Elements/ShortRecommended";
 import Footer from "./Shared/components/UI-Elements/Footer";
-
+//catalogue imports:
+import Catalogue from "./components/Catalogue";
 //the different page instances of the site
 //-admin options
 import AdminChangeEmail from "./pages/pages/PageForAdmin/pages/ChangeEmail/AdminChangeEmail";
 import AdminChangePassword from "./pages/pages/PageForAdmin/pages/ChangePassword/AdminChangePassword";
 import AdminAddTankPhotos from "./pages/pages/PageForAdmin/pages/AddTankPhotos/AddTankPhotos";
 import AdminStatistics from "./pages/pages/PageForAdmin/pages/Statistics/Statistics";
-
-//-suggestions
+//-suggestions options
 import AdminSuggestionsDatabase from "./pages/pages/PageForAdmin/pages/Database_Suggestions/SuggestionsDatabase";
 import AdminEditSuggestion from "./pages/pages/PageForAdmin/pages/Database_Suggestions/pages/EditSuggestions/EditSuggestions";
 import AdminReviewSuggestion from "./pages/pages/PageForAdmin/pages/Database_Suggestions/pages/ReviewSuggestions/ReviewSuggestion";
-//-tanks
+//-tanks options
 import AdminTanksDatabase from "./pages/pages/PageForAdmin/pages/Database_Tanks/TanksDatabase";
 import AdminAddTank from "./pages/pages/PageForAdmin/pages/Database_Tanks/pages/AddTank/AddTank";
 import AdminEditTank from "./pages/pages/PageForAdmin/pages/Database_Tanks/pages/EditTank/EditTank";
 import AdminReviewTank from "./pages/pages/PageForAdmin/pages/Database_Tanks/pages/ReviewTank/ReviewTank";
-//-users
+//-users options
 import AdminUsersDatabase from "./pages/pages/PageForAdmin/pages/Database_Users/UsersDatabase";
 import AdminAddUser from "./pages/pages/PageForAdmin/pages/Database_Users/pages/AddUser/AddUser";
 import AdminEditUser from "./pages/pages/PageForAdmin/pages/Database_Users/pages/EditUser/EditUser";
@@ -55,9 +46,7 @@ import AdminReviewUser from "./pages/pages/PageForAdmin/pages/Database_Users/pag
 import UserChangeEmail from "./pages/pages/PageForUser/pages/ChangeEmail/UserChangeEmail";
 import UserChangePassword from "./pages/pages/PageForUser/pages/ChangePassword/UserChangePassword";
 import UserSuggestionPage from "./pages/pages/PageForUser/pages/SubmitSuggestion/SubmitSuggestion";
-//
-import { LoginContext } from "./Shared/Context/login-context";
-//
+//welcome page imports
 import Welcome from "../components/Welcome";
 import Login from "../components/Login";
 import SignUp from "../components/Sign-Up";
@@ -115,8 +104,10 @@ import SignUp from "../components/Sign-Up";
 
 //!NOTE: FINISH THE IMPORTED COMPONENTS
 function MainSitePage() {
+  //login state
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
+  //all of the possible page routes that the site contains
   let routes;
   if (isLoggedIn) {
     routes = (
@@ -220,7 +211,7 @@ function MainSitePage() {
         </Route>
 
         {/* This route takes us to a desired tanks page containing the information about said tank*/}
-        <Route path="/MainPage/TankPage" exact>
+        <Route path="/MainPage/TankPage/:tankId" exact>
           <Title />
           <Profile />
           <MainNavigation />
@@ -428,10 +419,12 @@ function MainSitePage() {
             <AdminStatistics />
           </div>
         </Route>
+        <Redirect to="/MainPage/Search" />
         <Redirect to="/MainPage" />
       </Switch>
     );
   } else {
+    //other wise if not logged in then redirect to welcome page
     routes = (
       <Switch>
         {/* Routes to the starting page / login or sign up and welcome */}

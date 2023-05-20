@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-//
-import { Link, useHistory } from "react-router-dom";
+//basic imports
+import React from "react";
+import { useHistory } from "react-router-dom";
+//util import
 import { VALIDATOR_REQUIRE } from "../../../../Shared/Util/validators";
+//hook import
 import { useForm } from "../../../../Shared/Hooks/form-hook";
-//
+//component imports
 import Input from "../../../../Shared/components/Form-Elements/Input";
 import Text from "../../../../Shared/components/Visual-Elements/Text";
 import Button from "../../../../Shared/components/Form-Elements/Button";
 import Card from "../../../../Shared/components/UI-Elements/Card";
 
 function AdminOptions() {
-  // const [tankName, setTankName] = useState();
-  const [formState, inputHandler, setFormData] = useForm(
+  //form's initial state
+  const [formState, inputHandler] = useForm(
     {
       tankId: {
         value: "",
@@ -20,8 +22,10 @@ function AdminOptions() {
     },
     false
   );
+  //declare "useHistory" here
   const pages = useHistory();
 
+  //used to pass along the tank id to the next page and uses that to find and add the desired images
   const tankIdHandler = (event) => {
     event.preventDefault();
     const tankId = formState.inputs.tankId.value;

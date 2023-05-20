@@ -4,10 +4,15 @@ const uniqueValidator = require('mongoose-unique-validator');
 const Schema = mongoose.Schema;
 
 
-
+//?add the following parameters to user = {
+/////?       admin role ,
+/////?       add favorite tanks collection ,
+/////?       //!implement the login save feature
+//?}
 const userSchema = new Schema({
     isAdmin: { type: Boolean , required: true },
     adminKey: { type: String , required: false },
+    adminRole: { type: String , required: false },
     imagePfp: { type: String , required: false },
     
     username: { type: String , required: true },
@@ -19,12 +24,14 @@ const userSchema = new Schema({
     age: { type: Number , required: true },
     
     creationDate: { type: Date , required: true },
+    currentLoginDate: { type: Date , required: false },
     lastLoginDate: { type: Date , required: false },
     lastAccountChanges: { type: Date , required: false},
 
     company: { type: String , required: false },
     publisher: { type: String , required: false },
     association: { type: String , required: false},
+    favNation: { type: String , required: false },
     
     socialGroup: {
         socialType: { type: String , required: false },
@@ -32,8 +39,9 @@ const userSchema = new Schema({
     },
     
     submittedSuggestions: [{ type: mongoose.Types.ObjectId , required: false , ref: 'Suggestion'}],
-    favNation: { type: String , required: false },
+    
     favTanksList: [{ type: mongoose.Types.ObjectId , required: false , ref: 'Tank'}],
+    likedTanksList: [{ type: Array , required: false }],
     ratedTanks: { type: Number , required: false },
 });
 

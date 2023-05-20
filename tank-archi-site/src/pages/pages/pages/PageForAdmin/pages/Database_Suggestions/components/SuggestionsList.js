@@ -1,19 +1,21 @@
+//basic import
 import React from "react";
-//
+//component import
 import SuggestionItem from "./components/SuggestionItem";
 
 function SuggestionsList(props) {
+  //show this if there are no suggestions in the list
   if (props.items.length === 0)
     return (
       <div className="Container">
         <h1>No Suggestions Found!</h1>
       </div>
     );
-  //here we return each item in the users list as the following parameters :
-  // "key" = (the users id as a key) , "id" =  (the users actual id as an id) ,
-  // "tankName" = (the suggestion's tank name) , "username" = (the suggestion's submitter's username) ,
-  // "age" = (the suggestion user's age) , "nation" = (the suggestion's nation to which the tank in it belongs) ,
-  // "email" = (the suggestion submitter's email address) , "submissionDate" = (the suggestion's submission date) ,
+  ////here we return each item in the users list as the following parameters :
+  //// "key" = (the users id as a key) , "id" =  (the users actual id as an id) ,
+  //// "tankName" = (the suggestion's tank name) , "username" = (the suggestion's submitter's username) ,
+  //// "age" = (the suggestion user's age) , "nation" = (the suggestion's nation to which the tank in it belongs) ,
+  //// "email" = (the suggestion submitter's email address) , "submissionDate" = (the suggestion's submission date) ,
   return (
     <div className="Container">
       <table>
@@ -22,6 +24,9 @@ function SuggestionsList(props) {
             <th>
               <button>Sort :</button>
               <button>ID</button>
+            </th>
+            <th>
+              <button>Suggestion Profile Picture</button>
             </th>
             <th>
               <button>Sort :</button>
@@ -66,6 +71,7 @@ function SuggestionsList(props) {
               <SuggestionItem
                 key={suggestion.id}
                 id={suggestion.id}
+                suggestionPfp={suggestion.suggestionPfp}
                 tankName={suggestion.tankName}
                 age={suggestion.age}
                 nation={suggestion.nation}

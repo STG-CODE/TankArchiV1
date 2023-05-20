@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 
 const suggestionSchema = new Schema({
     suggestionTitle:{ type: String, required: true },
+    suggestionPfp:{ type: String, required: false},
     tankName: { type: String , required: true },
     nation: { type: String , required: true },
     combatRole: { type: String, required: true },

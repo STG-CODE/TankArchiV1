@@ -1,25 +1,34 @@
+//basic imports
 import React, { useEffect, useState, useContext } from "react";
-
+//hook import
 import { useHttpClient } from "../../../../Shared/Hooks/http-hook";
+//context import
 import { LoginContext } from "../../../../Shared/Context/login-context";
-
+//component imports
 import SuggestionItem from "../../PageForAdmin/pages/Database_Suggestions/components/components/SuggestionItem";
 import ErrorModal from "../../../../Shared/components/UI-Elements/ErrorModal";
 import LoadingSpinner from "../../../../Shared/components/UI-Elements/LoadingSpinner";
 import Text from "../../../../Shared/components/Visual-Elements/Text";
 
 function UserSuggestionsTable(props) {
-    const loginContext = useContext(LoginContext);
-    const { isLoading, error, sendRequest, clearError } = useHttpClient();
-    const [loadedSuggestions, setLoadedSuggestions] = useState();
+  //login context
+  const loginContext = useContext(LoginContext);
+  //deconstruction of the http client hook
+  const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  //loaded suggestion state
+  const [loadedSuggestions, setLoadedSuggestions] = useState();
+  //current logged in user's id
+  const userId = loginContext.currentUser.id;
 
-    const userId = loginContext.currentUser.id;
-
+  //useEffect - fetches the user's suggestions
   useEffect(() => {
     const fetchSuggestions = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/MainPage/Admin/SuggestionsDatabase/${userId}`
+          `http://localhost:5000/MainPage/Admin/SuggestionsDatabase/${userId}`,
+          "GET",
+          null,
+          {Authorization: "Bearer " + loginContext.token}
         );
         setLoadedSuggestions(responseData.suggestions);
       } catch (err) {}
@@ -27,12 +36,12 @@ function UserSuggestionsTable(props) {
     fetchSuggestions();
   }, [sendRequest],[userId]);
 
+  //handles the deletion refresh in case the user decides to delete his suggestion
   const suggestionDeletedHandler = deletedSuggestionId => {
     props.isUpToDate(false);
     setLoadedSuggestions(
       loadedSuggestions.filter(suggestion => suggestion.id !== deletedSuggestionId)
     );
-    
   };
 
   return (
@@ -51,6 +60,9 @@ function UserSuggestionsTable(props) {
                 <tr>
                   <th>
                     <button>ID</button>
+                  </th>
+                  <th>
+                    <button>Suggestion Profile Picture</button>
                   </th>
                   <th>
                     <button>Tank Name</button>
@@ -87,6 +99,7 @@ function UserSuggestionsTable(props) {
                     <SuggestionItem
                       key={suggestion.id}
                       id={suggestion.id}
+                      suggestionPfp={suggestion.suggestionPfp}
                       tankName={suggestion.tankName}
                       age={suggestion.age}
                       nation={suggestion.nation}

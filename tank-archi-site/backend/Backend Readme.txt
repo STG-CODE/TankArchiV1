@@ -17,6 +17,10 @@ seventh command:
 eighth command:
 "npm install --save multer" -> we install this in order to read data in a none 
                             json format so that we can work with photos and other data.
+ninth command:
+"npm install --save bcryptjs" -> we install this in order to encrypt the passwords in our backend.
+tenth command:
+"npm install --save jsonwebtoken" -> we install this package in order to generate js tokens with a privet key.
 
 commands for terminal:
 "nodemon server" - used to run the server 

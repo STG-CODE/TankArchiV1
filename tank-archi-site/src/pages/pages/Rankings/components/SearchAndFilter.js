@@ -1,7 +1,5 @@
+//basic import
 import React from "react";
-
-//Component Contents :
-
 //TODO: create a hover window on the filter button that will show the filter options or create a window that filters.
 
 function Rankings() {

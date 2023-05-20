@@ -1,55 +1,56 @@
-import React from "react";
-
-//Component Contents :
-
+//basic imports
+import React, { useState } from "react";
+//component import
+import RankingItem from "./RankingItem";
 //TODO :
 
-function Rankings() {
+function Rankings(props) {
+  let rank = 0;
   return (
-    <div className="Container">
-      <h2>The Rankings Table :</h2>
+    <React.Fragment>
       <div>
         <table>
             <thead>
                 <tr>
-                    <th>Tank Name</th>
-                    <th>Nation</th>
-                    <th>Tank Role</th>
-                    <th>Era</th>
-                    <th>Service Period</th>
-                    <th>Service Start Date</th>
-                    <th>Service End Date</th>
-                    <th>Rank</th>
-                    <th>Votes</th>
+                  <th>Rank:</th>
+                  <th>Image:</th>
+                  <th>Tank Name:</th>
+                  <th>Nation:</th>
+                  <th>Tank Role:</th>
+                  <th>Era:</th>
+                  <th>Service Period - Start Date:</th>
+                  <th>Service Period - End Date:</th>
+                  <th>Average Rating:</th>
+                  <th>Votes:</th>
+                  <th>Page Link:</th>
                 </tr>
             </thead>
-          <tbody>
-          <tr>
-            <th>1</th>
-            <th>2</th>
-            <th>3</th>
-            <th>4</th>
-            <th>5</th>
-            <th>6</th>
-            <th>7</th>
-            <th>8</th>
-            <th>9</th>
-          </tr>
-          <tr>
-            <th>10</th>
-            <th>11</th>
-            <th>12</th>
-            <th>13</th>
-            <th>14</th>
-            <th>15</th>
-            <th>16</th>
-            <th>17</th>
-            <th>18</th>
-          </tr>
-          </tbody>
+          {props.tanks.map((tank) => {
+            rank = rank + 1;
+            return (
+              <tbody>
+                <RankingItem
+                id={tank.id}
+                image={tank.tankImagePfp}
+                tankName={tank.tankName}
+                nation={tank.nation}
+                combatRole={tank.combatRole}
+                era={tank.era}
+                startDate={tank.servicePeriod.startDate}
+                endDate={tank.servicePeriod.endDate}
+                rank={rank}
+                avgRating={tank.avgRating}
+                votes={tank.voteCount}
+                alt={"uploads/stockImages/tankStockIcon.jpg"}
+                style={{width:"160px", hight:"50px"}}
+                />
+              </tbody>
+            )
+          })}
         </table>
-      </div>
     </div>
+    </React.Fragment>
+    
   );
 }
 

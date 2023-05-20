@@ -19,6 +19,10 @@ server.use(bodyParser.json());
 
 server.use('/uploads/images', express.static(path.join('uploads','images')));
 server.use('/uploads/imagesOfTanks', express.static(path.join('uploads','imagesOfTanks')));
+server.use('/uploads/stockImages', express.static(path.join('uploads','stockImages')));
+server.use('/uploads/tankProfilePics', express.static(path.join('uploads','tankProfilePics')));
+server.use('/uploads/suggestionProfilePics', express.static(path.join('uploads','suggestionProfilePics')));
+
 
 
 //used for port miss match and "CORS" error
@@ -47,9 +51,12 @@ server.use((req, res ,next) => {
 //error handling middle ware function
 server.use((error,req, res, next) => {
     if(req.file){
-        fs.unlink(req.file.path, (err) => {
-            console.log(err , "image was deleted");
+        console.log("To Delete = " + req.file.path)
+        if(req.file.path !== null){
+            fs.unlink(req.file.path, (err) => {
+            console.log(err , "Image Was Deleted Successfully");
         });
+        } 
     }
     if(res.headersSent){
         return next(error);

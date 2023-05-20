@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
-//
-import ImageUpload from "../shared/components/ImageUploadSection";
-//
+//basic imports
+import React, { useContext, useEffect, useState } from "react";
+//hook imports
 import { useHttpClient } from "../../../Shared/Hooks/http-hook";
-import { VALIDATOR_REQUIRE } from "../../../Shared/Util/validators";
 import { useForm } from "../../../Shared/Hooks/form-hook";
-//
+//util imports
+import { VALIDATOR_REQUIRE } from "../../../Shared/Util/validators";
+//component imports
+import ImageUpload from "../shared/components/ImageUploadSection";
 import Card from "../../../Shared/components/UI-Elements/Card";
 import Input from "../../../Shared/components/Form-Elements/Input";
 import Text from "../../../Shared/components/Visual-Elements/Text";
 import Button from "../../../Shared/components/Form-Elements/Button";
 import LoadingSpinner from "../../../Shared/components/UI-Elements/LoadingSpinner";
 import ErrorModal from "../../../Shared/components/UI-Elements/ErrorModal";
-
-
+//context import
+import { LoginContext } from "../../../Shared/Context/login-context";
 
 function Details(props) {
+  //login context
+  const loginContext = useContext(LoginContext);
+  //deconstruction of the http client hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  //the user state
   const [loadedUser, setLoadedUser] = useState();
+  //admin's id from the current user at "props"
   const userId = props.user.id;
 
+  //initial state of the form
   const [formState, inputHandler, setFormData] = useForm(
     {
       firstName: {
@@ -42,6 +49,7 @@ function Details(props) {
     false
   );
 
+  //useEffect - sets up the uses into the form with out actually fetching it with HTTP CLIENT HOOK
   useEffect(() => {
     const fetchUser = () => {
       try {
@@ -74,6 +82,7 @@ function Details(props) {
     fetchUser();
   }, [sendRequest, setLoadedUser]);
 
+  //handles the specific changes that the admin \ user has made and attempts to save them
   const detailsUpdateHandler = async (event) => {
     event.preventDefault();
     try {
@@ -88,6 +97,7 @@ function Details(props) {
         }),
         {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + loginContext.token
         }
       );
       props.isUpToDate(false);

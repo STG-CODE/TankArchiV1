@@ -27,7 +27,10 @@ function Admin() {
     const adminInfoChangeHandler = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/MainPage/Admin/UsersDatabase/EditUser/${adminId}`
+          `http://localhost:5000/MainPage/Admin/UsersDatabase/EditUser/${adminId}`,
+          "GET",
+          null,
+          {Authorization: "Bearer " + loginContext.token}
         );
         setUpToDateAdmin(true);
         setLoadedAdmin(responseData.user);

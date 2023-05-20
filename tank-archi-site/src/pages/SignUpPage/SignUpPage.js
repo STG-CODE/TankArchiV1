@@ -1,44 +1,28 @@
-import React, { useState, useContext, useCallback } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
-
-//The components of "SignUpPage"
-import Header from "./components/Header";
-import Body from "./components/Body";
-import Footer from "./components/Footer";
-
-//Routes used in the page
+//basic imports
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+//component imports
+import SignUpBody from "./components/SignUpBody";
+import Text from "../Shared/components/Visual-Elements/Text";
+//page imports
 import App from "../../App";
 import MainPage from "../MainPage";
-//
-import { LoginContext } from "../Shared/Context/login-context";
 
 function SignUpPage() {
-  //used for getting the "formState" from body and sending
-  // the ".isValid" to the "footer" component for creating an account.
-  const [stateFromBody, setStateFromBody] = useState(false);
-
-  const bodyCallbackHandler = (bodyState) => {
-    setStateFromBody(bodyState);
-  };
-
+  //// used for getting the "formState" from body and sending
+  //// the ".isValid" to the "footer" component for creating an account.
   return (
     <Router>
       <Switch>
         <div className="Container">
           {/* Routes to sign up page and renders it */}
           <Route path="/SignUpPage" exact>
-            <Header />
-            <Body/>
-            <Footer/>
+            <Text element="h1" value="Sign Up Page:"/>
+            <SignUpBody/>
           </Route>
 
           {/* routes to start page */}
-          <Route path="/" exact>
+          <Route path="/WelcomePage" exact>
             <App />
           </Route>
 

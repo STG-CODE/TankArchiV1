@@ -2,12 +2,18 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-
-
+///// ?NEW: 
+/////? userNations - contains the nations that used the tank , 
+/////? serviceState - contains the current state of the tank's service ,
+/////? generation - contains the generation that the tank relates to
+//?Tank crew accounts and stories
 const tankSchema = new Schema({
     tankName: { type: String , required: true },
     nation: { type: String , required: true },
-    combatRole: { type: String, required: true },
+    userNations: { type: Array , required: true },
+    combatRole: { type: String , required: true },
+    serviceStates: { type: Array , required: true },
+    generation: { type: String , required: true },
     
     era: { type: String , required: false },
     age: { type: Number , required: false },
@@ -18,6 +24,7 @@ const tankSchema = new Schema({
 
     tankHistory: { type: String , required: true },
     tankServiceHistory: { type: String , required: true },
+    tankServiceStatesInfo: { type: String , required: true },
     tankProductionHistory: { type: String , required: true },
     tankArmamentAndArmour: { type: String , required: true },
 

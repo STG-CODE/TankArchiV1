@@ -1,21 +1,31 @@
-import React, { useState, useEffect } from "react";
-
+//basic imports
+import React, { useState, useEffect, useContext } from "react";
+//hook imports
 import { useHttpClient } from "../../../Shared/Hooks/http-hook";
-import { VALIDATOR_REQUIRE } from "../../../Shared/Util/validators";
 import { useForm } from "../../../Shared/Hooks/form-hook";
-
+//util imports
+import { VALIDATOR_REQUIRE } from "../../../Shared/Util/validators";
+//component imports
 import Card from "../../../Shared/components/UI-Elements/Card";
 import Input from "../../../Shared/components/Form-Elements/Input";
 import Text from "../../../Shared/components/Visual-Elements/Text";
 import Button from "../../../Shared/components/Form-Elements/Button";
 import LoadingSpinner from "../../../Shared/components/UI-Elements/LoadingSpinner";
 import ErrorModal from "../../../Shared/components/UI-Elements/ErrorModal";
+//context import
+import { LoginContext } from "../../../Shared/Context/login-context";
 
 function OptionalDetails(props) {
+  //login context
+  const loginContext = useContext(LoginContext);
+  //deconstruction of the http client hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  //loaded user state
   const [loadedUser, setLoadedUser] = useState();
+  //extracts the user's id from the "props"
   const userId = props.user.id;
 
+  //initial state of the form
   const [formState, inputHandler, setFormData] = useForm(
     {
       company: {
@@ -46,6 +56,7 @@ function OptionalDetails(props) {
     false
   );
 
+  //useEffect - sets up the uses into the form with out actually fetching it with HTTP CLIENT HOOK
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -87,6 +98,7 @@ function OptionalDetails(props) {
     fetchUser();
   }, [sendRequest, setLoadedUser]);
 
+  //handles the update of the optional details if there was any
   const optionalDetailsUpdateHandler = async (event) => {
     event.preventDefault();
     try {
@@ -103,6 +115,7 @@ function OptionalDetails(props) {
         }),
         {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + loginContext.token
         }
       );
       props.isUpToDate(false);

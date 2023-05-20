@@ -1,23 +1,24 @@
+//basic imports
 import React from "react";
-
+//component import
 import TankItem from "./components/TankItem";
 
 function TanksList(props) {
+  //if there is no tanks in the list then we will show the following massage
   if (props.items.length === 0)
     return (
       <div className="Container">
         <h1>No Tanks Found!</h1>
       </div>
     );
-  //here we return each item in the users list as the following parameters :
-  // "key" = (the users id as a key) , "id" =  (the users actual id as an id) ,
-  // "tankName" = (the tank's name) , "nation" = (the tank's nation') ,
-  // "tankBattleRole" = (the tank's battle role) , "era" = (the tank's era to which it belongs) ,
-  // "servicePeriod" = (the tank's service period) , "startDate" = (the tank's start of service date) ,
-  // "endDate" = (the tank's end date of service date) , "accumulatedVoteCount" = (the tank's accumulated vote count')
+  ////here we return each item in the users list as the following parameters :
+  //// "key" = (the users id as a key) , "id" =  (the users actual id as an id) ,
+  //// "tankName" = (the tank's name) , "nation" = (the tank's nation') ,
+  //// "tankBattleRole" = (the tank's battle role) , "era" = (the tank's era to which it belongs) ,
+  //// "servicePeriod" = (the tank's service period) , "startDate" = (the tank's start of service date) ,
+  //// "endDate" = (the tank's end date of service date) , "accumulatedVoteCount" = (the tank's accumulated vote count')
   return (
     <div className="Container">
-      
       <table>
         <thead>
           <tr>

@@ -1,7 +1,7 @@
+//basic imports
 import React from "react";
-//
+//component imports
 import EditUserBody from "./components/EditUserBody";
-//
 import Text from "../../../../../../../Shared/components/Visual-Elements/Text";
 
 function EditUser() {

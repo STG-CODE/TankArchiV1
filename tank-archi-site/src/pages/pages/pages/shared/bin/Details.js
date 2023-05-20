@@ -1,9 +1,11 @@
+//basic imports
 import React, { useEffect, useState } from "react";
-//
+//hook import
 import { useHttpClient } from "../../../../Shared/Hooks/http-hook";
-import { VALIDATOR_REQUIRE } from "../../../../Shared/Util/validators";
 import { useForm } from "../../../../Shared/Hooks/form-hook";
-//
+//util imports
+import { VALIDATOR_REQUIRE } from "../../../../Shared/Util/validators";
+//component imports
 import Card from "../../../../Shared/components/UI-Elements/Card";
 import Input from "../../../../Shared/components/Form-Elements/Input";
 import Text from "../../../../Shared/components/Visual-Elements/Text";
@@ -13,10 +15,14 @@ import LoadingSpinner from "../../../../Shared/components/UI-Elements/LoadingSpi
 import ErrorModal from "../../../../Shared/components/UI-Elements/ErrorModal";
 
 function Details(props) {
+  //deconstruction of the http client hook
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  //the admin state
   const [loadedAdmin, setLoadedAdmin] = useState();
+  //admin's id from the current user at "props"
   const adminId = props.user.id;
 
+  //initial state of the form
   const [formState, inputHandler, setFormData] = useForm(
     {
       firstName: {
@@ -43,6 +49,7 @@ function Details(props) {
     false
   );
 
+  //useEffect - sets up the uses into the form with out actually fetching it with HTTP CLIENT HOOK
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -79,6 +86,7 @@ function Details(props) {
     fetchUser();
   }, [sendRequest, setLoadedAdmin]);
 
+  //handles the specific changes that the admin or user has made and attempts to save them
   const detailsUpdateHandler = async (event) => {
     event.preventDefault();
     try {
@@ -93,6 +101,7 @@ function Details(props) {
         }),
         {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + loginContext.token
         }
       );
       props.isUpToDate(false);
@@ -102,6 +111,7 @@ function Details(props) {
     console.log(formState.inputs);
   };
 
+  //handles the user \ admin update of his profile picture
   const userProfilePicUpdateHandler = async (event) => {
     event.preventDefault();
     try {
@@ -111,7 +121,8 @@ function Details(props) {
       await sendRequest(
         `http://localhost:5000/MainPage/User/UpdateUserProfilePic/${adminId}`,
         "PATCH",
-        formData
+        formData,
+        {Authorization: "Bearer " + loginContext.token}
       );
       props.isUpToDate(false);
     } catch (err) {

@@ -9,6 +9,8 @@ const { check } = require('express-validator')
 
 //our controller imports
 const suggestionsControllers = require('../controllers/suggestions-controllers');
+const suggestionFileUpload = require('../middleware/file-upload-suggestion');
+const checkAuth = require('../middleware/check-auth');
 
 //custom error message and code import
 const HttpError = require('../models/http-error-model')
@@ -18,6 +20,7 @@ const HttpError = require('../models/http-error-model')
 const router = express.Router();
 
 //here we use this pointers to point to the needed functions
+router.use(checkAuth);
 
 //(get all suggestions)
 router.get('/', suggestionsControllers.getSuggestions);
@@ -28,11 +31,24 @@ router.get('/:uid', suggestionsControllers.getSuggestionsByUserId);
 //(get suggestion information by its id)
 router.get('/EditSuggestion/:sid', suggestionsControllers.getSuggestionById);
 
-//(create a user)
-router.post('/', suggestionsControllers.createSuggestion);
+//(create a suggestion)
+router.post(
+    '/',
+    suggestionFileUpload.single('suggestionPfp'),
+    suggestionsControllers.createSuggestion
+);
 
 //(update a tank)
-router.patch('/EditSuggestion/:sid', suggestionsControllers.updateSuggestion);
+router.patch(
+    '/EditSuggestion/:sid',
+    suggestionFileUpload.single('suggestionPfp'),
+    suggestionsControllers.updateSuggestion
+);
+
+router.patch(
+    '/UpdateSuggestion/:sid',
+    suggestionsControllers.updateSuggestionUser
+);
 
 //delete a user
 router.delete('/:sid',suggestionsControllers.deleteSuggestion);
