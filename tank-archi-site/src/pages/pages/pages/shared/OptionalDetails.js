@@ -14,6 +14,8 @@ import LoadingSpinner from "../../../Shared/components/UI-Elements/LoadingSpinne
 import ErrorModal from "../../../Shared/components/UI-Elements/ErrorModal";
 //context import
 import { LoginContext } from "../../../Shared/Context/login-context";
+//Material UI import
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function OptionalDetails(props) {
   //login context
@@ -138,7 +140,9 @@ function OptionalDetails(props) {
         {!isLoading && loadedUser && (
           <Card>
             <form onSubmit={optionalDetailsUpdateHandler}>
-              {/* For "company" */}
+              <Grid2 container spacing={1}>
+                <Grid2>
+                  {/* For "company" */}
               <Text
                 element={"text"}
                 value={`Company Name : ${loadedUser.company || "None"}`}
@@ -154,7 +158,9 @@ function OptionalDetails(props) {
                 initialValue={loadedUser.company || "None"}
                 initialValid={true}
               />
-              {/* For "publisher" */}
+                </Grid2>
+                <Grid2>
+                  {/* For "publisher" */}
               <Text
                 element={"text"}
                 value={`Publisher Name : ${loadedUser.publisher || "None"}`}
@@ -170,7 +176,9 @@ function OptionalDetails(props) {
                 initialValue={loadedUser.publisher || "None"}
                 initialValid={true}
               />
-              {/* For "association" */}
+                </Grid2>
+                <Grid2>
+                  {/* For "association" */}
               <Text
                 element={"text"}
                 value={`Association Name : ${loadedUser.association || "None"}`}
@@ -186,7 +194,9 @@ function OptionalDetails(props) {
                 initialValue={loadedUser.association || "None"}
                 initialValid={true}
               />
-              {/* For "socialType" */}
+                </Grid2>
+                <Grid2>
+                  {/* For "socialType" */}
               <Text
                 element={"text"}
                 value={`Social Type Of Group : ${loadedUser.socialGroup.socialType || "None"}`}
@@ -203,7 +213,9 @@ function OptionalDetails(props) {
                 initialValue={loadedUser.socialGroup.socialType || "None"}
                 initialValid={true}
               />
-              {/* For "socialName" */}
+                </Grid2>
+                <Grid2>
+                  {/* For "socialName" */}
               <Text
                 element={"text"}
                 value={`Social Group Name : ${loadedUser.socialGroup.socialName || "None"}`}
@@ -220,7 +232,9 @@ function OptionalDetails(props) {
                 initialValue={loadedUser.socialGroup.socialName || "None"}
                 initialValid={true}
               />
-              {/* For "favNation" */}
+                </Grid2>
+                <Grid2>
+                  {/* For "favNation" */}
               <Text
                 element={"text"}
                 value={`Favorite Nation Name : ${loadedUser.favNation || "None"}`}
@@ -236,9 +250,15 @@ function OptionalDetails(props) {
                 initialValue={loadedUser.favNation || "None"}
                 initialValid={true}
               />
-              <Button type="submit" disabled={!formState.isValid}>
-                Save Changes
-              </Button>
+                </Grid2>
+                <Grid2>
+                  <Card>
+                    <Button type="submit" disabled={!formState.isValid}>
+                      Save Changes
+                    </Button>
+                  </Card>
+                </Grid2>
+              </Grid2>
             </form>
           </Card>
         )}

@@ -9,7 +9,6 @@ function SubmitSuggestion() {
   return (
     <React.Fragment>
       <div className="Container">
-        <Text element="h1" value="Suggestion Submission Page:" />
         <Card>
           <SubmitSuggestionsBody />
         </Card>

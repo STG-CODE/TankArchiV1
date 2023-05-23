@@ -10,10 +10,11 @@ import LoadingSpinner from "../../Shared/components/UI-Elements/LoadingSpinner";
 import ErrorModal from "../../Shared/components/UI-Elements/ErrorModal";
 import Paginate from "../../Shared/components/Extra-Elements/Pagination";
 //Material UI Imports
-import {Autocomplete, Checkbox, FormControl, FormControlLabel, FormGroup, createFilterOptions, TextField, Pagination, PaginationItem, Paper, Slider,} from "@mui/material";
+import {Autocomplete, Checkbox, FormControl, FormControlLabel, FormGroup, createFilterOptions, TextField, Pagination, PaginationItem, Paper, Slider, Container,} from "@mui/material";
 import { blue, grey } from "@mui/material/colors";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 //hook import
 import { useHttpClient } from "../../Shared/Hooks/http-hook";
 //context import
@@ -369,9 +370,10 @@ function TankSearch() {
         <ErrorModal error={error} onClear={clearError} />
         <Text element="h1" value="Tank Search Tab!:" />
         <Card>
-          <Text element="h3" value="Our Tank Search Engine:" />
-          //!need to change options in search so that
-          <Card>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={4}>
+              <Card>
+              <Text element="h3" value="Our Tank Search Engine:" />
             {searchByName && (
               <React.Fragment>
                 <Autocomplete
@@ -699,6 +701,8 @@ function TankSearch() {
                   label="Pick age range in which to search for a tank:"
                   value={`Look For A Tank Between ${ageSearch[0]} Years And ${ageSearch[1]} Years`}
                 />
+                <br/>
+                <br/>
                 <Slider
                   getAriaLabel={() => "Minimum distance"}
                   value={ageSearch}
@@ -842,11 +846,12 @@ function TankSearch() {
             )}
             <Button onClick={searchTank}>Search</Button>
             <Button onClick={resetSearch}>Reset Search</Button>
-          </Card>
-          <Card>
+              </Card>
+            </Grid2>
+            <Grid2 container xs={8}>
+              <Card>
             <FormControl component="fieldset" required={true}>
-              <Text element="text" value="Filter Options:" />
-              //!need to finish the filter options here!
+              <Text element="h3" value="Filter Options:" />
               <FormGroup aria-label="position" row>
                 <FormControlLabel
                   control={<Checkbox checked={searchByName}sx={{color: grey[600],"&.Mui-checked": { color: blue[800] },}}/>}
@@ -885,14 +890,16 @@ function TankSearch() {
                   onChange={handleServiceStateFilterChange}
                 />
                 <FormControlLabel control={<Checkbox checked={searchByGeneration}sx={{color: grey[600],"&.Mui-checked": { color: blue[800] },}}/>}
-                  label="Filter By Tank Generation"
+                  label="Filter By Generation"
                   labelPlacement="end"
                   onChange={handleGenerationFilterChange}
                 />
-                <Button onClick={resetFilter}>Rest Filters</Button>
+                <Button onClick={resetFilter}>Filter Reset Button</Button>
               </FormGroup>
             </FormControl>
           </Card>
+            </Grid2>
+          </Grid2>
           <Card>
             {isLoading && !loadedTanks && (
               <div>
@@ -910,9 +917,11 @@ function TankSearch() {
               </div>
             )}
             {!isLoading && loadedTanks && (
-              <div>
-                <TankCatalogueTable tanks={loadedTanks} />
-              </div>
+              <Container fixed>
+                <div>
+                  <TankCatalogueTable tanks={loadedTanks} />
+                </div>
+              </Container>
             )}
           </Card>
           <Paper elevation={6}>

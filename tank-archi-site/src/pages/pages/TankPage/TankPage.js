@@ -20,6 +20,9 @@ import Image from "../../Shared/components/Visual-Elements/Image";
 import TankRating from "../../Shared/components/UI-Elements/TankRating";
 import TankLikeButton from "../../Shared/components/UI-Elements/TankLikeButton";
 import AddToFavButton from "../../Shared/components/UI-Elements/AddToFavButton";
+//Material UI imports
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Container } from "@mui/material";
 //TODO :
 
 function TankPage() {
@@ -57,6 +60,8 @@ function TankPage() {
     fetchTank();
   },[sendRequest,setLoadedTank, tankId]);
 
+  //!change so that we enter the values here instead of in the component it self
+  //?needs to be intractable for rating the tank
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} to="/MainPage"/>
@@ -67,93 +72,156 @@ function TankPage() {
       )}
       {!loginContext.isAdmin && !isLoading && loadedTank && (
         <div>
-        <Text element="h1" value={`The ${loadedTank.tankName} Tank`} />
         <Card>
-          <Card>
-            <Image
-              image={`http://localhost:5000/${loadedTank.tankImagePfp}`}
-              alt={"http://localhost:5000/uploads/stockImages/tankStockIcon.jpg"}
-              style={{width:"100px", hight:"50px"}}
-            />
-            <TankBasicInfo tank={loadedTank}/>
-          </Card>
-          <Card>
-            <Button to="/MainPage">Go Back</Button>
-            {!isLimit && (
-              <Button disabled={true}>
-                Submit A Suggestion Here
-             </Button>
-            )}
-            {isLimit && (
-              <Button to="/MainPage/User/SubmitSuggestion">
-                Submit A Suggestion Here
-              </Button>
-            )}
-            <TankRating isAdmin={false} rating={loadedTank.avgRating}/>//!change so that we enter the values here instead of in the component it self
-            //?needs to be intractable for rating the tank
-            <TankLikeButton isAdmin={false}/>
-            <AddToFavButton isAdmin={false}/>
-          </Card>
-          <Card>
-            <Text element="text" value={`${loadedTank.tankName}'s Photo Gallery:`}></Text>
-            <TankPhotosContainer tankPhotoCollection={loadedTank.photoCollection}/>
-          </Card>
-          <Card>
-            <TankBio
-             name={loadedTank.tankName} 
-             history={loadedTank.tankHistory}
-             service={loadedTank.tankServiceHistory}
-             serviceState={loadedTank.tankServiceStatesInfo}
-             production={loadedTank.tankProductionHistory}
-             armsAndArmour={loadedTank.tankArmamentAndArmour}
-            />
-          </Card>
-          <Card>
-            <RecommendationWindow currentTank={tankId}/>
-          </Card>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={12}>
+              <Card>
+                <Image
+                  image={`http://localhost:5000/${loadedTank.tankImagePfp}`}
+                  alt={"http://localhost:5000/uploads/stockImages/tankStockIcon.jpg"}
+                  style={{width:"100%", hight:"70%"}}
+                />
+              </Card>
+            </Grid2>
+            <Grid2 xs={4}>
+              <Card>
+                <Text element="h1" value={`The ${loadedTank.tankName}`} />
+                <TankRating isAdmin={false} rating={loadedTank.avgRating}/>
+              </Card>
+            </Grid2>
+            <Grid2 xs={8}>
+              <Card>
+                <Grid2 xs={12} container spacing={1}>
+                  <Grid2>
+                    <Button to="/MainPage">Go Back</Button>
+                  </Grid2>
+                  <Grid2>
+                    {!isLimit && (
+                      <Button disabled={true}>
+                        Submit A Suggestion Here
+                      </Button>
+                    )}
+                    {isLimit && (
+                      <Button to="/MainPage/User/SubmitSuggestion">
+                        Submit A Suggestion Here
+                      </Button>
+                    )}
+                  </Grid2>
+                  <Grid2>
+                    <AddToFavButton isAdmin={false}/>
+                  </Grid2>
+                  <Grid2>
+                    <TankLikeButton isAdmin={false}/>
+                  </Grid2>
+                </Grid2>
+              </Card>
+            </Grid2>
+            <Grid2 xs={8}>
+              <Card>
+                <TankBasicInfo tank={loadedTank}/>
+              </Card>
+              <Card>
+                <TankBio
+                  name={loadedTank.tankName} 
+                  history={loadedTank.tankHistory}
+                  service={loadedTank.tankServiceHistory}
+                  serviceState={loadedTank.tankServiceStatesInfo}
+                  production={loadedTank.tankProductionHistory}
+                  armsAndArmour={loadedTank.tankArmamentAndArmour}
+                />
+              </Card>
+            </Grid2>
+            <Grid2 xs={4}>
+              <Card>
+                <Text element="text" value={`${loadedTank.tankName}'s Photo Gallery:`}></Text>
+                <TankPhotosContainer tankPhotoCollection={loadedTank.photoCollection}/>
+              </Card>
+            </Grid2>
+            <Grid2 xs={12}>
+              <Card>
+                <RecommendationWindow currentTank={tankId}/>
+              </Card>
+            </Grid2>
+          </Grid2>
           <Button to="/MainPage">Go Back</Button>
         </Card>
       </div>
       )}
       {loginContext.isAdmin && !isLoading && loadedTank && (
         <div>
-        <Text element="h1" value={`The ${loadedTank.tankName} Tank`} />
-        <Card>
           <Card>
-            <Image
-              image={`http://localhost:5000/${loadedTank.tankImagePfp}`}
-              alt={"http://localhost:5000/uploads/stockImages/tankStockIcon.jpg"}
-              style={{width:"100px", hight:"50px"}}
-            />
-            <TankBasicInfo tank={loadedTank}/>
-          </Card>
-          <Card>
-            <Button to="/MainPage">Go Back</Button>
-            <Button disabled={true}>
-              Submit A Suggestion Here
-            </Button>
-            <TankRating isAdmin={true} rating={loadedTank.avgRating}/>//!change so that we enter the values here instead of in the component it self
-            //?needs to be intractable for rating the tank
-            <TankLikeButton isAdmin={true}/>
-            <AddToFavButton isAdmin={true}/>
-          </Card>
-          <Card>
-            <Text element="text" value={`${loadedTank.tankName}'s Photo Gallery:`}></Text>
-            <TankPhotosContainer tankPhotoCollection={loadedTank.photoCollection}/>
-          </Card>
-          <Card>
-            <TankBio
-             name={loadedTank.tankName} 
-             history={loadedTank.tankHistory}
-             service={loadedTank.tankServiceHistory}
-             serviceState={loadedTank.tankServiceStatesInfo}
-             production={loadedTank.tankProductionHistory}
-             armsAndArmour={loadedTank.tankArmamentAndArmour}
-            />
-          </Card>
-          <Card>
-            <RecommendationWindow currentTank={tankId}/>
-          </Card>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={12}>
+              <Card>
+                <Image
+                  image={`http://localhost:5000/${loadedTank.tankImagePfp}`}
+                  alt={"http://localhost:5000/uploads/stockImages/tankStockIcon.jpg"}
+                  style={{width:"100%", hight:"70%"}}
+                />
+              </Card>
+            </Grid2>
+            <Grid2 xs={4}>
+              <Card>
+                <Text element="h1" value={`The ${loadedTank.tankName}`} />
+                <TankRating isAdmin={true} rating={loadedTank.avgRating}/>
+              </Card>
+            </Grid2>
+            <Grid2 xs={8}>
+              <Card>
+                <Grid2 xs={12} container spacing={1}>
+                  <Grid2>
+                    <Button to="/MainPage">Go Back</Button>
+                  </Grid2>
+                  <Grid2>
+                    <Button to="/MainPage/Admin/TanksDatabase">Tank Database</Button>
+                  </Grid2>
+                  <Grid2>
+                    <Button to={`/MainPage/Admin/TanksDatabase/EditTank/${loadedTank.id}`}>Edit {loadedTank.tankName}</Button>
+                  </Grid2>
+                  <Grid2>
+                    <Button to={`/MainPage/Admin/TanksDatabase/ReviewTank/${loadedTank.id}`}>Review {loadedTank.tankName}</Button>
+                  </Grid2>
+                  <Grid2>
+                    <Button disabled={true}>
+                      Submit A Suggestion Here
+                    </Button>
+                  </Grid2>
+                  <Grid2>
+                    <AddToFavButton isAdmin={true}/>
+                  </Grid2>
+                  <Grid2>
+                    <TankLikeButton isAdmin={true}/>
+                  </Grid2>
+                </Grid2>
+              </Card>
+            </Grid2>
+            <Grid2 xs={8}>
+              <Card>
+                <TankBasicInfo tank={loadedTank}/>
+              </Card>
+              <Card>
+                <TankBio
+                  name={loadedTank.tankName} 
+                  history={loadedTank.tankHistory}
+                  service={loadedTank.tankServiceHistory}
+                  serviceState={loadedTank.tankServiceStatesInfo}
+                  production={loadedTank.tankProductionHistory}
+                  armsAndArmour={loadedTank.tankArmamentAndArmour}
+                />
+              </Card>
+            </Grid2>
+            <Grid2 xs={4}>
+              <Card>
+                <Text element="text" value={`${loadedTank.tankName}'s Photo Gallery:`}></Text>
+                <TankPhotosContainer tankPhotoCollection={loadedTank.photoCollection}/>
+              </Card>
+            </Grid2>
+            <Grid2 xs={12}>
+              <Card>
+                <RecommendationWindow currentTank={tankId}/>
+              </Card>
+            </Grid2>
+          </Grid2>
           <Button to="/MainPage">Go Back</Button>
         </Card>
       </div>

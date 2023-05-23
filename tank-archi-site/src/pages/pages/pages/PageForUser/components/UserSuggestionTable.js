@@ -55,6 +55,7 @@ function UserSuggestionsTable(props) {
       {(!isLoading && loadedSuggestions) && (loadedSuggestions.length > 0) && (
         <div className="Container">
           <div>
+            <Text element="h2" value="Current Pending Suggestions:"/>
             <table>
               <thead>
                 <tr>

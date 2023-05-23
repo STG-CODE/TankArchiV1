@@ -15,6 +15,8 @@ import LoadingSpinner from "../../../Shared/components/UI-Elements/LoadingSpinne
 import ErrorModal from "../../../Shared/components/UI-Elements/ErrorModal";
 //context import
 import { LoginContext } from "../../../Shared/Context/login-context";
+//Material UI import
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function Details(props) {
   //login context
@@ -119,86 +121,110 @@ function Details(props) {
         )}
         {!isLoading && loadedUser && (
           <Card>
-            <ImageUpload user={props.user} isUpToDate={props.isUpToDate} />
-            <form onSubmit={detailsUpdateHandler}>
-              {/* For "firstName" */}
-              <Text
-                element={"text"}
-                value={`First Name : ${props.user.firstName}`}
-              />
-              <Input
-                id="firstName"
-                element="input"
-                type="text"
-                label="Enter New First Name:"
-                validators={[VALIDATOR_REQUIRE]}
-                errorText="Please enter A Valid First Name!"
-                onInput={inputHandler}
-                initialValue={loadedUser.firstName}
-                initialValid={true}
-              />
-              {/* For "lastName" */}
-              <Text
-                element={"text"}
-                value={`Last Name : ${props.user.lastName}`}
-              />
-              <Input
-                id="lastName"
-                element="input"
-                type="text"
-                label="Enter New Last Name:"
-                validators={[VALIDATOR_REQUIRE]}
-                errorText="Please enter A Valid Last Name!"
-                onInput={inputHandler}
-                initialValue={loadedUser.lastName}
-                initialValid={true}
-              />
-              {/* For "age" */}
-              <Text element={"text"} value={`Age : ${props.user.age}`} />
-              <Input
-                id="age"
-                element="input"
-                type="text"
-                label="Enter New Age:"
-                validators={[VALIDATOR_REQUIRE]}
-                errorText="Please enter A Valid Age!"
-                onInput={inputHandler}
-                initialValue={loadedUser.age}
-                initialValid={true}
-              />
-              {/* For "country" */}
-              <Text
-                element={"text"}
-                value={`Country : ${props.user.country}`}
-              />
-              <Input
-                id="country"
-                element="input"
-                type="text"
-                label="Enter New Country:"
-                validators={[VALIDATOR_REQUIRE]}
-                errorText="Please enter A Valid Country!"
-                onInput={inputHandler}
-                initialValue={loadedUser.country}
-                initialValid={true}
-              />
-              <Button type="submit" disabled={!formState.isValid}>
-                Save Changes
-              </Button>
-            </form>
+            <Grid2 container spacing={1}>
+              <Grid2 xs={4}>
+                <Card>
+                  <ImageUpload user={props.user} isUpToDate={props.isUpToDate} />
+                </Card>
+                
+              </Grid2>
+              
+              <Grid2 xs={4}>
+                <form onSubmit={detailsUpdateHandler}>
+                <Card>
+                  {/* For "firstName" */}
+                <Text
+                  element={"text"}
+                  value={`First Name : ${props.user.firstName}`}
+                />
+                <Input
+                  id="firstName"
+                  element="input"
+                  type="text"
+                  label="Enter New First Name:"
+                  validators={[VALIDATOR_REQUIRE]}
+                  errorText="Please enter A Valid First Name!"
+                  onInput={inputHandler}
+                  initialValue={loadedUser.firstName}
+                  initialValid={true}
+                />
+                {/* For "lastName" */}
+                <Text
+                  element={"text"}
+                  value={`Last Name : ${props.user.lastName}`}
+                />
+                <Input
+                  id="lastName"
+                  element="input"
+                  type="text"
+                  label="Enter New Last Name:"
+                  validators={[VALIDATOR_REQUIRE]}
+                  errorText="Please enter A Valid Last Name!"
+                  onInput={inputHandler}
+                  initialValue={loadedUser.lastName}
+                  initialValid={true}
+                />
+                {/* For "age" */}
+                <Text 
+                  element={"text"} 
+                  value={`Age : ${props.user.age}`} 
+                />
+                <Input
+                  id="age"
+                  element="input"
+                  type="text"
+                  label="Enter New Age:"
+                  validators={[VALIDATOR_REQUIRE]}
+                  errorText="Please enter A Valid Age!"
+                  onInput={inputHandler}
+                  initialValue={loadedUser.age}
+                  initialValid={true}
+                />
+                {/* For "country" */}
+                <Text
+                  element={"text"}
+                  value={`Country : ${props.user.country}`}
+                />
+                <Input
+                  id="country"
+                  element="input"
+                  type="text"
+                  label="Enter New Country:"
+                  validators={[VALIDATOR_REQUIRE]}
+                  errorText="Please enter A Valid Country!"
+                  onInput={inputHandler}
+                  initialValue={loadedUser.country}
+                  initialValid={true}
+                />
+                <br/>
+                <Button type="submit" disabled={!formState.isValid}>
+                  Save Changes
+                </Button>
+                </Card>
+                </form>
+              </Grid2>
+              <Grid2 xs={4}>
+                <Card>
+                  <Text
+                    element={"text"}
+                    value={`Email Address : ${props.user.email}`}
+                  />
+                  <Button to={"/MainPage/User/ChangeEmail"}>
+                    Change Email Address
+                  </Button>
+                  <Text
+                   element={"text"} 
+                   value={`To Change Password :`} 
+                  />
+                  <Button to={"/MainPage/User/ChangePassword"}>
+                    Change Password
+                  </Button>
+                </Card>
+              </Grid2>
+            </Grid2>
           </Card>
         )}
-        <Card>
-          <Text
-            element={"text"}
-            value={`Email Address : ${props.user.email}`}
-          />
-          <Button to={"/MainPage/User/ChangeEmail"}>
-            Change Email Address
-          </Button>
-          <Text element={"text"} value={`To Change Password :`} />
-          <Button to={"/MainPage/User/ChangePassword"}>Change Password</Button>
-        </Card>
+        
       </div>
     </React.Fragment>
   );

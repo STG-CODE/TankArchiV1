@@ -12,6 +12,10 @@ import MainPage from "./pages/MainPage";
 import { LoginContext } from "./pages/Shared/Context/login-context";
 //hook import
 import { useAuth } from "./pages/Shared/Hooks/auth-hook";
+//Material UI imports
+import { Container } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import Title from "./pages/Shared/components/UI-Elements/Title";
 
 function App() {
   //deconstruct our hook to all different states and data that the site needs
@@ -51,9 +55,23 @@ function App() {
       <Switch>
             {/* Routes to the starting page / login or sign up and welcome */}
             <Route path="/WelcomePage" exact>
-              <Welcome />
-              <Login />
-              <SignUp />
+              <Container maxWidth="md">
+                <Grid2 container spacing={2}>
+                <Grid2 xs={12}>
+                  <Title/>
+                </Grid2>
+                <Grid2 xs={12}>
+                  <Welcome />
+                </Grid2>
+                <Grid2 xs={8}>
+                  <Login />
+                </Grid2>
+                <Grid2 xs={4}>
+                  <SignUp />
+                </Grid2>
+                </Grid2>
+              </Container>
+              
             </Route>
 
             {/* Routes to the sign up page */}
@@ -68,30 +86,34 @@ function App() {
   }
 
   return (
-    <LoginContext.Provider
-     value={{
-      isLoggedIn: !!token,
-      token: token,
-      currentUser: currentUser,
-      isAdmin: isAdmin,
-      tankNamesArray: tankNamesArray,
-      tankNationsArray: tankNationsArray,
-      allNationsArray: tankAllNationsArray,
-      tankCombatRolesArray: tankCombatRolesArray,
-      tankErasArray: tankErasArray,
-      tankServiceStatesArray: tankServiceStatesArray,
-      tankGenerationsArray: tankGenerationsArray,
-      refreshUser: refreshUser,
-      login: login,
-      logout: logout
-    }}
-    >
-      <Router>
-          <div className="container">
-            {routes}
-          </div>
-      </Router>
-    </LoginContext.Provider>
+    <React.Fragment>
+      <LoginContext.Provider
+        value={{
+          isLoggedIn: !!token,
+          token: token,
+          currentUser: currentUser,
+          isAdmin: isAdmin,
+          tankNamesArray: tankNamesArray,
+          tankNationsArray: tankNationsArray,
+          allNationsArray: tankAllNationsArray,
+          tankCombatRolesArray: tankCombatRolesArray,
+          tankErasArray: tankErasArray,
+          tankServiceStatesArray: tankServiceStatesArray,
+          tankGenerationsArray: tankGenerationsArray,
+          refreshUser: refreshUser,
+          login: login,
+          logout: logout
+        }}
+        >
+        <Container maxWidth="xl" fixed disableGutters>
+          <Router>
+            <div className="container">
+              {routes}
+            </div>
+          </Router>
+        </Container>
+      </LoginContext.Provider>
+    </React.Fragment>
   );
 }
 

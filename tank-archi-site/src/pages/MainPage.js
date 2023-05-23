@@ -50,6 +50,8 @@ import UserSuggestionPage from "./pages/pages/PageForUser/pages/SubmitSuggestion
 import Welcome from "../components/Welcome";
 import Login from "../components/Login";
 import SignUp from "../components/Sign-Up";
+//Material UI imports
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 //TODO:(Profile Pages(1))Add the following parameters to the DB : (Last Login Date, Favoured Tanks Count , Favorite Tanks ,User Pfp)
 //TODO:(Profile Pages(2))Add the needed optional params in the design of the admin's page.
@@ -114,137 +116,259 @@ function MainSitePage() {
       <Switch>
         {/* This is our main page directory */}
         <Route path="/MainPage" exact>
-          <Title />
-          <Profile />
-          <MainNavigation />
-          <div>
-            <Catalogue />
-          </div>
-          <ShortAboutUs />
-          <ShortTankFest />
-          <ShortRecommended />
-          <Footer />
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <MainNavigation />
+            </Grid2>
+            <Grid2 container xs={2} spacing={0}>
+              <ShortAboutUs />
+              <ShortTankFest />
+              <ShortRecommended />
+            </Grid2>
+            <Grid2 xs={10}>
+                <Catalogue />
+            </Grid2>
+            <Grid2 xs={12}>
+              <Footer />
+            </Grid2>
+          </Grid2>
         </Route>
 
         {/* This route leads us to the "Search" page where we can search for different tanks and also filter them */}
         <Route path="/MainPage/Search" exact>
-          <Title />
-          <Profile />
-          <MainNavigation />
-          <div>
-            <Search />
-          </div>
-          <ShortAboutUs />
-          <ShortTankFest />
-          <ShortRecommended />
-          <Footer />
+        <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <MainNavigation />
+            </Grid2>
+            <Grid2 xs={12}>
+              <Search />
+            </Grid2>
+            <Grid2 container xs={4}>
+              <ShortAboutUs />
+            </Grid2>
+            <Grid2 container xs={4}>
+              <ShortTankFest />
+            </Grid2>
+            <Grid2 container xs={4}>
+              <ShortRecommended />
+            </Grid2>
+            <Grid2 xs={12}>
+              <Footer />
+            </Grid2>
+          </Grid2>
         </Route>
 
         {/* This route leads us to the "Rankings" page where all tanks rankings are rated by order */}
         <Route path="/MainPage/Rankings" exact>
-          <Title />
-          <Profile />
-          <MainNavigation />
-          <div>
-            <Rankings />
-          </div>
-          <ShortAboutUs />
-          <ShortTankFest />
-          <ShortRecommended />
-          <Footer />
+        <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <MainNavigation />
+            </Grid2>
+            <Grid2 xs={12}>
+              <Rankings />
+            </Grid2>
+            <Grid2 container xs={4}>
+              <ShortAboutUs />
+            </Grid2>
+            <Grid2 container xs={4}>
+              <ShortTankFest />
+            </Grid2>
+            <Grid2 container xs={4}>
+              <ShortRecommended />
+            </Grid2>
+            <Grid2 xs={12}>
+              <Footer />
+            </Grid2>
+          </Grid2>
         </Route>
 
         {/* This route takes us to the "TankFest" page where we promote the tank museum */}
         <Route path="/MainPage/TankFest" exact>
-          <Title />
-          <Profile />
-          <MainNavigation />
-          <div>
-            <TankFest />
-          </div>
-          <ShortAboutUs />
-          <ShortTankFest />
-          <ShortRecommended />
-          <Footer />
+            <Grid2 container spacing={1}>
+              <Grid2 xs={7}>
+                <Title />
+              </Grid2>
+              <Grid2 xs={5}>
+                <Profile />
+              </Grid2>
+              <Grid2 xs={12}>
+                <MainNavigation />
+              </Grid2>
+              <Grid2 container xs={2} spacing={0}>
+                <ShortAboutUs />
+                <ShortTankFest />
+                <ShortRecommended />
+              </Grid2>
+              <Grid2 xs={10}>
+                <TankFest />
+              </Grid2>
+              <Grid2 xs={12}>
+                <Footer />
+              </Grid2>
+            </Grid2>
         </Route>
 
         {/* This route takes us to the "Media & Entertainment" page where there are recommendations for games movies and such */}
         <Route path="/MainPage/Recommended" exact>
-          <Title />
-          <Profile />
-          <MainNavigation />
-          <div>
-            <Recommended />
-          </div>
-          <ShortAboutUs />
-          <ShortTankFest />
-          <ShortRecommended />
-          <Footer />
+            <Grid2 container spacing={1}>
+              <Grid2 xs={7}>
+                <Title />
+              </Grid2>
+              <Grid2 xs={5}>
+                <Profile />
+              </Grid2>
+              <Grid2 xs={12}>
+                <MainNavigation />
+              </Grid2>
+              <Grid2 container xs={2} spacing={0}>
+                <ShortAboutUs />
+                <ShortTankFest />
+                <ShortRecommended />
+              </Grid2>
+              <Grid2 xs={10}>
+                <Recommended />
+              </Grid2>
+              <Grid2 xs={12}>
+                <Footer />
+              </Grid2>
+            </Grid2>
         </Route>
 
         {/* This route takes us to the "Site Guide" page where we have a written guide about all the features of the site */}
         <Route path="/MainPage/SiteGuide" exact>
-          <Title />
-          <Profile />
-          <MainNavigation />
-          <div>
-            <SiteGuide />
-          </div>
-          <ShortAboutUs />
-          <ShortTankFest />
-          <ShortRecommended />
-          <Footer />
+            <Grid2 container spacing={1}>
+              <Grid2 xs={7}>
+                <Title />
+              </Grid2>
+              <Grid2 xs={5}>
+                <Profile />
+              </Grid2>
+              <Grid2 xs={12}>
+                <MainNavigation />
+              </Grid2>
+              <Grid2 container xs={2} spacing={0}>
+                <ShortAboutUs />
+                <ShortTankFest />
+                <ShortRecommended />
+              </Grid2>
+              <Grid2 xs={10}>
+                <SiteGuide />
+              </Grid2>
+              <Grid2 xs={12}>
+                <Footer />
+              </Grid2>
+            </Grid2>
         </Route>
 
         {/* This route takes us to the "About Us" page where there is information about the sites creators and goals */}
         <Route path="/MainPage/AboutUs" exact>
-          <Title />
-          <Profile />
-          <MainNavigation />
-          <div>
-            <AboutUs />
-          </div>
-          <ShortAboutUs />
-          <ShortTankFest />
-          <ShortRecommended />
-          <Footer />
+            <Grid2 container spacing={1}>
+              <Grid2 xs={7}>
+                <Title />
+              </Grid2>
+              <Grid2 xs={5}>
+                <Profile />
+              </Grid2>
+              <Grid2 xs={12}>
+                <MainNavigation />
+              </Grid2>
+              <Grid2 container xs={2} spacing={0}>
+                <ShortAboutUs />
+                <ShortTankFest />
+                <ShortRecommended />
+              </Grid2>
+              <Grid2 xs={10}>
+                <AboutUs />
+              </Grid2>
+              <Grid2 xs={12}>
+                <Footer />
+              </Grid2>
+            </Grid2>
         </Route>
 
         {/* This route takes us to a desired tanks page containing the information about said tank*/}
         <Route path="/MainPage/TankPage/:tankId" exact>
-          <Title />
-          <Profile />
-          <MainNavigation />
-          <div>
-            <TankPage />
-          </div>
-          <ShortAboutUs />
-          <ShortTankFest />
-          <ShortRecommended />
-          <Footer />
+            <Grid2 container spacing={1}>
+              <Grid2 xs={7}>
+                <Title />
+              </Grid2>
+              <Grid2 xs={5}>
+                <Profile />
+              </Grid2>
+              <Grid2 xs={12}>
+                <MainNavigation />
+              </Grid2>
+              <Grid2 xs={12}>
+                <TankPage />
+              </Grid2>
+              <Grid2 container xs={4}>
+                <ShortAboutUs />
+              </Grid2>
+              <Grid2 container xs={4}>
+                <ShortTankFest />
+              </Grid2>
+              <Grid2 container xs={4}>
+                <ShortRecommended />
+              </Grid2>
+              <Grid2 xs={12}>
+                <Footer />
+              </Grid2>
+            </Grid2>
         </Route>
 
         {/*!NOTE : this will be one route that will lead to either admin or user page depending on perimeters */}
         {/* This route leads us to the profile page of the User / Admin */}
         <Route path="/MainPage/User" exact>
-          <Title />
-          <Profile />
-          <div>
-            <UserPage />
-          </div>
-          <Footer />
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <UserPage />
+            </Grid2>
+            <Grid2 xs={12}>
+              <Footer />
+            </Grid2>
+          </Grid2>
         </Route>
-
         {/* This route leads us to the profile page of the User / Admin */}
         <Route path="/MainPage/Admin" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminPage />
-          </div>
-          <Footer />
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminPage />
+            </Grid2>
+            <Grid2 xs={12}>
+              <Footer />
+            </Grid2>
+          </Grid2>
         </Route>
-
         {/* This route leads us to the change email address page of the Admin */}
         <Route path="/MainPage/Admin/ChangeEmail" exact>
           <Title />
@@ -279,52 +403,89 @@ function MainSitePage() {
 
         {/* This route leads us to the suggestion submission page */}
         <Route path="/MainPage/User/SubmitSuggestion" exact>
-          <Title />
-          <div>
-            <UserSuggestionPage />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <UserSuggestionPage />
+            </Grid2>
+          </Grid2>
         </Route>
 
         {/* This route leads us to the Suggestions Database */}
         <Route path="/MainPage/Admin/SuggestionsDatabase" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminSuggestionsDatabase />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminSuggestionsDatabase />
+            </Grid2>
+          </Grid2>
         </Route>
 
         {/* ---> (Admin)Suggestions Database edit option */}
         <Route path="/MainPage/Admin/SuggestionsDatabase/EditSuggestion/:suggestionId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminEditSuggestion />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminEditSuggestion />
+            </Grid2>
+          </Grid2>
         </Route>
         {/* ---> (User)Suggestions Database edit option */}
         <Route path="/MainPage/User/EditSuggestion/:suggestionId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminEditSuggestion />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminEditSuggestion />
+            </Grid2>
+          </Grid2>
         </Route>
         {/* ---> (Admin)Suggestions Database review option */}
         <Route path="/MainPage/Admin/SuggestionsDatabase/ReviewSuggestion/:suggestionId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminReviewSuggestion />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminReviewSuggestion />
+            </Grid2>
+          </Grid2>
         </Route>
         {/* ---> (User)Suggestions Database review option */}
         <Route path="/MainPage/User/ReviewSuggestion/:suggestionId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminReviewSuggestion />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminReviewSuggestion />
+            </Grid2>
+          </Grid2>
         </Route>
         {/* This route leads us to the Add Tank Photos Page */}
         <Route path="/MainPage/Admin/AddTankPhotos/:tankId" exact>

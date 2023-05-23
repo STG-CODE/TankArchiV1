@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
-//
+//basic imports
+import React, { useContext, useEffect, useState } from "react";
+//hook imports
 import { useHttpClient } from "../../../../Shared/Hooks/http-hook";
 import { useForm } from "../../../../Shared/Hooks/form-hook";
-//
+//component imports
 import Text from "../../../../Shared/components/Visual-Elements/Text";
 import Button from "../../../../Shared/components/Form-Elements/Button";
 import ImageUpload from "../../../../Shared/components/Form-Elements/ImageUpload";
 import LoadingSpinner from "../../../../Shared/components/UI-Elements/LoadingSpinner";
 import ErrorModal from "../../../../Shared/components/UI-Elements/ErrorModal";
+//context import
+import { LoginContext } from "../../../../Shared/Context/login-context";
 
 function PfpUploader(props) {
+  const loginContext = useContext(LoginContext);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const userId = props.user.id;
 
@@ -50,7 +54,8 @@ function PfpUploader(props) {
       await sendRequest(
         `http://localhost:5000/MainPage/User/UpdateUserProfilePic/${userId}`,
         "PATCH",
-        formData
+        formData,
+        {Authorization: "Bearer " + loginContext.token}
       );
       props.isUpToDate(false);
     } catch (err) {

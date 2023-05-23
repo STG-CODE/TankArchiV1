@@ -8,8 +8,11 @@ import LoadingSpinner from "../../../../../Shared/components/UI-Elements/Loading
 import Text from "../../../../../Shared/components/Visual-Elements/Text";
 import Button from "../../../../../Shared/components/Form-Elements/Button";
 import SuggestionsList from "./components/SuggestionsList";
+import Card from "../../../../../Shared/components/UI-Elements/Card";
 //context import
 import { LoginContext } from "../../../../../Shared/Context/login-context";
+//Material UI import
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function SuggestionsDatabase() {
   //login context
@@ -52,21 +55,27 @@ function SuggestionsDatabase() {
       )}
       {!isLoading && loadedSuggestions && (
         <div className="Container">
-          <div>
-            <Text element="h3" value="Suggestions Management Page:" />
-            <SuggestionsList
-             items={loadedSuggestions} 
-             onDeleteSuggestion={suggestionDeletedHandler}
-            />
-            <div>
-              <Button to="/MainPage/Admin">
-                Go Back
-              </Button>
-              <Button to="/MainPage">
-                Head To Main Page
-              </Button>
-            </div>
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={12}>
+              <Card>
+                <Text element="h2" value="Suggestions Management Page:" />
+                <SuggestionsList
+                  items={loadedSuggestions} 
+                  onDeleteSuggestion={suggestionDeletedHandler}
+                />
+              </Card>
+            </Grid2>
+            <Grid2 xs={12}>
+              <Card>
+                <Button to="/MainPage/Admin">
+                  Go Back
+                </Button>
+                <Button to="/MainPage">
+                  Head To Main Page
+                </Button>
+              </Card>
+            </Grid2>
+          </Grid2>
         </div>
       )}
       {!isLoading && !loadedSuggestions && (

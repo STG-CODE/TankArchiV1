@@ -15,6 +15,8 @@ import Text from "../../../Shared/components/Visual-Elements/Text";
 import Card from "../../../Shared/components/UI-Elements/Card";
 import ErrorModal from "../../../Shared/components/UI-Elements/ErrorModal";
 import LoadingSpinner from "../../../Shared/components/UI-Elements/LoadingSpinner";
+//Material UI import
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function User() {
   //login context
@@ -58,29 +60,43 @@ function User() {
       )}
       {!isLoading && loadedUser && (
         <div className="Container">
-          <Text
-            element="h1"
-            value={"Hello " + loginContext.currentUser.username + "!"}
-          />
+          <Grid2 container spacing={1}>
+            <Grid2 xs={4}>
+              <Card>
+                <Text
+                  element="h1"
+                  value={"Hello " + loginContext.currentUser.username + "!"}
+                />
+              </Card>
+            </Grid2>
+            <Grid2 xs={8}>
+              <Card>
+                <UserDetailsBar user={loginContext.currentUser} />
+              </Card>
+            </Grid2>
+            <Grid2 xs={12}>
+              <Card>
+                <UserDetails isUpToDate={setUpToDateUser} user={loginContext.currentUser} />
+              </Card>
+            </Grid2>
+            <Grid2 xs={12}>
+              <Card>
+                <UserOptionalDetails isUpToDate={setUpToDateUser} user={loginContext.currentUser} />
+              </Card>
+            </Grid2>
+            <Grid2 xs={12}>
+              <Card>
+                <UserSuggestionsTable isUpToDate={setUpToDateUser}/>
+              </Card>
+            </Grid2>
+            <Grid2 xs={12}>
+              <Card>
+                <UserOptions />
+              </Card>
+            </Grid2>
+          </Grid2>
           <div>
-            <Card>
-              <UserDetailsBar user={loginContext.currentUser} />
-            </Card>
-            <Card>
-              <UserDetails isUpToDate={setUpToDateUser} user={loginContext.currentUser} />
-            </Card>
-            <Card>
-              <UserOptionalDetails isUpToDate={setUpToDateUser} user={loginContext.currentUser} />
-            </Card>
-            <Card>
-              <UserSuggestionsTable isUpToDate={setUpToDateUser}/>
-            </Card>
-            <Card>
-              <UserOptions />
-            </Card>
-            <div>
               <Button to={"/MainPage"}>Go Back</Button>
-            </div>
           </div>
         </div>
       )}

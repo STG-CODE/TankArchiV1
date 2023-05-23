@@ -6,7 +6,6 @@ import Card from "../../Shared/components/UI-Elements/Card";
 import Button from "../../Shared/components/Form-Elements/Button";
 import LoadingSpinner from "../../Shared/components/UI-Elements/LoadingSpinner";
 import ErrorModal from "../../Shared/components/UI-Elements/ErrorModal";
-import SearchAndFilter from "./components/SearchAndFilter";
 import RankingsTable from "./components/RankingsTable";
 //Material UI Imports
 import { Autocomplete, Checkbox, FormControl, FormControlLabel, FormGroup, TextField, createFilterOptions, Slider} from "@mui/material";
@@ -16,6 +15,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useHttpClient } from "../../Shared/Hooks/http-hook";
 //context import
 import { LoginContext } from "../../Shared/Context/login-context";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 //TODO : need to link both imported components so that they can communicate and respond to each other
 //assign the imported Material UI function "createFilterOptions" to a variable
@@ -317,9 +317,10 @@ function Rankings() {
         <ErrorModal error={error} onClear={clearError} to="/MainPage"/>
         <Text element="h1" value="Rankings Tab: " />
         <Card>
-          <Text element="h3" value="The Top Tank Rankings:"/>
-          <Card>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={4}>
             <Card>
+            <Text element="h3" value="Our Rankings Search Engine:"/>
             {searchByName && (
               <Autocomplete 
               id="tankNameSearch" value={search} options={loginContext.tankNamesArray}
@@ -602,6 +603,8 @@ function Rankings() {
                   label="Pick age range in which to search for a tank:"
                   value={`Look For A Tank Between ${ageSearch[0]} Years And ${ageSearch[1]} Years`}
                 />
+                <br/>
+                <br/>
                 <Slider
                   getAriaLabel={() => "Minimum distance"}
                   value={ageSearch}
@@ -746,10 +749,11 @@ function Rankings() {
             <Button onClick={searchTankByRankings}>Search</Button>
             <Button onClick={resetRankingsSearch}>Reset</Button>
             </Card>
+            </Grid2>
+            <Grid2  container xs={8}>
             <Card>
               <FormControl component="fieldset" required={true}>
-              <Text element="text" value="Filter Options:" />
-              //!need to finish the filter options here!
+              <Text element="h3" value="Filter Options:" />
               <FormGroup aria-label="position" row>
                 <FormControlLabel
                   control={<Checkbox checked={searchByName} sx={{color: grey[600],"&.Mui-checked": { color: blue[800] },}}/>}
@@ -799,11 +803,13 @@ function Rankings() {
                   labelPlacement="end"
                   onChange={handleGenerationFilterChange}
                 />
-                <Button onClick={resetRankingsFilter}>Filter Reset</Button>
+                <Button onClick={resetRankingsFilter}>Filter Reset Button</Button>
               </FormGroup>
             </FormControl>
             </Card>
-            </Card>
+            </Grid2>
+          </Grid2>
+          
           <Card>
             {isLoading && !loadedTanks && (
               <div>

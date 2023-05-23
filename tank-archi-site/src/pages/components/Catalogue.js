@@ -9,6 +9,8 @@ import Card from "../Shared/components/UI-Elements/Card";
 import Text from "../Shared/components/Visual-Elements/Text";
 import LoadingSpinner from "../Shared/components/UI-Elements/LoadingSpinner";
 import ErrorModal from "../Shared/components/UI-Elements/ErrorModal";
+//Material UI imports
+import { Container } from "@mui/material";
 
 function Catalogue() {
   //http clint hook destructuring
@@ -47,6 +49,7 @@ function Catalogue() {
         <Text element="text" value="Lorem Ipsum, Lorem Ipsum Lorem ipsum dolor sit amet."/>
         <Button onClick={catalogueRefreshHandler}>Refresh</Button>
       <Card>
+        <Container fixed>
         {isLoading && !loadedTanks && (
           <div>
             <LoadingSpinner/>
@@ -62,6 +65,7 @@ function Catalogue() {
             <TankCatalogueTable tanks={loadedTanks}/>
           </div>
         )}
+        </Container>
       </Card>
     </Card>
     </React.Fragment>

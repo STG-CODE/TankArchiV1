@@ -18,6 +18,8 @@ import LoadingSpinner from "../../../../../../../../Shared/components/UI-Element
 import Text from "../../../../../../../../Shared/components/Visual-Elements/Text";
 import ImageUpload from "../../../../../../../../Shared/components/Form-Elements/ImageUpload";
 import Avatar from "../../../../../../../../Shared/components/UI-Elements/Avatar";
+import { Card, Grid } from "@mui/material";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function EditSuggestionBody() {
   //login context
@@ -220,186 +222,219 @@ function EditSuggestionBody() {
       {!isLoading && loadedSuggestion && (
         <div className="Container">
           <form onSubmit={suggestionUpdateSubmitHandler}>
-            <Avatar
-              image={`http://localhost:5000/${loadedSuggestion.creatorPfp}`}
-              alt="- No Creator Profile Picture Found -"
-              style={{ width: "100px", hight: "50px" }}
-            />
-            {/* For "suggestionTitle" */}
-            <Input
-              id="suggestionTitle"
-              element="input"
-              type="text"
-              label="Suggestion Title:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Suggestion Title"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.suggestionTitle}
-              initialValid={true}
-            />
-            {/* For "tankName" */}
-            <Input
-              id="tankName"
-              element="input"
-              type="text"
-              label="Tank Name:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank Name"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.tankName}
-              initialValid={true}
-            />
-            {/* For "nation" */}
-            <Input
-              id="nation"
-              element="input"
-              type="text"
-              label="Nation:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Nation"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.nation}
-              initialValid={true}
-            />
-            {/* For "combatRole" */}
-            <Input
-              id="combatRole"
-              element="input"
-              type="text"
-              label="Combat Role:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Combat Role"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.combatRole}
-              initialValid={true}
-            />
-            {/* For "era" */}
-            <Input
-              id="era"
-              element="input"
-              type="text"
-              label="Era:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Era"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.era}
-              initialValid={true}
-            />
-            {/* For "age" */}
-            <Input
-              id="age"
-              element="input"
-              type="text"
-              label="Age:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Age"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.age}
-              initialValid={true}
-            />
-            {/* For "startDate" */}
-            <Input
-              id="startDate"
-              element="input"
-              type="text"
-              label="Service Period - Start Date:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Start Date"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.servicePeriod.startDate}
-              initialValid={true}
-            />
-            {/* For "endDate" */}
-            <Input
-              id="endDate"
-              element="input"
-              type="text"
-              label="Service Period - End Date:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid End Date"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.servicePeriod.endDate}
-              initialValid={true}
-            />
-            {/* For "tankHistory" */}
-            <Input
-              id="tankHistory"
-              type="text"
-              label="Tank History:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank History"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.tankHistory}
-              initialValid={true}
-            />
-            {/* For "tankServiceHistory" */}
-            <Input
-              id="tankServiceHistory"
-              type="text"
-              label="Tank Service History:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank Service History"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.tankServiceHistory}
-              initialValid={true}
-            />
-            {/* For "tankProductionHistory" */}
-            <Input
-              id="tankProductionHistory"
-              type="text"
-              label="Tank Production History:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank Production History"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.tankProductionHistory}
-              initialValid={true}
-            />
-            {/* For "tankArmamentAndArmour" */}
-            <Input
-              id="tankArmamentAndArmour"
-              type="text"
-              label="Tank Armament And Armour:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank Armament And Armour"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.tankArmamentAndArmour}
-              initialValid={true}
-            />
-            <Text element="text" value="Change Suggestion Profile Picture:"/>
-            <ImageUpload 
-              id="suggestionPfp"
-              onInput={inputHandler}
-              errorText="Please Pick A Valid Replacement Picture"
-              initialValue={loadedSuggestion.suggestionPfp}
-              initialValid={true}
-            />
-            {/* For "userDescription" */}
-            <Input
-              id="userDescription"
-              type="text"
-              label="User Description:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid User Description"
-              onInput={inputHandler}
-              initialValue={loadedSuggestion.userDescription}
-              initialValid={true}
-            />
-            {loginContext.isAdmin && (
-              <div>
-                <Button to="/MainPage/Admin/SuggestionsDatabase">Cancel</Button>
-                <Button type="submit" disabled={!formState.isValid}>UPDATE SUGGESTION</Button>
-                <Button to="/MainPage/Admin/SuggestionsDatabase">Delete Suggestion</Button>
-                <Button to="/MainPage">Direct Upload</Button>
-                <Button to="/MainPage">Direct Upload And Visit</Button>
-                <Button to="/MainPage/Admin/SuggestionsDatabase">Direct Upload And Go Back</Button>
-              </div>
-            )}
-            {!loginContext.isAdmin && (
-              <div>
-                <Button to="/MainPage/User">Cancel</Button>
-                <Button type="submit" disabled={!formState.isValid}>UPDATE SUGGESTION</Button>
-              </div>
-            )}
+            <Card>
+              <Grid2 container spacing={1}>
+                <Grid2 xs={4}>
+                  <Text element="h2" value="Edit Suggestion Page:"/>
+                </Grid2>
+                <Grid2 xs={8}>
+                  <Avatar
+                    image={`http://localhost:5000/${loadedSuggestion.creatorPfp}`}
+                    alt="- No Creator Profile Picture Found -"
+                    style={{ width: "30%", hight: "25%" }}
+                  />
+                </Grid2 >
+                <Grid2 xs={4}>
+                  {/* For "suggestionTitle" */}
+                  <Input
+                    id="suggestionTitle"
+                    element="input"
+                    type="text"
+                    label="Suggestion Title:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Suggestion Title"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.suggestionTitle}
+                    initialValid={true}
+                  />
+                  {/* For "tankName" */}
+                  <Input
+                    id="tankName"
+                    element="input"
+                    type="text"
+                    label="Tank Name:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Tank Name"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.tankName}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  {/* For "nation" */}
+                  <Input
+                    id="nation"
+                    element="input"
+                    type="text"
+                    label="Nation:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Nation"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.nation}
+                    initialValid={true}
+                  />
+                  {/* For "combatRole" */}
+                  <Input
+                    id="combatRole"
+                    element="input"
+                    type="text"
+                    label="Combat Role:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Combat Role"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.combatRole}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  {/* For "era" */}
+                  <Input
+                    id="era"
+                    element="input"
+                    type="text"
+                    label="Era:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Era"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.era}
+                    initialValid={true}
+                  />
+                  {/* For "age" */}
+                  <Input
+                    id="age"
+                    element="input"
+                    type="text"
+                    label="Age:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Age"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.age}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  {/* For "startDate" */}
+                  <Input
+                    id="startDate"
+                    element="input"
+                    type="text"
+                    label="Service Period - Start Date:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Start Date"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.servicePeriod.startDate}
+                    initialValid={true}
+                  />
+                  {/* For "endDate" */}
+                  <Input
+                    id="endDate"
+                    element="input"
+                    type="text"
+                    label="Service Period - End Date:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid End Date"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.servicePeriod.endDate}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  {/* For "tankHistory" */}
+                  <Input
+                    id="tankHistory"
+                    type="text"
+                    label="Tank History:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Tank History"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.tankHistory}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  {/* For "tankServiceHistory" */}
+                  <Input
+                    id="tankServiceHistory"
+                    type="text"
+                    label="Tank Service History:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Tank Service History"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.tankServiceHistory}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  {/* For "tankProductionHistory" */}
+                  <Input
+                    id="tankProductionHistory"
+                    type="text"
+                    label="Tank Production History:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Tank Production History"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.tankProductionHistory}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  {/* For "tankArmamentAndArmour" */}
+                  <Input
+                    id="tankArmamentAndArmour"
+                    type="text"
+                    label="Tank Armament And Armour:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid Tank Armament And Armour"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.tankArmamentAndArmour}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  {/* For "userDescription" */}
+                  <Input
+                    id="userDescription"
+                    type="text"
+                    label="User Description:"
+                    validators={[VALIDATOR_REQUIRE()]}
+                    errorText="Please Enter A Valid User Description"
+                    onInput={inputHandler}
+                    initialValue={loadedSuggestion.userDescription}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={4}>
+                  <Text element="text" value="Change Suggestion Profile Picture:"/>
+                  <ImageUpload 
+                    id="suggestionPfp"
+                    onInput={inputHandler}
+                    errorText="Please Pick A Valid Replacement Picture"
+                    initialValue={loadedSuggestion.suggestionPfp}
+                    initialValid={true}
+                  />
+                </Grid2>
+                <Grid2 xs={12}>
+                {loginContext.isAdmin && (
+                  <div>
+                    <Button to="/MainPage/Admin/SuggestionsDatabase">Cancel</Button>
+                    <Button type="submit" disabled={!formState.isValid}>Update Suggestion</Button>
+                    <Button to="/MainPage/Admin/SuggestionsDatabase">Delete Suggestion</Button>
+                    <Button to="/MainPage">Direct Upload</Button>
+                    <Button to="/MainPage">Direct Upload And Visit</Button>
+                    <Button to="/MainPage/Admin/SuggestionsDatabase">Direct Upload And Go Back</Button>
+                  </div>
+                )}
+                {!loginContext.isAdmin && (
+                  <div>
+                    <Button to="/MainPage/User">Cancel</Button>
+                    <Button type="submit" disabled={!formState.isValid}>Update Suggestion</Button>
+                  </div>
+                )}
+                </Grid2>
+              </Grid2>
+            
+            </Card>
+            
           </form>
         </div>
       )}
