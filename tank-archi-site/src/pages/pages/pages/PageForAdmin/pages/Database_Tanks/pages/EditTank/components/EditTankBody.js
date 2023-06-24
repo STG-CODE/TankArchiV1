@@ -13,8 +13,11 @@ import ErrorModal from "../../../../../../../../Shared/components/UI-Elements/Er
 import LoadingSpinner from "../../../../../../../../Shared/components/UI-Elements/LoadingSpinner";
 import Text from "../../../../../../../../Shared/components/Visual-Elements/Text";
 import ImageUpload from "../../../../../../../../Shared/components/Form-Elements/ImageUpload";
+import Card from "../../../../../../../../Shared/components/UI-Elements/Card";
 //context import
 import { LoginContext } from "../../../../../../../../Shared/Context/login-context";
+//Material UI import
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function EditTankBody() {
   //login context
@@ -245,203 +248,227 @@ function EditTankBody() {
       {!isLoading && loadedTank && (
         <div className="Container">
           <form onSubmit={tankUpdateSubmitHandler}>
-            <Text element="text" value="Change Tank Profile Picture:"/>
-            <ImageUpload 
-              id="tankImagePfp"
-              onInput={inputHandler}
-              errorText="Please Pick A Valid Replacement Picture"
-              initialValue={loadedTank.tankImagePfp}
-              initialValid={true}
-            />
-            {/* For "tankName" */}
-            <Input
-              id="tankName"
-              element="input"
-              type="text"
-              label="Tank Name:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank Name"
-              onInput={inputHandler}
-              initialValue={loadedTank.tankName}
-              initialValid={true}
-            />
-            {/* For "nation" */}
-            <Input
-              id="nation"
-              element="input"
-              type="text"
-              label="Nation:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Nation"
-              onInput={inputHandler}
-              initialValue={loadedTank.nation}
-              initialValid={true}
-            />
-            {/* For "userNations" */}
-            <Input
-              id="userNations"
-              element="input"
-              type="text"
-              label="User Nations:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid User Nations"
-              onInput={inputHandler}
-              initialValue={loadedTank.userNations.join(",")}
-              initialValid={true}
-            />
-            {/* For "combatRole" */}
-            <Input
-              id="combatRole"
-              element="input"
-              type="text"
-              label="Combat Role:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Combat Role"
-              onInput={inputHandler}
-              initialValue={loadedTank.combatRole}
-              initialValid={true}
-            />
-            {/* For "serviceStates" */}
-            <Input
-              id="serviceStates"
-              element="input"
-              type="text"
-              label="Service States:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Service States"
-              onInput={inputHandler}
-              initialValue={loadedTank.serviceStates}
-              initialValid={true}
-            />
-            {/* For "generation" */}
-            <Input
-              id="generation"
-              element="input"
-              type="text"
-              label="Generation:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Generation"
-              onInput={inputHandler}
-              initialValue={loadedTank.generation}
-              initialValid={true}
-            />
-            {/* For "era" */}
-            <Input
-              id="era"
-              element="input"
-              type="text"
-              label="Era:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Era"
-              onInput={inputHandler}
-              initialValue={loadedTank.era}
-              initialValid={true}
-            />
-            {/* For "age" */}
-            <Input
-              id="age"
-              element="input"
-              type="text"
-              label="Age:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Age"
-              onInput={inputHandler}
-              initialValue={loadedTank.age}
-              initialValid={true}
-            />
-            {/* For "startDate" */}
-            <Input
-              id="startDate"
-              element="input"
-              type="text"
-              label="Start Date:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Start Date"
-              onInput={inputHandler}
-              initialValue={loadedTank.servicePeriod.startDate}
-              initialValid={true}
-            />
-            {/* For "endDate" */}
-            <Input
-              id="endDate"
-              element="input"
-              type="text"
-              label="End Date:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid End Date"
-              onInput={inputHandler}
-              initialValue={loadedTank.servicePeriod.endDate}
-              initialValid={true}
-            />
-            {/* For "tankHistory" */}
-            <Input
-              id="tankHistory"
-              type="text"
-              label="Tank History:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank History"
-              onInput={inputHandler}
-              initialValue={loadedTank.tankHistory}
-              initialValid={true}
-            />
-            {/* For "tankServiceHistory" */}
-            <Input
-              id="tankServiceHistory"
-              type="text"
-              label="Tank Service History:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank Service History"
-              onInput={inputHandler}
-              initialValue={loadedTank.tankServiceHistory}
-              initialValid={true}
-            />
-            {/* For "tankServiceStatesInfo" */}
-            <Input
-              id="tankServiceStatesInfo"
-              type="text"
-              label="Tank Service States Information:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Tank Service States Information"
-              onInput={inputHandler}
-              initialValue={loadedTank.tankServiceStatesInfo}
-              initialValid={true}
-            />
-            {/* For "tankProductionHistory" */}
-            <Input
-              id="tankProductionHistory"
-              type="text"
-              label="Tank Production History:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter Valid Tank Production History"
-              onInput={inputHandler}
-              initialValue={loadedTank.tankProductionHistory}
-              initialValid={true}
-            />
-            {/* For "tankArmamentAndArmour" */}
-            <Input
-              id="tankArmamentAndArmour"
-              type="text"
-              label="Tank Armament And Armour:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter Valid Tank Armament And Armour"
-              onInput={inputHandler}
-              initialValue={loadedTank.tankArmamentAndArmour}
-              initialValid={true}
-            />
-            <div>
-            <Button to="/MainPage/Admin/TanksDatabase">
-              Cancel
-            </Button>
-            <Button type="submit" disabled={!formState.isValid}>
-              UPDATE TANK
-            </Button>
-            <Button to="/MainPage/Admin/TanksDatabase">
-              Delete
-            </Button>
-            <Button to="/MainPage/Admin/TanksDatabase">
-              Save Changes And Visit
-            </Button>
-            </div>
+            <Card>
+              <Grid2 container spacing={1}>
+                <Grid2 xs={12}>
+                  <Card>
+                    <Text element="h2" value="Edit Tank Page:"/>
+                  </Card> 
+                </Grid2>
+                <Grid2 xs={4}>
+                    <Card>
+                      <Text element="text" value="Change Tank Profile Picture:"/>
+                      <ImageUpload 
+                        id="tankImagePfp"
+                        onInput={inputHandler}
+                        errorText="Please Pick A Valid Replacement Picture"
+                        initialValue={loadedTank.tankImagePfp}
+                        initialValid={true}
+                      />
+                    </Card>
+                </Grid2>
+                <Grid2 xs={8}></Grid2>
+                <Grid2 xs={6}>
+                    <Card>
+                      {/* For "tankName" */}
+                      <Input
+                        id="tankName"
+                        element="input"
+                        type="text"
+                        label="Tank Name:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Tank Name"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.tankName}
+                        initialValid={true}
+                      />
+                      {/* For "nation" */}
+                      <Input
+                        id="nation"
+                        element="input"
+                        type="text"
+                        label="Nation:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Nation"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.nation}
+                        initialValid={true}
+                      />
+                      {/* For "userNations" */}
+                      <Input
+                        id="userNations"
+                        element="input"
+                        type="text"
+                        label="User Nations:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid User Nations"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.userNations.join(",")}
+                        initialValid={true}
+                      />
+                      {/* For "combatRole" */}
+                      <Input
+                        id="combatRole"
+                        element="input"
+                        type="text"
+                        label="Combat Role:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Combat Role"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.combatRole}
+                        initialValid={true}
+                      />
+                      {/* For "serviceStates" */}
+                      <Input
+                        id="serviceStates"
+                        element="input"
+                        type="text"
+                        label="Service States:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Service States"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.serviceStates}
+                        initialValid={true}
+                      />
+                      {/* For "generation" */}
+                      <Input
+                        id="generation"
+                        element="input"
+                        type="text"
+                        label="Generation:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Generation"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.generation}
+                        initialValid={true}
+                      />
+                      {/* For "era" */}
+                      <Input
+                        id="era"
+                        element="input"
+                        type="text"
+                        label="Era:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Era"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.era}
+                        initialValid={true}
+                      />
+                      {/* For "age" */}
+                      <Input
+                        id="age"
+                        element="input"
+                        type="text"
+                        label="Age:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Age"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.age}
+                        initialValid={true}
+                      />
+                      {/* For "startDate" */}
+                      <Input
+                        id="startDate"
+                        element="input"
+                        type="text"
+                        label="Start Date:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Start Date"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.servicePeriod.startDate}
+                        initialValid={true}
+                      />
+                      {/* For "endDate" */}
+                      <Input
+                        id="endDate"
+                        element="input"
+                        type="text"
+                        label="End Date:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid End Date"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.servicePeriod.endDate}
+                        initialValid={true}
+                      />
+                    </Card>
+                </Grid2>
+                <Grid2 xs={6}>
+                    <Card>
+                      {/* For "tankHistory" */}
+                      <Input
+                        id="tankHistory"
+                        type="text"
+                        label="Tank History:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Tank History"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.tankHistory}
+                        initialValid={true}
+                      />
+                      {/* For "tankServiceHistory" */}
+                      <Input
+                        id="tankServiceHistory"
+                        type="text"
+                        label="Tank Service History:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Tank Service History"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.tankServiceHistory}
+                        initialValid={true}
+                      />
+                      {/* For "tankServiceStatesInfo" */}
+                      <Input
+                        id="tankServiceStatesInfo"
+                        type="text"
+                        label="Tank Service States Information:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter A Valid Tank Service States Information"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.tankServiceStatesInfo}
+                        initialValid={true}
+                      />
+                      {/* For "tankProductionHistory" */}
+                      <Input
+                        id="tankProductionHistory"
+                        type="text"
+                        label="Tank Production History:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter Valid Tank Production History"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.tankProductionHistory}
+                        initialValid={true}
+                      />
+                      {/* For "tankArmamentAndArmour" */}
+                      <Input
+                        id="tankArmamentAndArmour"
+                        type="text"
+                        label="Tank Armament And Armour:"
+                        validators={[VALIDATOR_REQUIRE()]}
+                        errorText="Please Enter Valid Tank Armament And Armour"
+                        onInput={inputHandler}
+                        initialValue={loadedTank.tankArmamentAndArmour}
+                        initialValid={true}
+                      />
+                    </Card>
+                </Grid2>
+                <Grid2 xs={12}>
+                    <Card>
+                      <Button to="/MainPage/Admin/TanksDatabase">
+                        Cancel
+                      </Button>
+                      <Button type="submit" disabled={!formState.isValid}>
+                        Update Tank
+                      </Button>
+                      <Button to="/MainPage/Admin/TanksDatabase">
+                        Delete
+                      </Button>
+                      <Button to="/MainPage/Admin/TanksDatabase">
+                        Save Changes And Visit
+                      </Button>
+                    </Card>
+                </Grid2>
+              </Grid2>
+            </Card>
           </form>
         </div>
       )}

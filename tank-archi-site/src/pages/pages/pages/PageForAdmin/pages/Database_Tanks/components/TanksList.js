@@ -2,6 +2,8 @@
 import React from "react";
 //component import
 import TankItem from "./components/TankItem";
+//Material Ui Imports
+import { TableCell, TableHead, TableRow } from "@mui/material";
 
 function TanksList(props) {
   //if there is no tanks in the list then we will show the following massage
@@ -20,65 +22,24 @@ function TanksList(props) {
   return (
     <div className="Container">
       <table>
-        <thead>
-          <tr>
-            <th>
-              <button>Sort :</button>
-              <button>ID</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Name</button>
-            </th>
-            <th>
-              <button>Main Image</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Nation</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Battle Role</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Era</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Service Period</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Service Start</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Service End</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Vote Count</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Average User Rating</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Creation Date</button>
-            </th>
-            <th>
-              <button>Sort :</button>
-              <button>Last Updated By Admin</button>
-            </th>
-            <th>
-              <button>Options</button>
-            </th>
-          </tr>
-        </thead>
-
+        <TableHead>
+          <TableRow>
+            <TableCell>Tank ID :</TableCell>
+            <TableCell>Name :</TableCell>
+            <TableCell>Tank Profile Image :</TableCell>
+            <TableCell>Nation :</TableCell>
+            <TableCell>Combat Role :</TableCell>
+            <TableCell>Tank Era :</TableCell>
+            <TableCell>Service Period :</TableCell>
+            <TableCell>Service Period Start :</TableCell>
+            <TableCell>Service Period End :</TableCell>
+            <TableCell>Vote Count :</TableCell>
+            <TableCell>Average User Rating :</TableCell>
+            <TableCell>Creation Date :</TableCell>
+            <TableCell>Last Updated By Admin :</TableCell>
+            <TableCell>Options</TableCell>
+          </TableRow>
+        </TableHead>
         {props.items.map((tank) => {
           return (
             <tbody>

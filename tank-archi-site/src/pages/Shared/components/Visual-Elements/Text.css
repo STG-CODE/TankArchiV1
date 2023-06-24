@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto+Slab:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500&display=swap');
+@font-face {
+    font-family: "open-sans";
+    src: url("../../../../fonts/open-sans.regular.ttf");
+  }
+.text{
+    font-size: 0.8em;
+    font-family: 'Orbitron', sans-serif;
+}
+* {
+    -webkit-font-smoothing:antialiased !important;
+  }
+.textarea{
+    font-size: medium;
+    font-family: 'open-sans';
+    height:180px;
+    width:90%;
+    font-weight:400;
+    background:#fff;
+    border-radius:3px;
+    line-height:2em;
+    border:none;
+    box-shadow:0px 0px 5px 1px rgba(0,0,0,0.1);
+    padding:30px;
+    margin: 10px;
+    -webkit-transition: height 2s ease;
+    -moz-transition: height 2s ease;
+    -ms-transition: height 2s ease;
+    -o-transition: height 2s ease;
+    transition: height 2s ease;
+}
+.p {
+    font-size: 0.8em;
+    font-family: 'Orbitron', sans-serif;
+    color: #000;
+    
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+}

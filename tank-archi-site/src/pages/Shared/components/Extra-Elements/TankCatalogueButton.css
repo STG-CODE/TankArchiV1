@@ -1,29 +1,154 @@
-.tankCatalogueButton {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.tankCatalogueButton img {
+@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
+figure.snip1190 {
+  border: 2px solid #381b1b;
+  font-family: inherit;
+  color: #000000a2;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 220px;
+  max-width: 310px;
+  max-height: 230px;
+  width: 100%;
+  background-position: center;
+  background: #381b1bc2;
+  text-align: center;
+}
+figure.snip1190 * {
+  -webkit-box-sizing: padding-box;
+  box-sizing: padding-box;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+figure.snip1190 img {
+  opacity: 0.8;
+  width: 100%;
+}
+figure.snip1190 figcaption {
+  bottom: 0;
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
-
-.tankCatalogueButton button {
-  padding: 0px;
+figure.snip1190 h2 {
+  font-weight: 400;
+  left: 0;
+  right: 0;
+  letter-spacing: -1px;
+  margin: 0 auto;
+  position: absolute;
+  text-transform: uppercase;
+  bottom: 50%;
+  -webkit-transform: translateY(50%);
+  transform: translateY(50%);
+}
+figure.snip1190 h2 span {
+  font-weight: 800;
+}
+figure.snip1190 p {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 50%;
+  opacity: 0;
+  font-size: 18px;
+  -webkit-transform: translateY(-20%) scale(0.7);
+  transform: translateY(-20%) scale(0.7);
+}
+figure.snip1190 .square {
+  height: 78px;
+  width: 78px;
+  overflow: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  content: '';
+  -webkit-transform: rotate(45deg) translate(-50%, -50%);
+  transform: rotate(45deg) translate(-50%, -50%);
+  -webkit-transform-origin: 0 0;
+  transform-origin: 0 0;
+}
+figure.snip1190 .square:before,
+figure.snip1190 .square:after,
+figure.snip1190 .square div:before,
+figure.snip1190 .square div:after {
+  background-color: #000000b7;
+  position: absolute;
+  content: "";
   display: block;
-  width: 100%;
-  height: 100%;
-  transition: all ease-in-out 0.2s;
-  cursor: pointer;
+  -webkit-transition: all 0.4s ease-in-out;
+  transition: all 0.4s ease-in-out;
+}
+figure.snip1190 .square:before,
+figure.snip1190 .square:after {
+  width: 65%;
+  height: 3px;
+}
+figure.snip1190 .square div:before,
+figure.snip1190 .square div:after {
+  width: 3px;
+  height: 65%;
+}
+figure.snip1190 .square:before,
+figure.snip1190 .square div:before {
+  left: 0;
+  top: 0;
+}
+figure.snip1190 .square:after,
+figure.snip1190 .square div:after {
+  bottom: 0;
+  right: 0;
+}
+figure.snip1190 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+figure.snip1190:hover img,
+figure.snip1190.hover img {
+  opacity: 0.25;
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+figure.snip1190:hover h2,
+figure.snip1190.hover h2 {
+  color: #000;
+  opacity: 1;
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+}
+figure.snip1190:hover p,
+figure.snip1190.hover p {
+  color: #000;
+  opacity: 1;
+  -webkit-transform: translateY(0px) scale(1);
+  transform: translateY(0px) scale(1);
+}
+figure.snip1190:hover .square:before,
+figure.snip1190.hover .square:before {
+  background-color: #000000;
+  width: 38%;
+}
+figure.snip1190:hover .square div:before,
+figure.snip1190.hover .square div:before {
+  background-color: #000000;
+  height: 38%;
+}
+figure.snip1190:hover .square:after,
+figure.snip1190.hover .square:after {
+  background-color: #000000;
+  width: 55%;
+}
+figure.snip1190:hover .square div:after,
+figure.snip1190.hover .square div:after {
+  background-color: #000000;
+  height: 55%;
 }
 
-.tankCatalogueButton button:hover {
-  background-color: black;
-  border: 1px solid #888;
-  background-color: #ddd;
-}

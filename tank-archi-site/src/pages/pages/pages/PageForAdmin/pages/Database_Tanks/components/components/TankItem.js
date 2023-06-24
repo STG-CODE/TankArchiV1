@@ -10,6 +10,7 @@ import Modal from "../../../../../../../Shared/components/UI-Elements/Modal";
 import Image from "../../../../../../../Shared/components/Visual-Elements/Image";
 //context import
 import { LoginContext } from "../../../../../../../Shared/Context/login-context";
+import { TableCell } from "@mui/material";
 
 function TankItem(props) {
   //login context
@@ -61,71 +62,63 @@ function TankItem(props) {
         <p>Are you sure that you want to delete the <strong>{props.tankName}</strong> from the database?</p>
       </Modal>
       {isLoading && <LoadingSpinner asOverlay />}
-      <tr>
-        <th>
-          <h4>{props.id}</h4>
-        </th>
-        <th>
-          <h4>{props.tankName}</h4>
-        </th>
-        <th>
-          <Image
-           image={`http://localhost:5000/${props.tankImagePfp ||
-            "uploads/stockImages/tankStockIcon.jpg"}`} 
-           alt={"No Tank Profile Image!"}
-           style={{width:"100px", hight:"50px"}}
-          />
-        </th>
-        <th>
-          <h4>{props.nation}</h4>
-        </th>
-        <th>
-          <h4>{props.combatRole}</h4>
-        </th>
-        <th>
-          <h4>{props.era}</h4>
-        </th>
-        <th>
-          <h4>
-            {props.startDate}
-            {" - "}
-            {props.endDate}
-          </h4>
-        </th>
-        <th>
-          <h4>{props.startDate}</h4>
-        </th>
-        <th>
-          <h4>{props.endDate}</h4>
-        </th>
-        <th>
-          <h4>
-            {props.voteCount} {props.voteCount === 1 ? "Vote" : "Votes"}
-          </h4>
-        </th>
-        <th>
-          <h4>{props.avgRating}</h4>
-        </th>
-        <th>
-          <h4>{props.uploadDate}</h4>
-        </th>
-        <th>
-          <h4>{props.lastUpdated}</h4>
-        </th>
-        <th>
-          <Button inverse to={`/MainPage/Admin/TanksDatabase/EditTank/${props.id}`}>
+      <TableCell component="th" scop="row">
+        {props.id}
+      </TableCell>
+      <TableCell align="right">
+        {props.tankName}
+      </TableCell>
+      <TableCell align="right">
+        <Image
+          image={`http://localhost:5000/${props.tankImagePfp ||
+          "uploads/stockImages/tankStockIcon.jpg"}`} 
+          alt={"No Tank Profile Image!"}
+          style={{width:"100%", hight:"100%"}}
+        />
+      </TableCell>
+      <TableCell align="right">
+        {props.nation}
+      </TableCell>
+      <TableCell align="right">
+        {props.combatRole}
+      </TableCell>
+      <TableCell align="right">
+        {props.era}
+      </TableCell>
+      <TableCell align="right">
+        {props.startDate}
+        {" - "}
+        {props.endDate}
+      </TableCell>
+      <TableCell align="right">
+        {props.startDate}
+      </TableCell>
+      <TableCell align="right">
+        {props.endDate}
+      </TableCell>
+      <TableCell align="right">
+        {props.voteCount} {props.voteCount === 1 ? "Vote" : "Votes"}
+      </TableCell>
+      <TableCell align="right">
+        {props.avgRating}
+      </TableCell>
+      <TableCell align="right">
+        {props.uploadDate}
+      </TableCell>
+      <TableCell align="right">
+        {props.lastUpdated}
+      </TableCell>
+      <TableCell align="right">
+          <Button to={`/MainPage/Admin/TanksDatabase/EditTank/${props.id}`}>
             Edit
           </Button>
-          /
           <Button to={`/MainPage/Admin/TanksDatabase/ReviewTank/${props.id}`}>
             Review
           </Button>
-          /
           <Button danger onClick={showDeleteWarningHandler}>
             Delete
           </Button>
-        </th>
-      </tr>
+      </TableCell>
     </React.Fragment>
   );
 }

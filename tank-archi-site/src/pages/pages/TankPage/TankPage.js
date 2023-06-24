@@ -22,7 +22,10 @@ import TankLikeButton from "../../Shared/components/UI-Elements/TankLikeButton";
 import AddToFavButton from "../../Shared/components/UI-Elements/AddToFavButton";
 //Material UI imports
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { Container } from "@mui/material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 //TODO :
 
 function TankPage() {
@@ -41,6 +44,98 @@ function TankPage() {
   const tankId = useParams().tankId;
   //!
   const history = useHistory();
+
+  // //TODO: need to set it so that the handlers update both database users and tanks and currently loaded tanks and users as well
+  // const AddToFavoritesButtonHandler = async () => {
+  //   //add req for handling both clicks and also add changes on inner side of the front end
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('tankId',tankId);
+  //     await sendRequest(
+  //       `http://localhost:5000/MainPage/User/AddTankToFavList/${loginContext.currentUser.id}`,
+  //       "POST",
+  //       formData,
+  //       {Authorization: "Bearer " + loginContext.token}
+  //     );
+  //     loginContext.currentUser.favTanksList.push(tankId);
+  //   } catch (err) { 
+  //     console.log("Failed To Add To Fav List", err); 
+  //   }
+  // };
+
+  // const RemoveFromFavoritesButtonHandler = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('tankId',tankId);
+  //     await sendRequest(
+  //       `http://localhost:5000/MainPage/User/RemoveTankFromFavList/${loginContext.currentUser.id}`,
+  //       "DELETE",
+  //       formData,
+  //       {Authorization: "Bearer " + loginContext.token}
+  //     );
+  //     loginContext.currentUser.favTanksList.remove(tankId);
+  //   } catch (err) { 
+  //     console.log("Failed To Add To Fav List", err); 
+  //   }
+  // };
+
+  // const AddLikeButtonHandler = async () => {
+  //   try {
+  //     try {
+  //       await sendRequest(
+  //         `http://localhost:5000/MainPage/User/AddLikedTank/${loginContext.currentUser.id}`,
+  //         "POST",
+  //         JSON.stringify({
+  //           tankId: tankId,
+  //         }),
+  //         {
+  //           "Content-Type": "application/json",
+  //           Authorization: "Bearer " + loginContext.token
+  //         }
+  //       );
+  //       loginContext.currentUser.likedTanksList.push(tankId);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+      
+  //     try {
+  //       await sendRequest(
+  //         `http://localhost:5000/MainPage/Admin/TanksDatabase/AddTankLike/${tankId}`,
+  //         "POST",
+  //         null,
+  //         {Authorization: "Bearer " + loginContext.token}
+  //       );
+  //       loadedTank.likeVoteCount = loadedTank.likeVoteCount + 1;
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   } catch (err) {
+  //     console.log("Failed To Add A Liked Tank",)
+  //   }
+  // };
+
+  // const RemoveLikeButtonHandler = async () => {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('tankId',tankId);
+  //     await sendRequest(
+  //       `http://localhost:5000/MainPage/User/RemoveLikedTank/${loginContext.currentUser.id}`,
+  //       "DELETE",
+  //       formData,
+  //       {Authorization: "Bearer " + loginContext.token}
+  //     );
+  //     loginContext.currentUser.likedTanksList.remove(tankId);
+  //     await sendRequest(
+  //       `http://localhost:5000/Admin/TanksDatabase/RemoveTankLike/${tankId}`,
+  //       "DELETE",
+  //       null,
+  //       {Authorization: "Bearer " + loginContext.token}
+  //     );
+  //     loadedTank.likeVoteCount -= 1;
+  //   } catch (err) {
+  //     console.log("Failed To Remove A Liked Tank", err);
+  //   }
+  // };
 
   //brings us the tank that has the same ID
   useEffect(() => {
@@ -86,7 +181,7 @@ function TankPage() {
             <Grid2 xs={4}>
               <Card>
                 <Text element="h1" value={`The ${loadedTank.tankName}`} />
-                <TankRating isAdmin={false} rating={loadedTank.avgRating}/>
+                <TankRating text={`Choose To Rate The ${loadedTank.tankName}:`} isAdmin={false} rating={loadedTank.avgRating}/>
               </Card>
             </Grid2>
             <Grid2 xs={8}>
@@ -108,10 +203,59 @@ function TankPage() {
                     )}
                   </Grid2>
                   <Grid2>
-                    <AddToFavButton isAdmin={false}/>
+                    {/* {!isLoading && !loginContext.currentUser.favTanksList.includes(tankId) && ( */}
+                      <Button>
+                          <Grid2 container>
+                            Add To Favorite
+                          <FavoriteBorderIcon/>
+                        </Grid2>
+                      </Button>
+                    {/* )} */}
+                    {/* {!isLoading && loginContext.currentUser.favTanksList.includes(tankId) && (
+                      <Button onClick={RemoveFromFavoritesButtonHandler}>
+                        <Grid2 container>
+                          Add To Favorite
+                          <FavoriteBorderIcon/>
+                        </Grid2>
+                      </Button>
+                    )}
+                    {isLoading && (
+                      <Button disabled>
+                        <Grid2 container>
+                          Add To Favorite
+                          <FavoriteBorderIcon/>
+                        </Grid2>
+                      </Button>
+                    )}
+                     */}
+                    {/* <AddToFavButton isAdmin={false}/> */}
                   </Grid2>
                   <Grid2>
-                    <TankLikeButton isAdmin={false}/>
+                    {/* {!isLoading && !loginContext.currentUser.likedTanksList.includes(tankId) && ( */}
+                      <Button>
+                        <Grid2 container>
+                          Like +1
+                          <ThumbUpOffAltIcon/>
+                        </Grid2>
+                      </Button>
+                    {/* )} */}
+                    {/* {!isLoading && loginContext.currentUser.likedTanksList.includes(tankId) && (
+                      <Button onClick={RemoveLikeButtonHandler}>
+                        <Grid2 container>
+                          Like +1
+                          <ThumbUpIcon/>
+                        </Grid2>
+                      </Button>
+                    )}
+                    {isLoading && (
+                      <Button disabled>
+                        <Grid2 container>
+                          Like +1
+                          <ThumbUpIcon/>
+                        </Grid2>
+                      </Button>
+                    )} */}
+                    {/* <TankLikeButton isAdmin={false}/> */}
                   </Grid2>
                 </Grid2>
               </Card>
@@ -163,7 +307,7 @@ function TankPage() {
             <Grid2 xs={4}>
               <Card>
                 <Text element="h1" value={`The ${loadedTank.tankName}`} />
-                <TankRating isAdmin={true} rating={loadedTank.avgRating}/>
+                <TankRating text={`Choose To Rate The ${loadedTank.tankName}:`} isAdmin={true} rating={loadedTank.avgRating}/>
               </Card>
             </Grid2>
             <Grid2 xs={8}>

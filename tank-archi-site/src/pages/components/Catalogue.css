@@ -1,0 +1,15 @@
+.catalogueStyle{
+    align-content: center;
+    position: relative;
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.catalogueBackground{
+    border: 1px solid #00000069;
+    border-radius: 12px;
+    background: linear-gradient(-55deg, #95b4a277, #bed8c15d, #c4dbcd73);
+    margin: 0.5rem;
+    padding: 0.5rem;
+    
+}

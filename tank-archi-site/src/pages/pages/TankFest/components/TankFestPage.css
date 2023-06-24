@@ -1,0 +1,49 @@
+@font-face {
+    font-family: "open-sans";
+    src: url("../../../../fonts/open-sans.regular.ttf");
+  }
+.tfText{ 
+    font-family: 'open-sans';
+}
+
+.twitter{
+  padding-left: 20px;
+  padding-right: 20px;
+  color: rgb(51, 155, 214);
+}
+
+.facebook{
+  padding-left: 20px;
+  padding-right: 20px;
+  color: rgb(0, 132, 255);
+}
+
+.instagram{
+  padding-left: 20px;
+  padding-right: 20px;
+  color: rgb(255, 255, 255);
+}
+
+.youtube{
+  padding-left: 20px;
+  padding-right: 20px;
+  color: rgb(250, 0, 12);
+}
+
+.tiktok{
+  padding-left: 20px;
+  padding-right: 20px;
+  color: rgb(32, 32, 39);
+  font-size: larger;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.patreon{
+  padding-left: 20px;
+  padding-right: 20px;
+  color: rgb(255, 150, 51);
+  font-size: larger;
+  align-items: center;
+  padding-bottom: 30px;
+}

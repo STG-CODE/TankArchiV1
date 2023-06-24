@@ -13,6 +13,7 @@ import Image from "../../../../../../../../Shared/components/Visual-Elements/Ima
 import TankPhotosContainer from "../../../../../../../../Shared/components/Extra-Elements/TankPhotosContainer";
 //context import
 import { LoginContext } from "../../../../../../../../Shared/Context/login-context";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function ReviewTankBody() {
   //login context
@@ -57,109 +58,143 @@ function ReviewTankBody() {
       {!isLoading && loadedTank && (
         <div className="Container">
           <Card>
-            <Text element="text" value="Tank's Current Profile Picture:"/>
-            <Image
-              image={`http://localhost:5000/${loadedTank.tankImagePfp}`}
-              alt={"- No Tank Profile Picture Found -"}
-              style={{width:"25%", hight:"20%"}}
-            />
-            <Text label="Tank's Upload Date:" value={loadedTank.uploadDate} />
-            <Text
-              label="Tank Last Updated:"
-              value={loadedTank.lastUpdated || "- Was Not Updated Yet -"}
-            />
-            
-            <Card>
-              <Text
-                label="Tank's Name:"
-                element="text"
-                value={loadedTank.tankName}
-              />
-              <Text
-               label="Nation:" 
-               element="text" 
-               value={loadedTank.nation} 
-              />
-              <Text
-               label="User Nations:" 
-               element="text" 
-               value={loadedTank.userNations} 
-              />
-              <Text
-                label="Combat Role:"
-                element="text"
-                value={loadedTank.combatRole}
-              />
-              <Text
-               label="Service States:" 
-               element="text" 
-               value={loadedTank.serviceStates} 
-              />
-              <Text
-               label="Generation:" 
-               element="text" 
-               value={loadedTank.generation} 
-              />
-              <Text
-                label="Related Era:"
-                element="text"
-                value={loadedTank.era}
-              />
-              <Text
-               label="Tank's Age:" 
-               element="text" 
-               value={loadedTank.age} 
-              />
-              <Text
-                label="Start Of Service Year:"
-                element="text"
-                value={loadedTank.servicePeriod.startDate}
-              />
-              <Text
-                label="End Of Service Year:"
-                element="text"
-                value={loadedTank.servicePeriod.endDate}
-              />
-              <Text
-                label="Tank's History In General:"
-                element="textarea"
-                value={loadedTank.tankHistory}
-              />
-              <Text
-                label="Tank's Service History:"
-                element="textarea"
-                value={loadedTank.tankServiceHistory}
-              />
-              <Text
-                label="Tank's Service States Information:"
-                element="textarea"
-                value={loadedTank.tankServiceStatesInfo}
-              />
-              <Text
-                label="Tank's Production History:"
-                element="textarea"
-                value={loadedTank.tankProductionHistory}
-              />
-              <Text
-                label="Tank's Armament And Armour:"
-                element="textarea"
-                value={loadedTank.tankArmamentAndArmour}
-              />
-              <Text
-                label="Amount Of DataBase Tank Photos:"
-                value={loadedTank.photoCollection.length || "0"}
-              />
-            </Card>
+          <Grid2 container spacing={1}>
+                <Grid2 xs={4}>
+                  <Text element="h2" value="Tank Review Page:"/>
+                </Grid2>
+                <Grid2 xs={12}>
+                  <div>
+                    <Text element="text" value="Tank's Current Profile Picture:"/>
+                    <Image
+                      image={`http://localhost:5000/${loadedTank.tankImagePfp}`}
+                      alt={"- No Tank Profile Picture Found -"}
+                      style={{width:"30%", hight:"20%"}}
+                    />
+                  </div>
+                </Grid2>
+                <Grid2 xs={3}>
+                  <Text
+                  label="Tank's Name:"
+                  element="text"
+                  value={loadedTank.tankName}
+                  />
+                  <Text 
+                  label="Tank's Upload Date:"
+                  element="text"
+                  value={loadedTank.uploadDate} 
+                  />
+                  <Text 
+                  label="Tank Last Updated:"
+                  element="text"
+                  value={loadedTank.lastUpdated || "- Was Not Updated Yet -"}
+                  />
+                  <Text
+                  label="Amount Of DataBase Tank Photos:"
+                  element="text"
+                  value={loadedTank.photoCollection.length || "0"}
+                  />
+                </Grid2>
+                <Grid2 xs={3}>
+                  <Text
+                  label="Nation:" 
+                  element="text" 
+                  value={loadedTank.nation} 
+                  />
+                  <Text
+                  label="User Nations:" 
+                  element="text" 
+                  value={loadedTank.userNations} 
+                  />
+                  <Text
+                  label="Combat Role:"
+                  element="text"
+                  value={loadedTank.combatRole}
+                  />
+                </Grid2>
+                <Grid2 xs={3}>
+                  <Text
+                  label="Service States:" 
+                  element="text" 
+                  value={loadedTank.serviceStates} 
+                  />
+                  <Text
+                  label="Generation:" 
+                  element="text" 
+                  value={loadedTank.generation} 
+                  />
+                  <Text
+                  label="Related Era:"
+                  element="text"
+                  value={loadedTank.era}
+                  />
+                </Grid2>
+                <Grid2 xs={3}>
+                  <Text
+                  label="Tank's Age:" 
+                  element="text" 
+                  value={loadedTank.age} 
+                  />
+                  <Text
+                    label="Start Of Service Year:"
+                    element="text"
+                    value={loadedTank.servicePeriod.startDate}
+                  />
+                  <Text
+                    label="End Of Service Year:"
+                    element="text"
+                    value={loadedTank.servicePeriod.endDate}
+                  />
+                </Grid2>
+                <Grid2 xs={8} container spacing={1}>
+                  <Grid2 xs={12}>
+                    <Text
+                    label="Tank's History In General:"
+                    element="textarea"
+                    value={loadedTank.tankHistory}
+                    />
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <Text
+                    label="Tank's Service History:"
+                    element="textarea"
+                    value={loadedTank.tankServiceHistory}
+                    />
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <Text
+                    label="Tank's Service States Information:"
+                    element="textarea"
+                    value={loadedTank.tankServiceStatesInfo}
+                    />
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <Text
+                    label="Tank's Production History:"
+                    element="textarea"
+                    value={loadedTank.tankProductionHistory}
+                    />
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <Text
+                    label="Tank's Armament And Armour:"
+                    element="textarea"
+                    value={loadedTank.tankArmamentAndArmour}
+                    />
+                  </Grid2>
+                </Grid2>
+                <Grid2 xs={4}>
+                  <Card>
+                    <TankPhotosContainer tankPhotoCollection={loadedTank.photoCollection}/>
+                  </Card>
+                </Grid2>
+                <Grid2 xs={12}>
+                  <Button to="/MainPage/Admin/TanksDatabase">Go Back</Button>
+                  <Button to="/MainPage/Admin/TanksDatabase/EditTank">Edit Tank</Button>
+                  <Button to="/MainPage/Admin/TanksDatabase">Delete</Button>
+                  <Button to="/MainPage/Admin/TanksDatabase">Go To Tank</Button>
+                </Grid2>
+            </Grid2>
           </Card>
-          <Card>
-            <TankPhotosContainer tankPhotoCollection={loadedTank.photoCollection}/>
-          </Card>
-          <div>
-            <Button to="/MainPage/Admin/TanksDatabase">Go Back</Button>
-            <Button to="/MainPage/Admin/TanksDatabase/EditTank">Edit Tank</Button>
-            <Button to="/MainPage/Admin/TanksDatabase">Delete</Button>
-            <Button to="/MainPage/Admin/TanksDatabase">Go To Tank</Button>
-          </div>
         </div>
       )}
       {!isLoading && !error && !loadedTank && (

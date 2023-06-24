@@ -21,8 +21,11 @@ import ErrorModal from "../../../../../../../../Shared/components/UI-Elements/Er
 import LoadingSpinner from "../../../../../../../../Shared/components/UI-Elements/LoadingSpinner";
 import Text from "../../../../../../../../Shared/components/Visual-Elements/Text";
 import ImageUpload from "../../../../../../../../Shared/components/Form-Elements/ImageUpload";
+import Card from "../../../../../../../../Shared/components/UI-Elements/Card";
 //context import
 import { LoginContext } from "../../../../../../../../Shared/Context/login-context";
+//Material UI import
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function EditUserBody() {
   //login context
@@ -192,151 +195,167 @@ function EditUserBody() {
         </div>
       )}
       {!isLoading && loadedUser && (
-        <div>
+        <div className="Container">
           <form onSubmit={userUpdateSubmitHandler}>
-            <Text element="text" value="Change User Profile Picture:"/>
-            <ImageUpload
-              id="imagePfp"
-              onInput={inputHandler}
-              errorText="Please Pick A Valid Replacement Picture"
-              initialValue={loadedUser.imagePfp}
-              initialValid={true}
-            />
-            {/* For "username" */}
-            <Input
-              id="username"
-              element="input"
-              type="text"
-              label="Username:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Username"
-              onInput={inputHandler}
-              initialValue={loadedUser.username}
-              initialValid={true}
-            />
-            {/* For "firstName" */}
-            <Input
-              id="firstName"
-              element="input"
-              type="text"
-              label="First Name:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid First Name"
-              onInput={inputHandler}
-              initialValue={loadedUser.firstName}
-              initialValid={true}
-            />
-            {/* For "lastName" */}
-            <Input
-              id="lastName"
-              element="input"
-              type="text"
-              label="Last Name:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Last Name"
-              onInput={inputHandler}
-              initialValue={loadedUser.lastName}
-              initialValid={true}
-            />
-            {/* For "country" */}
-            <Input
-              id="country"
-              element="input"
-              type="text"
-              label="Country:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Country"
-              onInput={inputHandler}
-              initialValue={loadedUser.country}
-              initialValid={true}
-            />
-            {/* For "age" */}
-            <Input
-              id="age"
-              element="input"
-              type="text"
-              label="Age:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Age"
-              onInput={inputHandler}
-              initialValue={loadedUser.age}
-              initialValid={true}
-            />
-            {/* For "company" */}
-            <Input
-              id="company"
-              element="input"
-              type="text"
-              label="Company:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Company"
-              onInput={inputHandler}
-              initialValue={loadedUser.company || "None"}
-              initialValid={true}
-            />
-            {/* For publisher */}
-            <Input
-              id="publisher"
-              element="input"
-              type="text"
-              label="Publisher:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Publisher"
-              onInput={inputHandler}
-              initialValue={loadedUser.publisher || "None"}
-              initialValid={true}
-            />
-            {/* For association */}
-            <Input
-              id="association"
-              element="input"
-              type="text"
-              label="Association:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Association"
-              onInput={inputHandler}
-              initialValue={loadedUser.association || "None"}
-              initialValid={true}
-            />
-            {/* For socialType */}
-            <Input
-              id="socialType"
-              element="input"
-              type="text"
-              label="Social Type:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Social Type"
-              onInput={inputHandler}
-              initialValue={loadedUser.socialType || "None"}
-              initialValid={true}
-            />
-            {/* For socialName */}
-            <Input
-              id="socialName"
-              element="input"
-              type="text"
-              label="Social Name:"
-              validators={[VALIDATOR_REQUIRE()]}
-              errorText="Please Enter A Valid Social Name"
-              onInput={inputHandler}
-              initialValue={loadedUser.socialName || "None"}
-              initialValid={true}
-            />
-            <div>
-              <Button to="/MainPage/Admin/UsersDatabase">
-                Cancel
-              </Button>
-              <Button type="submit" disabled={!formState.isValid}>
-                Update User
-              </Button>
-              <Button to="/MainPage/Admin/UsersDatabase">
-                Delete
-              </Button>
-              <Button to="/MainPage/Admin/UsersDatabase">
-                Review User Information
-              </Button>
-            </div>
-            
+            <Card>
+              <Grid2 container spacing={1}>
+                <Grid2 xs={12}>
+                  <Card>
+                    <Text element="h2" value="Edit User Page:"/>
+                  </Card>
+                </Grid2>
+                <Grid2 xs={4}>
+                  <Card>
+                    <Text element="text" value="Change User Profile Picture:"/>
+                    <ImageUpload
+                      id="imagePfp"
+                      onInput={inputHandler}
+                      errorText="Please Pick A Valid Replacement Picture"
+                      initialValue={loadedUser.imagePfp}
+                      initialValid={true}
+                    />
+                  </Card>
+                </Grid2>
+                <Grid2 xs={8}>
+                  <Card>
+                    {/* For "username" */}
+                    <Input
+                      id="username"
+                      element="input"
+                      type="text"
+                      label="Username:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Username"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.username}
+                      initialValid={true}
+                    />
+                    {/* For "firstName" */}
+                    <Input
+                      id="firstName"
+                      element="input"
+                      type="text"
+                      label="First Name:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid First Name"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.firstName}
+                      initialValid={true}
+                    />
+                    {/* For "lastName" */}
+                    <Input
+                      id="lastName"
+                      element="input"
+                      type="text"
+                      label="Last Name:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Last Name"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.lastName}
+                      initialValid={true}
+                    />
+                    {/* For "country" */}
+                    <Input
+                      id="country"
+                      element="input"
+                      type="text"
+                      label="Country:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Country"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.country}
+                      initialValid={true}
+                    />
+                    {/* For "age" */}
+                    <Input
+                      id="age"
+                      element="input"
+                      type="text"
+                      label="Age:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Age"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.age}
+                      initialValid={true}
+                    />
+                    {/* For "company" */}
+                    <Input
+                      id="company"
+                      element="input"
+                      type="text"
+                      label="Company:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Company"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.company || "None"}
+                      initialValid={true}
+                    />
+                    {/* For publisher */}
+                    <Input
+                      id="publisher"
+                      element="input"
+                      type="text"
+                      label="Publisher:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Publisher"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.publisher || "None"}
+                      initialValid={true}
+                    />
+                    {/* For association */}
+                    <Input
+                      id="association"
+                      element="input"
+                      type="text"
+                      label="Association:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Association"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.association || "None"}
+                      initialValid={true}
+                    />
+                    {/* For socialType */}
+                    <Input
+                      id="socialType"
+                      element="input"
+                      type="text"
+                      label="Social Type:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Social Type"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.socialType || "None"}
+                      initialValid={true}
+                    />
+                    {/* For socialName */}
+                    <Input
+                      id="socialName"
+                      element="input"
+                      type="text"
+                      label="Social Name:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Social Name"
+                      onInput={inputHandler}
+                      initialValue={loadedUser.socialName || "None"}
+                      initialValid={true}
+                    />
+                  </Card>
+                </Grid2>
+                <Grid2 xs={12}>
+                  <Button to="/MainPage/Admin/UsersDatabase">
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={!formState.isValid}>
+                    Update User
+                  </Button>
+                  <Button to="/MainPage/Admin/UsersDatabase">
+                    Delete
+                  </Button>
+                  <Button to="/MainPage/Admin/UsersDatabase">
+                    Review User Information
+                  </Button>
+                </Grid2>
+              </Grid2>
+            </Card>
           </form>
         </div>
       )}

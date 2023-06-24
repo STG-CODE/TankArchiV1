@@ -3,11 +3,13 @@ import React from "react";
 //component imports
 import Card from "../pages/Shared/components/UI-Elements/Card";
 import Text from "../pages/Shared/components/Visual-Elements/Text";
+//CSS import
+import "./WelcomePageCSS.css";
 
 function Welcome() {
   return (
     <div>
-      <Card>
+      <Card className="background">
         <Text element="h1" value="Hello And Welcome To TankArchi!"/>
         <br/>
         <Text 

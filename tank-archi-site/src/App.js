@@ -1,10 +1,13 @@
 //basic imports
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+//CSS import
+import "./App.css";
 //component imports
 import Welcome from "./components/Welcome";
 import SignUp from "./components/Sign-Up";
 import Login from "./components/Login";
+import Title from "./pages/Shared/components/UI-Elements/Title";
 //route imports
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import MainPage from "./pages/MainPage";
@@ -15,7 +18,6 @@ import { useAuth } from "./pages/Shared/Hooks/auth-hook";
 //Material UI imports
 import { Container } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import Title from "./pages/Shared/components/UI-Elements/Title";
 
 function App() {
   //deconstruct our hook to all different states and data that the site needs
@@ -55,9 +57,10 @@ function App() {
       <Switch>
             {/* Routes to the starting page / login or sign up and welcome */}
             <Route path="/WelcomePage" exact>
+              
               <Container maxWidth="md">
                 <Grid2 container spacing={2}>
-                <Grid2 xs={12}>
+                  <Grid2 xs={12}>
                   <Title/>
                 </Grid2>
                 <Grid2 xs={12}>
@@ -71,9 +74,7 @@ function App() {
                 </Grid2>
                 </Grid2>
               </Container>
-              
             </Route>
-
             {/* Routes to the sign up page */}
             <Route path="/SignUpPage" exact>
               <SignUpPage />
@@ -107,7 +108,7 @@ function App() {
         >
         <Container maxWidth="xl" fixed disableGutters>
           <Router>
-            <div className="container">
+            <div>
               {routes}
             </div>
           </Router>

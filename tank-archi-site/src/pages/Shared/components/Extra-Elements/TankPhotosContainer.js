@@ -13,7 +13,7 @@ function TankPhotosContainer(props) {
               <Image
                 image={`http://localhost:5000/${photo}`}
                 alt={"http://localhost:5000/uploads/stockImages/tankStockIcon.jpg"}
-                style={{width:"100%", hight:"25%"}}
+                style={{width:"95%", hight:"25%"}}
               />
             </div>
             );

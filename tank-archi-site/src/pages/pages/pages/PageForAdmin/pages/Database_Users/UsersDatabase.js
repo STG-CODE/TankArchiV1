@@ -10,6 +10,8 @@ import Button from "../../../../../Shared/components/Form-Elements/Button";
 import Text from "../../../../../Shared/components/Visual-Elements/Text";
 //context import
 import { LoginContext } from "../../../../../Shared/Context/login-context";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import Card from "../../../../../Shared/components/UI-Elements/Card";
 
 function UsersDatabase() {
   //login context
@@ -43,35 +45,47 @@ function UsersDatabase() {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      <Button inverse to="/MainPage/Admin/UsersDatabase/AddUser">
-        Create User
-      </Button>
-      {isLoading && (
+      <Grid2 container spacing={1}>
+        <Grid2 xs={12}>
+          <Card>
+            <Button inverse to="/MainPage/Admin/UsersDatabase/AddUser">
+              Create User
+            </Button>
+          </Card>
+        </Grid2>
+        {isLoading && (
         <div className="center">
           <LoadingSpinner />
         </div>
-      )}
-      {!isLoading && loadedUsers && (
-      <div className="Container">
-        <div>
-          <Text element="h3" value="Users Management Page:" />
-          <UsersList
-           items={loadedUsers}
-           onDeleteUser={userDeletedHandler}
-          />
-          <div>
-            <Button to="/MainPage/Admin">Go Back</Button>
-            <Button to="/MainPage">Go To Main Page</Button>
+        )}
+        {!isLoading && loadedUsers && (
+          <div className="Container">
+            <Grid2 xs={12}>
+              <Grid2 xs={12}>
+                <Card>
+                  <Grid2 xs={12}>
+                    <Text element="h2" value="Users Management Page:" />
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <UsersList items={loadedUsers} onDeleteUser={userDeletedHandler}/>
+                  </Grid2>
+                </Card>
+              </Grid2>
+              <Grid2 xs={12}>
+                <Card>
+                  <Button to="/MainPage/Admin">Go Back</Button>
+                  <Button to="/MainPage">Go To Main Page</Button>
+                </Card>
+              </Grid2>
+            </Grid2>
           </div>
-          
-        </div>
-      </div>
-      )}
-      {!isLoading && !loadedUsers && (
-        <div className="Container">
-        <h1>No Tanks Found!</h1>
-      </div>
-      )}
+        )}
+        {!isLoading && !loadedUsers && (
+          <div className="Container">
+            <h1>No Tanks Found!</h1>
+          </div>
+        )}
+      </Grid2>
     </React.Fragment>
   );
 }

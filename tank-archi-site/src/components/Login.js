@@ -14,6 +14,8 @@ import ErrorModal from "../pages/Shared/components/UI-Elements/ErrorModal";
 import LoadingSpinner from "../pages/Shared/components/UI-Elements/LoadingSpinner";
 //util imports
 import { VALIDATOR_EMAIL,VALIDATOR_MINLENGTH,VALIDATOR_REQUIRE,} from "../pages/Shared/Util/validators";
+//CSS import
+import "./WelcomePageCSS.css";
 
 function Login() {
   //login context
@@ -71,7 +73,7 @@ function Login() {
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} to="/WelcomePage"/>
       <div>
-        <Card>
+        <Card className="background">
           {isLoading && <LoadingSpinner asOverlay />}
         <Text element="h3" value="Login Required"/>
         <hr />

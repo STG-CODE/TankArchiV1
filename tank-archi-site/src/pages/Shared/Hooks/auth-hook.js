@@ -75,6 +75,7 @@ export const useAuth = () => {
 
   const logout = useCallback(() => {
     console.log("User logged out!");
+    // sendRequest(`http://localhost:5000/MainPage/User/UpdateLastLogin/${currentUser.id}`);
     setToken(null);
     setTokenExpirationDate(null);
     setCurrentUser(null);
@@ -87,6 +88,7 @@ export const useAuth = () => {
       const remainingTime = tokenExpirationDate.getTime() - new Date().getTime();
       logoutTimer = setTimeout(logout,remainingTime);
     } else {
+      // sendRequest(`http://localhost:5000/MainPage/User/UpdateLastLogin/${currentUser.id}`);
       clearTimeout(logoutTimer);
     }
   },[token,logout,tokenExpirationDate])

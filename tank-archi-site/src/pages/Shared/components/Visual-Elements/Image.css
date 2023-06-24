@@ -1,18 +1,47 @@
-.image {
-  padding: 5px;
-    width: 100%;
-    height: 100%;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
+.image, .shadow  {
+    margin: 5px;
+    padding: 5px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 105%;
+    border-radius: 8px;
   }
   
-.image img {
+  .image img {
     margin: 0px;
-    border: solid;
-    border-width: 5px;
+    border: solid rgba(26, 73, 26, 0.151);
+    border-width: 2px;
     display: block;
-    width: 100%;
-    height: 100%;
+    width: inherit;
+    height: inherit;
     object-fit: cover;
   }
+
+  .shadow {
+    transform: scale(0.9)  translateY(30px);
+    -webkit-filter: blur(25px);
+    filter: blur(25px);
+    background-color: rgba(0,0,0,0.3);
+  }
+  
+  .shadowImage {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+  }
+
+  .image:hover{ 
+    transform: scale(1.04) translateY(-5px);
+  }
+  .image:hover .image,
+  .image:hover .shadow {
+      background-size: 103%;
+  }
+  .image:hover .shadow {
+    transform: scale(0.85) translateY(40px);
+    -webkit-filter: blur(30px);
+    filter: blur(30px);
+  }
+  
+  

@@ -315,7 +315,9 @@ function Rankings() {
     <React.Fragment>
       <div>
         <ErrorModal error={error} onClear={clearError} to="/MainPage"/>
-        <Text element="h1" value="Rankings Tab: " />
+        <Card>
+          <Text element="h1" value="Tanks Ranking Page: " />
+        </Card>
         <Card>
           <Grid2 container spacing={1}>
             <Grid2 xs={4}>

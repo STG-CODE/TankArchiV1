@@ -77,10 +77,13 @@ const signup = async (req, res, next) => {
       socialType:null,
       socialName:null
     },
-    favTanksList: [],
     submittedSuggestions: [],
+    favTanksList: [],
     likedTanksList: [],
-    ratedTanks: null,
+    ratedTanksList: [{
+        tankObject:[],
+        rating:0
+    }],
     creationDate: new Date(),
   });
 
@@ -124,7 +127,7 @@ const login = async (req, res, next) => {
     existingUser = await User.findOne({ email: email });
   } catch (err) {
     const errorMessage = new HttpError(
-      "Logging In Failed, Please Try Again Later!",
+      "Logging In Failed, Failed To Find Email!",
       500
     );
     return next(errorMessage);
@@ -331,6 +334,307 @@ const updateUserOptionalDetails = async (req, res, next) => {
   res.status(200).json({ user: user.toObject({ getters: true }) });
 };
 
+//TODO: implement proper
+const updateLastLogin = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const userToUpdateId = req.params.uid;
+
+  let user;
+  try {
+    user = await User.findById(userToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching User,Could Not Update Last Login Date!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  //here we update our user\admin details
+  user.lastLoginDate = new Date();
+
+  try {
+    await user.save();
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Could Not Update Last Login And Save, Please Try Again Later!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  //we convert our mongoose object to a regular js object and get reed of our '__id'
+  res.status(200).json({ user: user.toObject({ getters: true }) });
+}
+
+//add tank to fav list
+const addTankToFavList = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const { tankId } = req.body;
+
+  const userToUpdateId = req.params.uid;
+
+  let user;
+  try {
+    user = await User.findById(userToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching User, Could Not Update User!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  //here we update our user\admin details
+  user.favTanksList.push(tankId);
+
+  try {
+    await user.save();
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Could Not Update And Save The Given Changes, Please Try Again Later!",
+      500
+    );
+    return next(errorMessage);
+  }
+}
+
+//remove tank from fav list
+const removeTankFromFavList = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const { tankId } = req.body;
+
+  const userToUpdateId = req.params.uid;
+
+  let user;
+  try {
+    user = await User.findById(userToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching User, Could Not Update User!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  //here we update our user\admin details
+  user.favTanksList.remove(tankId);
+
+  try {
+    await user.save();
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Could Not Update And Save The Given Changes, Please Try Again Later!",
+      500
+    );
+    return next(errorMessage);
+  }
+}
+
+//add liked tank to list
+const addLikedTank = async (req,res,next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+  console.log("added a like");
+  //the expected data
+  const { tankId } = req.body;
+  console.log("Tank ID = " + tankId);
+  const userToUpdateId = req.params.uid;
+  console.log("User ID = " + userToUpdateId);
+  let user;
+  try {
+    user = await User.findById(userToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching User, Could Not Update User!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  //here we update our user\admin details
+  user.likedTanksList.push(tankId);
+
+  try {
+    await user.save();
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Could Not Update And Save The Given Changes, Please Try Again Later!",
+      500
+    );
+    return next(errorMessage);
+  }
+}
+
+//remove liked tank from list
+const removeLikedTank = async (req,res,next) =>{
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const { tankId } = req.body;
+
+  const userToUpdateId = req.params.uid;
+
+  let user;
+  try {
+    user = await User.findById(userToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching User, Could Not Update User!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  //here we update our user\admin details
+  user.likedTanksList.remove(tankId);
+
+  try {
+    await user.save();
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Could Not Update And Save The Given Changes, Please Try Again Later!",
+      500
+    );
+    return next(errorMessage);
+  }
+}
+
+//add rated tank to list
+const addRatedTank = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const { tankId,rating } = req.body;
+
+  const userToUpdateId = req.params.uid;
+
+  let user;
+  try {
+    user = await User.findById(userToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching User, Could Not Update User!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  //here we update our user\admin details
+  user.ratedTanksList.push({
+    tankId,
+    rating
+  });
+
+  try {
+    await user.save();
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Could Not Update And Save The Given Changes, Please Try Again Later!",
+      500
+    );
+    return next(errorMessage);
+  }
+}
+
+//remove rated tank from list
+const removeRatedTank = async (req,res,next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const { tankId,rating } = req.body;
+
+  const userToUpdateId = req.params.uid;
+
+  let user;
+  try {
+    user = await User.findById(userToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching User, Could Not Update User!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  //here we update our user\admin details
+  user.ratedTanksList.remove({
+    tankId,
+    rating
+  });
+
+  try {
+    await user.save();
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Could Not Update And Save The Given Changes, Please Try Again Later!",
+      500
+    );
+    return next(errorMessage);
+  }
+}
+
 const changeUserEmail = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -439,5 +743,12 @@ exports.login = login;
 exports.updateUserProfilePic = updateUserProfilePic;
 exports.updateUserDetails = updateUserDetails;
 exports.updateUserOptionalDetails = updateUserOptionalDetails;
+exports.updateLastLogin = updateLastLogin;
+exports.addTankToFavList = addTankToFavList;
+exports.removeTankFromFavList = removeTankFromFavList;
+exports.addLikedTank = addLikedTank;
+exports.removeLikedTank = removeLikedTank;
+exports.addRatedTank = addRatedTank;
+exports.removeRatedTank = removeRatedTank;
 exports.changeUserEmail = changeUserEmail;
 exports.changeUserPassword = changeUserPassword;

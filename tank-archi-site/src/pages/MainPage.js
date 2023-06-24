@@ -52,6 +52,8 @@ import Login from "../components/Login";
 import SignUp from "../components/Sign-Up";
 //Material UI imports
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+//imported CSS
+import "./MainPage.css";
 
 //TODO:(Profile Pages(1))Add the following parameters to the DB : (Last Login Date, Favoured Tanks Count , Favorite Tanks ,User Pfp)
 //TODO:(Profile Pages(2))Add the needed optional params in the design of the admin's page.
@@ -489,96 +491,152 @@ function MainSitePage() {
         </Route>
         {/* This route leads us to the Add Tank Photos Page */}
         <Route path="/MainPage/Admin/AddTankPhotos/:tankId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminAddTankPhotos />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminAddTankPhotos />
+            </Grid2>
+          </Grid2>
         </Route>
 
         {/* This route leads us to the Tanks Database */}
         <Route path="/MainPage/Admin/TanksDatabase" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminTanksDatabase />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminTanksDatabase />
+            </Grid2>
+          </Grid2>
         </Route>
-
         {/* ---> Tanks Database add option */}
         <Route path="/MainPage/Admin/TanksDatabase/AddTank" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminAddTank />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminAddTank />
+            </Grid2>
+          </Grid2>
         </Route>
-
         {/* ---> Tanks Database edit option */}
         <Route path="/MainPage/Admin/TanksDatabase/EditTank/:tankId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminEditTank />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminEditTank />
+            </Grid2>
+          </Grid2>
         </Route>
         {/* <Route path="/MainPage/Admin/TanksDatabase/EditTank/:tankId"></Route> */}
 
         {/* ---> Tanks Database review option */}
         <Route path="/MainPage/Admin/TanksDatabase/ReviewTank/:tankId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminReviewTank />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminReviewTank />
+            </Grid2>
+          </Grid2>
         </Route>
         {/* <Route path="/MainPage/Admin/TanksDatabase/ReviewTank/:tankId"></Route> */}
 
         {/* This route leads us to the Users Database */}
         <Route path="/MainPage/Admin/UsersDatabase" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminUsersDatabase />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminUsersDatabase />
+            </Grid2>
+          </Grid2>
         </Route>
-
         {/* ---> Users Database add option */}
         <Route path="/MainPage/Admin/UsersDatabase/AddUser" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminAddUser />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminAddUser />
+            </Grid2>
+          </Grid2>
         </Route>
-
         {/* ---> Users Database edit option */}
         <Route path="/MainPage/Admin/UsersDatabase/EditUser/:userId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminEditUser />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminEditUser />
+            </Grid2>
+          </Grid2>
         </Route>
         {/* <Route path="/MainPage/Admin/UsersDatabase/EditUser/:userId"></Route> */}
 
         {/* ---> Users Database review option */}
         <Route path="/MainPage/Admin/UsersDatabase/ReviewUser/:userId" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminReviewUser />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminReviewUser />
+            </Grid2>
+          </Grid2>
         </Route>
         {/* <Route path="/MainPage/Admin/UsersDatabase/ReviewUser/:userId"></Route> */}
 
         {/* This route leads us to the Admin's Statistics Page */}
         <Route path="/MainPage/Admin/AdminStatistics" exact>
-          <Title />
-          <Profile />
-          <div>
-            <AdminStatistics />
-          </div>
+          <Grid2 container spacing={1}>
+            <Grid2 xs={7}>
+              <Title />
+            </Grid2>
+            <Grid2 xs={5}>
+              <Profile />
+            </Grid2>
+            <Grid2 xs={12}>
+              <AdminStatistics />
+            </Grid2>
+          </Grid2>
         </Route>
         <Redirect to="/MainPage/Search" />
         <Redirect to="/MainPage" />
@@ -600,7 +658,7 @@ function MainSitePage() {
   }
 
   return (
-    <div className="Container">
+    <div className="">
       <Router>{routes}</Router>
     </div>
   );

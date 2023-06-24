@@ -20,6 +20,7 @@ server.use(bodyParser.json());
 server.use('/uploads/images', express.static(path.join('uploads','images')));
 server.use('/uploads/imagesOfTanks', express.static(path.join('uploads','imagesOfTanks')));
 server.use('/uploads/stockImages', express.static(path.join('uploads','stockImages')));
+server.use('/uploads/video', express.static(path.join('uploads','video')));
 server.use('/uploads/tankProfilePics', express.static(path.join('uploads','tankProfilePics')));
 server.use('/uploads/suggestionProfilePics', express.static(path.join('uploads','suggestionProfilePics')));
 

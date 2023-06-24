@@ -1,0 +1,72 @@
+.textareaWT{
+    height: 90%;
+}
+
+.wtLogo img{
+    width: 90%;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    padding: 5%;
+}
+
+.textareaWOT{
+    height: 88%;
+}
+
+.wotLogo img{
+    width: 100%;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.textareaE{
+    height: 88%;
+}
+
+.eLogo img{
+    width: 100%;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.textareaAW{
+    height: 88%;
+}
+
+.awLogo img{
+    width: 100%;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    padding-top: 80px;
+    padding-bottom: 40px;
+}
+
+.textareaF{
+    margin-left: 20px;
+    margin-right: 20px;
+    height: 92.5%;
+    
+}
+
+.MovieLogos img{
+    margin-left: 40px;
+    margin-top: 28px;
+    width: 72%;
+    display: block;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    
+}

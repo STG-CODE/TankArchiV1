@@ -30,11 +30,13 @@ const tankSchema = new Schema({
 
     overallRatingSum: { type: Number , required: false },
     avgRating: { type: Number , required: false },
+    ratingVoteCount: { type: Number , required: false },
+    likeVoteCount: { type: Number, required: false },
     uploadDate: { type: Date , required: true },
     lastUpdated: { type: Date , required: false },
     tankImagePfp: { type: String , required: false },
     photoCollection: { type: Array, required: false },
-    voteCount: { type: Number, required: false },
+    
 });
 
 module.exports = mongoose.model('Tank', tankSchema);

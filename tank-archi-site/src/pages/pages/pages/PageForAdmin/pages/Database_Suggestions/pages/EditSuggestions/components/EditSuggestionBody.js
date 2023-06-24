@@ -18,7 +18,8 @@ import LoadingSpinner from "../../../../../../../../Shared/components/UI-Element
 import Text from "../../../../../../../../Shared/components/Visual-Elements/Text";
 import ImageUpload from "../../../../../../../../Shared/components/Form-Elements/ImageUpload";
 import Avatar from "../../../../../../../../Shared/components/UI-Elements/Avatar";
-import { Card, Grid } from "@mui/material";
+import Card from "../../../../../../../../Shared/components/UI-Elements/Card";
+//Material UI imports
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function EditSuggestionBody() {

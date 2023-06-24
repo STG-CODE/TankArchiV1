@@ -27,8 +27,11 @@ import ErrorModal from "../../../../../../../../Shared/components/UI-Elements/Er
 import LoadingSpinner from "../../../../../../../../Shared/components/UI-Elements/LoadingSpinner";
 import Text from "../../../../../../../../Shared/components/Visual-Elements/Text";
 import ImageUpload from "../../../../../../../../Shared/components/Form-Elements/ImageUpload";
+import Card from "../../../../../../../../Shared/components/UI-Elements/Card";
 //context import
 import { LoginContext } from "../../../../../../../../Shared/Context/login-context";
+//Material UI import
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function AddUserBody() {
   //login context
@@ -88,7 +91,7 @@ function AddUserBody() {
       console.log("Username = " + formState.inputs.username.value)
       formData.append("imagePfp",formState.inputs.imagePfp.value);
       formData.append("username",formState.inputs.username.value);
-      formData.append("email",formState.inputs.email.value);
+      formData.append("email",formState.inputs.email.value.toLowerCase());
       formData.append("password",formState.inputs.password.value);
       formData.append("firstName",formState.inputs.firstName.value);
       formData.append("lastName",formState.inputs.lastName.value);
@@ -114,107 +117,128 @@ function AddUserBody() {
       <ErrorModal error={error} onClear={clearError} />
       <div className="Container">
         <form className="" onSubmit={userCreationHandler}>
-          {isLoading && <LoadingSpinner asOverlay />}
-          <Text element="text" value="Pick A Profile Picture For New User:"/>
-          <ImageUpload 
-            id="imagePfp"
-            onInput={inputHandler}
-            errorText="Please Pick A Profile Picture For The New User"
-            placeholder="User Profile Pic Slot"
-          />
-          {/* For Username */}
-          <Input
-            id="username"
-            element="input"
-            type="text"
-            label="Username:"
-            validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(3)]}
-            errorText="Please Enter A Valid Username"
-            onInput={inputHandler}
-          />
-          {/* For Email */}
-          <Input
-            id="email"
-            element="input"
-            type="text"
-            label="Email:"
-            validators={[
-              VALIDATOR_REQUIRE(),
-              VALIDATOR_EMAIL(),
-              VALIDATOR_MINLENGTH(4),
-            ]}
-            errorText="Please Enter A Valid Email Address"
-            onInput={inputHandler}
-          />
-          {/* For Age */}
-          <Input
-            id="age"
-            element="input"
-            type="number"
-            label="Age:"
-            validators={[
-              VALIDATOR_REQUIRE(),
-              VALIDATOR_MIN(13),
-              VALIDATOR_MAX(100),
-            ]}
-            errorText="Please Enter A Valid Age Number"
-            onInput={inputHandler}
-          />
-          {/* For Country */}
-          <Input
-            id="country"
-            element="input"
-            type="text"
-            label="Country:"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter A Valid Country Name"
-            onInput={inputHandler}
-          />
-          {/* For First Name */}
-          <Input
-            id="firstName"
-            element="input"
-            type="text"
-            label="First Name:"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter A Valid First Name"
-            onInput={inputHandler}
-          />
-          {/* For Last Name */}
-          <Input
-            id="lastName"
-            element="input"
-            type="text"
-            label="Last Name:"
-            validators={[VALIDATOR_REQUIRE()]}
-            errorText="Please Enter A Valid Last Name"
-            onInput={inputHandler}
-          />
-          {/* For Password */}
-          <Input
-            id="password"
-            element="input"
-            type="password"
-            label="Password:"
-            validators={[
-              VALIDATOR_REQUIRE(),
-              VALIDATOR_MINLENGTH(8),
-              VALIDATOR_MAXLENGTH(20),
-            ]}
-            errorText="Please Enter A Valid Password"
-            onInput={inputHandler}
-          />
-          <div>
-            <Button to="/MainPage/Admin/UsersDatabase">
-              Cancel
-            </Button>
-            <Button type="submit" disabled={!formState.isValid}>
-              Create A New User
-            </Button>
-            <Button to="/MainPage/Admin/UsersDatabase">
-              Create User And Review
-            </Button>
-          </div>
+          <Grid2 container spacing={1}>
+            <Card>
+              {isLoading && <LoadingSpinner asOverlay />}
+              <Grid2 container spacing={1}>
+                <Grid2 xs={12}>
+                  <Card>
+                    <Text element="h2" value="Add User Page:"/>
+                  </Card>
+                </Grid2>
+                <Grid2 xs={4}>
+                  <Card>
+                    <Text element="text" value="Pick A Profile Picture For New User:"/>
+                    <ImageUpload 
+                      id="imagePfp"
+                      onInput={inputHandler}
+                      errorText="Please Pick A Profile Picture For The New User"
+                      placeholder="User Profile Pic Slot"
+                    />
+                  </Card>
+                </Grid2>
+                <Grid2 xs={8}>
+                  <Card>
+                    {/* For Username */}
+                    <Input
+                      id="username"
+                      element="input"
+                      type="text"
+                      label="Username:"
+                      validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(3)]}
+                      errorText="Please Enter A Valid Username"
+                      onInput={inputHandler}
+                    />
+                    {/* For Email */}
+                    <Input
+                      id="email"
+                      element="input"
+                      type="text"
+                      label="Email:"
+                      validators={[
+                        VALIDATOR_REQUIRE(),
+                        VALIDATOR_EMAIL(),
+                        VALIDATOR_MINLENGTH(4),
+                      ]}
+                      errorText="Please Enter A Valid Email Address"
+                      onInput={inputHandler}
+                    />
+                    {/* For Age */}
+                    <Input
+                      id="age"
+                      element="input"
+                      type="number"
+                      label="Age:"
+                      validators={[
+                        VALIDATOR_REQUIRE(),
+                        VALIDATOR_MIN(13),
+                        VALIDATOR_MAX(100),
+                      ]}
+                      errorText="Please Enter A Valid Age Number"
+                      onInput={inputHandler}
+                    />
+                    {/* For Country */}
+                    <Input
+                      id="country"
+                      element="input"
+                      type="text"
+                      label="Country:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Country Name"
+                      onInput={inputHandler}
+                    />
+                    {/* For First Name */}
+                    <Input
+                      id="firstName"
+                      element="input"
+                      type="text"
+                      label="First Name:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid First Name"
+                      onInput={inputHandler}
+                    />
+                    {/* For Last Name */}
+                    <Input
+                      id="lastName"
+                      element="input"
+                      type="text"
+                      label="Last Name:"
+                      validators={[VALIDATOR_REQUIRE()]}
+                      errorText="Please Enter A Valid Last Name"
+                      onInput={inputHandler}
+                    />
+                    {/* For Password */}
+                    <Input
+                      id="password"
+                      element="input"
+                      type="password"
+                      label="Password:"
+                      validators={[
+                        VALIDATOR_REQUIRE(),
+                        VALIDATOR_MINLENGTH(8),
+                        VALIDATOR_MAXLENGTH(20),
+                      ]}
+                      errorText="Please Enter A Valid Password"
+                      onInput={inputHandler}
+                    />
+                  </Card>
+                </Grid2>
+                <Grid2 xs={12}>
+                  <Card>
+                    <Button to="/MainPage/Admin/UsersDatabase">
+                      Cancel
+                    </Button>
+                    <Button type="submit" disabled={!formState.isValid}>
+                      Create A New User
+                    </Button>
+                    <Button to="/MainPage/Admin/UsersDatabase">
+                      Create User And Review
+                    </Button>
+                  </Card>
+                </Grid2>
+              </Grid2>
+            </Card>
+          </Grid2>
         </form>
       </div>
     </React.Fragment>

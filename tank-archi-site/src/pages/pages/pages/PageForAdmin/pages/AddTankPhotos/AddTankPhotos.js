@@ -13,6 +13,8 @@ import ErrorModal from "../../../../../Shared/components/UI-Elements/ErrorModal"
 import LoadingSpinner from "../../../../../Shared/components/UI-Elements/LoadingSpinner";
 //context import
 import { LoginContext } from "../../../../../Shared/Context/login-context";
+//Material UI import
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 //TODO: Add boxes for dragging and adding pics to the specified tank!
 
@@ -174,76 +176,112 @@ function AddTankPhotos() {
           )}
           {!isLoading && loadedTank && (
             <React.Fragment>
-              <Text element="h1" value={`${loadedTank.tankName} Photos Upload Page:`}/>
-              <Text element="h1" value={`[Tank ID : ${tankId}]`} />
-              <form onSubmit={adminPhotosUploadHandler}>
-                <Card>
-                  <Text
-                   element="h3" 
-                   value={`Please Place Photos For The Selected ${loadedTank.tankName} Below:`}
-                  />
-                  <Card>
-                    <ImageUpload
-                      id="slot1"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 1."
-                      placeholder="Slot 1"
-                    />
-                    <ImageUpload
-                      id="slot2"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 2."
-                      placeholder="Slot 2"
-                    />
-                    <ImageUpload
-                      id="slot3"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 3."
-                      placeholder="Slot 3"
-                    />
-                    <ImageUpload
-                      id="slot4"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 4."
-                      placeholder="Slot 4"
-                    />
-                    <ImageUpload
-                      id="slot5"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 5."
-                      placeholder="Slot 5"
-                    />
-                    <ImageUpload
-                      id="slot6"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 6."
-                      placeholder="Slot 6"
-                    />
-                    <ImageUpload
-                      id="slot7"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 7."
-                      placeholder="Slot 7"
-                    />
-                    <ImageUpload
-                      id="slot8"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 8."
-                      placeholder="Slot 8"
-                    />
-                    <ImageUpload
-                      id="slot9"
-                      onInput={inputHandler}
-                      errorText="Please Pick A Photo For Slot 9."
-                      placeholder="Slot 9"
-                    />
-                  </Card>
-                </Card>
-                <Button to="/MainPage/Admin">Cancel</Button>
-                <Button type="submit" disabled={!formState.isValid}>
-                  Upload {loadedTank.tankName} Photos
-                </Button>
-              </form>
+              <Grid2 container spacing={1}>
+                <Grid2 xs={6}>
+                  <Text element="h1" value={`${loadedTank.tankName} Photos Upload Page:`}/>
+                </Grid2>
+                <Grid2 xs={6}>
+                  <Text element="h1" value={`[Tank ID : ${tankId}]`} />
+                </Grid2>
+                  <Grid2 xs={12}>
+                    <form onSubmit={adminPhotosUploadHandler}>
+                    <Card>
+                      <Grid2 xs={12}>
+                        <Text
+                        element="h2" 
+                        value={`Please Place Photos For The Selected ${loadedTank.tankName} Below:`}
+                        />
+                      </Grid2>
+                      <Grid2 xs={12}>
+                        <Card>
+                          <Grid2 container xs={12}>
+                            <Grid2 xs={4}>
+                              <ImageUpload
+                                  id="slot1"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 1."
+                                  placeholder="Slot 1"
+                                />
+                              </Grid2>
+                              <Grid2 xs={4}>
+                                <ImageUpload
+                                  id="slot2"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 2."
+                                  placeholder="Slot 2"
+                                />
+                              </Grid2>
+                              <Grid2 xs={4}>
+                                <ImageUpload
+                                  id="slot3"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 3."
+                                  placeholder="Slot 3"
+                                />
+                              </Grid2>
+                              <Grid2 xs={4}>
+                                <ImageUpload
+                                  id="slot4"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 4."
+                                  placeholder="Slot 4"
+                                />
+                              </Grid2>
+                              <Grid2 xs={4}>
+                                <ImageUpload
+                                  id="slot5"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 5."
+                                  placeholder="Slot 5"
+                                />
+                              </Grid2>
+                              <Grid2 xs={4}>
+                                <ImageUpload
+                                  id="slot6"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 6."
+                                  placeholder="Slot 6"
+                                />
+                              </Grid2>
+                              <Grid2 xs={4}>
+                                <ImageUpload
+                                  id="slot7"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 7."
+                                  placeholder="Slot 7"
+                                />
+                              </Grid2>
+                              <Grid2 xs={4}>
+                                <ImageUpload
+                                  id="slot8"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 8."
+                                  placeholder="Slot 8"
+                                />
+                              </Grid2>
+                              <Grid2 xs={4}>
+                                <ImageUpload
+                                  id="slot9"
+                                  onInput={inputHandler}
+                                  errorText="Please Pick A Photo For Slot 9."
+                                  placeholder="Slot 9"
+                                />
+                              </Grid2>
+                          </Grid2>
+                        </Card>
+                      </Grid2>
+                    </Card>
+                    </form>
+                  </Grid2>
+                  <Grid2 xs={12}>
+                    <Card>
+                      <Button to="/MainPage/Admin">Cancel</Button>
+                      <Button type="submit" disabled={!formState.isValid}>
+                        Upload {loadedTank.tankName} Photos
+                      </Button>
+                    </Card>
+                  </Grid2>
+              </Grid2>
             </React.Fragment>
           )}
           {!isLoading && !loadedTank && (

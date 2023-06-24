@@ -41,6 +41,11 @@ router.post('/Login',usersControllers.login);
 
 router.use(checkAuth);
 
+router.post(
+    '/UpdateLastLogin/:uid',
+    usersControllers.updateLastLogin
+);
+
 router.patch('/UpdateDetails/:uid',usersControllers.updateUserDetails);
 
 router.patch('/UpdateOptionalDetails/:uid',usersControllers.updateUserOptionalDetails)
@@ -49,6 +54,36 @@ router.patch(
     '/UpdateUserProfilePic/:uid',
     fileUpload.single('image'),
     usersControllers.updateUserProfilePic
+);
+
+router.post(
+    '/AddTankToFavList/:uid',
+    usersControllers.addTankToFavList
+);
+
+router.delete(
+    '/RemoveTankFromFavList/:uid',
+    usersControllers.removeTankFromFavList
+);
+
+router.post(
+    '/AddLikedTank/:uid',
+    usersControllers.addLikedTank
+);
+
+router.delete(
+    '/RemoveLikedTank/:uid',
+    usersControllers.removeLikedTank
+);
+
+router.post(
+    '/AddRatedTank/:uid',
+    usersControllers.addRatedTank
+);
+    
+router.delete(
+    '/RemoveRatedTank/:uid',
+    usersControllers.removeRatedTank 
 );
 
 router.patch(

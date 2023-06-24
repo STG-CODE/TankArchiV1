@@ -27,6 +27,9 @@ function UsersList(props) {
               <button>ID</button>
             </th>
             <th>
+              <button>User\Admin Pfp:</button>
+            </th>
+            <th>
               <button>Sort :</button>
               <button>Username</button>
             </th>

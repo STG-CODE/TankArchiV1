@@ -368,7 +368,9 @@ function TankSearch() {
     <React.Fragment>
       <div>
         <ErrorModal error={error} onClear={clearError} />
-        <Text element="h1" value="Tank Search Tab!:" />
+        <Card>
+          <Text element="h1" value="Tanks Search Page:" />
+        </Card>
         <Card>
           <Grid2 container spacing={1}>
             <Grid2 xs={4}>
@@ -924,21 +926,23 @@ function TankSearch() {
               </Container>
             )}
           </Card>
-          <Paper elevation={6}>
-            <Pagination
-              defaultPage={1}
-              count={pageCount}
-              onChange={handleChange}
-              renderItem={(item) => (
-                <PaginationItem
-                  slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
-                  {...item}
-                  component={Link}
-                  to={`/MainPage/Search?page=${page}`}
-                />
-              )}
-            />
-          </Paper>
+          <Card>
+            <Grid2 xs={12}>
+              <Pagination
+                defaultPage={1}
+                count={pageCount}
+                onChange={handleChange}
+                renderItem={(item) => (
+                  <PaginationItem
+                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                    {...item}
+                    component={Link}
+                    to={`/MainPage/Search?page=${page}`}
+                  />
+                )}
+              />
+            </Grid2>
+          </Card>
           <Paginate />
           <Button to="/MainPage">Go Back</Button>
         </Card>

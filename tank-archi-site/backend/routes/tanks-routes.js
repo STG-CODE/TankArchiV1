@@ -97,7 +97,26 @@ router.patch(
     tanksControllers.updateTankPhotos
 );
 
+//
+router.patch(
+    '/UpdateTankRating/:tid',
+    tanksControllers.updateTankRating
+);
+
+router.post(
+    '/AddTankLike/:tid',
+    tanksControllers.addTankLike
+);
+
+router.delete(
+    '/RemoveTankLike/:tid',
+    tanksControllers.removeTankLike
+);
+
 //delete a user
-router.delete('/:tid',tanksControllers.deleteTank);
+router.delete(
+    '/:tid',
+    tanksControllers.deleteTank
+);
 
 module.exports = router;

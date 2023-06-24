@@ -4,6 +4,7 @@ const uuid = require("../node_modules/uuid/dist/v4");
 //we then place uuid as a function where ever we want a random id ( "uuid" )
 
 const fs = require("fs");
+const bcrypt = require("bcryptjs");
 
 //we add this function so that when we call it we can use it to check if there were any validation errors
 const { validationResult } = require("express-validator");
@@ -83,21 +84,63 @@ const createUser = async (req, res, next) => {
     firstName,
     lastName,
     country,
-    age } = req.body;
+    age
+  } = req.body;
+
+  let existingUser;
+  try {
+    //checks if given email is unique
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "User Creation Failed, Please Look Up Reason!",
+      500
+    );
+    return next(errorMessage);
+  }
+
+  if (existingUser) {
+    const errorMessage = new HttpError(
+      "User Exists Already, User Creation Failed!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  let hashedPassword;
+  try {
+    hashedPassword = await bcrypt.hash(password , 12);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      'Could Not Create User!',
+      500
+    );
+    return next(errorMessage);
+  }
 
   const createdUser = new User({
     isAdmin: false,
     adminKey: null,
+    adminRole: null,
     imagePfp: req.file.path || "uploads/stockImages/stockPfpPicture.jpg",
     username,
     email,
-    password,
+    password: hashedPassword,
     firstName,
     lastName,
     country,
     age,
-    favTanksList: [],
+    socialGroup:{
+      socialType:null,
+      socialName:null
+    },
     submittedSuggestions: [],
+    favTanksList: [],
+    likedTanksList: [],
+    ratedTanksList: [{
+        tankObject:[],
+        rating:0
+    }],
     creationDate: new Date()//?make sure that this gets us the current time and date
   });
 

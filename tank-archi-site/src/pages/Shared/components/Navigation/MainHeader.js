@@ -5,7 +5,7 @@ import './MainHeader.css';
 const MainHeader = props => {
     return (
         <React.Fragment>
-            <header className="">
+            <header>
                 {props.children}
             </header>
         </React.Fragment>

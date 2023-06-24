@@ -406,14 +406,14 @@ const createTank = async (req, res, next) => {
     tankServiceStatesInfo,
     tankProductionHistory,
     tankArmamentAndArmour,
-    avgRating: 0,
     uploadDate: new Date(), //?make sure that this gets us the current time and date
     lastUpdated: new Date(),
     tankImagePfp: req.file.path || "uploads/stockImages/tankStockIcon.jpg",
     photoCollection: [],
-    voteCount: 0,
-    avgRating: 0,
     overallRatingSum: 0,
+    avgRating: 0,
+    ratingVoteCount: 0,
+    likeVoteCount: 0,
   });
 
   try {
@@ -657,6 +657,132 @@ const updateTankProfilePhoto = async (req, res, next) => {
   res.status(200).json({ tank: tank.toObject({ getters: true }) });
 };
 
+const updateTankRating = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const {
+    rating
+  } = req.body;
+
+  const tankToUpdateId = req.params.tid;
+
+  let tank;
+  try {
+    tank = await Tank.findById(tankToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching Tank, Could Not Update Tank!",
+      500
+    );
+    return next(errorMessage);
+  }
+  //here we update our tank details
+
+  tank.ratingVoteCount += 1;
+  tank.overallRatingSum += rating;
+  tank.avgRating = tank.overallRatingSum / tank.ratingVoteCount;
+
+  try {
+    await tank.save();
+  } catch (err) {
+    console.log(err);
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Saving Tank, Could Not Update Tank!",
+      500
+    );
+    return next(errorMessage);
+  }
+};
+
+const addTankLike = async (req, res ,next) => {
+  console.log("addTankLike Activated")
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const tankToUpdateId = req.params.tid;
+  console.log("Tank Id To Add Like To = " + tankToUpdateId);
+  let tank;
+  try {
+    tank = await Tank.findById(tankToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching Tank, Could Not Update Tank!",
+      500
+    );
+    return next(errorMessage);
+  }
+  //here we update our tank details
+
+  tank.likeVoteCount = tank.likeVoteCount + 1;
+ 
+  try {
+    await tank.save();
+  } catch (err) {
+    console.log(err);
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Saving Tank, Could Not Update Tank!",
+      500
+    );
+    return next(errorMessage);
+  }
+};
+
+const removeTankLike = async (req, res ,next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    const errorMessage = new HttpError(
+      "Invalid Input Detected, Check Your Input Data!",
+      422
+    );
+    return next(errorMessage);
+  }
+
+  //the expected data
+  const tankToUpdateId = req.params.tid;
+
+  let tank;
+  try {
+    tank = await Tank.findById(tankToUpdateId);
+  } catch (err) {
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Fetching Tank, Could Not Update Tank!",
+      500
+    );
+    return next(errorMessage);
+  }
+  //here we update our tank details
+
+  tank.likeVoteCount -= 1;
+ 
+  try {
+    await tank.save();
+  } catch (err) {
+    console.log(err);
+    const errorMessage = new HttpError(
+      "Something Went Wrong While Saving Tank, Could Not Update Tank!",
+      500
+    );
+    return next(errorMessage);
+  }
+};
 //(this function is used to delete the chosen tank)
 const deleteTank = async (req, res, next) => {
   const tankId = req.params.tid;
@@ -724,4 +850,7 @@ exports.createTank = createTank;
 exports.updateTank = updateTank;
 exports.updateTankProfilePhoto = updateTankProfilePhoto;
 exports.updateTankPhotos = updateTankPhotos;
+exports.updateTankRating = updateTankRating;
+exports.addTankLike = addTankLike;
+exports.removeTankLike = removeTankLike;
 exports.deleteTank = deleteTank;

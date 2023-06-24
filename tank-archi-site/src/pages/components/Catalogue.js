@@ -11,6 +11,9 @@ import LoadingSpinner from "../Shared/components/UI-Elements/LoadingSpinner";
 import ErrorModal from "../Shared/components/UI-Elements/ErrorModal";
 //Material UI imports
 import { Container } from "@mui/material";
+//CSS import
+import "./Catalogue.css";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 
 function Catalogue() {
   //http clint hook destructuring
@@ -44,29 +47,35 @@ function Catalogue() {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError}/>
-      <Card>
-        <Text element="h3" value="Welcome To Our Tank Catalogue:"/>
-        <Text element="text" value="Lorem Ipsum, Lorem Ipsum Lorem ipsum dolor sit amet."/>
-        <Button onClick={catalogueRefreshHandler}>Refresh</Button>
-      <Card>
-        <Container fixed>
-        {isLoading && !loadedTanks && (
-          <div>
-            <LoadingSpinner/>
-          </div>
-        )}
-        {!isLoading && !loadedTanks && (
-          <div>
-            <Text element="h1" value="No Tanks Found!"/>
-          </div>
-        )}
-        {!isLoading && loadedTanks && (
-          <div>
-            <TankCatalogueTable tanks={loadedTanks}/>
-          </div>
-        )}
-        </Container>
-      </Card>
+      <Card className="catalogueBackground">
+        <Grid2 container spacing={1}>
+          <Grid2 xs={12}>
+            <Text element="h3" value="Welcome To Our Tank Catalogue:"/>
+            <hr/>
+            <Text element="text" value="Lorem Ipsum, Lorem Ipsum Lorem ipsum dolor sit amet."/>
+            <Button onClick={catalogueRefreshHandler}>Refresh</Button>
+            <hr/>
+          </Grid2>
+          <Grid2 xs={12}>
+            <Card className="catalogueStyle">
+              {isLoading && !loadedTanks && (
+                <div>
+                  <LoadingSpinner/>
+                </div>
+              )}
+              {!isLoading && !loadedTanks && (
+                <div>
+                  <Text element="h1" value="No Tanks Found!"/>
+                </div>
+              )}
+              {!isLoading && loadedTanks && (
+                <div>
+                  <TankCatalogueTable tanks={loadedTanks}/>
+                </div>
+              )}
+            </Card>
+          </Grid2>
+        </Grid2>
     </Card>
     </React.Fragment>
     

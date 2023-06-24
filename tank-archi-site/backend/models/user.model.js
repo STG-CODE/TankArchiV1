@@ -40,9 +40,12 @@ const userSchema = new Schema({
     
     submittedSuggestions: [{ type: mongoose.Types.ObjectId , required: false , ref: 'Suggestion'}],
     
-    favTanksList: [{ type: mongoose.Types.ObjectId , required: false , ref: 'Tank'}],
-    likedTanksList: [{ type: Array , required: false }],
-    ratedTanks: { type: Number , required: false },
+    favTanksList: [{ type: String , required: false }],
+    likedTanksList: [{ type: String , required: false }],
+    ratedTanksList:[{
+        tankId:{ type: String , required: false },
+        rating:{ type: Number, required: false }
+    }],
 });
 
 //is used for validating unique data in the schema

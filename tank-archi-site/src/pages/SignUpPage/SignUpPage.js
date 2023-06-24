@@ -17,7 +17,6 @@ function SignUpPage() {
         <div className="Container">
           {/* Routes to sign up page and renders it */}
           <Route path="/SignUpPage" exact>
-            <Text element="h1" value="Sign Up Page:"/>
             <SignUpBody/>
           </Route>
 
