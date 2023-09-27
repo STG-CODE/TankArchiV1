@@ -120,7 +120,7 @@ function Details(props) {
           </div>
         )}
         {!isLoading && loadedUser && (
-          <Card>
+          <Card className="none">
             <Grid2 container spacing={1}>
               <Grid2 xs={4}>
                 <Card>

@@ -135,7 +135,7 @@ function SignUpBody() {
                   id="firstName"
                   type="text"
                   label="First Name"
-                  validators={[VALIDATOR_REQUIRE]}
+                  validators={[VALIDATOR_REQUIRE,VALIDATOR_MINLENGTH(2)]}
                   errorText="Please enter a valid first name"
                   onInput={inputHandler}
                 />
@@ -144,7 +144,7 @@ function SignUpBody() {
                   id="lastName"
                   type="text"
                   label="Last Name"
-                  validators={[VALIDATOR_REQUIRE]}
+                  validators={[VALIDATOR_REQUIRE,VALIDATOR_MINLENGTH(2)]}
                   errorText="Please enter a valid last name"
                   onInput={inputHandler}
                 />
@@ -166,7 +166,7 @@ function SignUpBody() {
                   id="email"
                   type="email"
                   label="Email"
-                  validators={[VALIDATOR_REQUIRE, VALIDATOR_EMAIL]}
+                  validators={[VALIDATOR_REQUIRE, VALIDATOR_EMAIL()]}
                   errorText="Please enter a valid email address"
                   onInput={inputHandler}
                 />

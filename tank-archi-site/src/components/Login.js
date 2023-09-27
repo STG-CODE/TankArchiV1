@@ -92,7 +92,7 @@ function Login() {
             id="email"
             type="email"
             label="Email:"
-            validators={[VALIDATOR_EMAIL()]}
+            validators={[VALIDATOR_REQUIRE,VALIDATOR_EMAIL()]}
             errorText="Please enter a valid email address"
             onInput={inputHandler}
           />
@@ -101,7 +101,7 @@ function Login() {
             id="password"
             type="password"
             label="Password:"
-            validators={[VALIDATOR_MINLENGTH(5)]}
+            validators={[VALIDATOR_REQUIRE,VALIDATOR_MINLENGTH(5)]}
             errorText="Please enter a valid password"
             onInput={inputHandler}
           />

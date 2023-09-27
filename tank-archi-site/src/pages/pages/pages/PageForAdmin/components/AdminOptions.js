@@ -2,7 +2,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 //util import
-import { VALIDATOR_REQUIRE } from "../../../../Shared/Util/validators";
+import { VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../../../Shared/Util/validators";
 //hook import
 import { useForm } from "../../../../Shared/Hooks/form-hook";
 //component imports
@@ -52,7 +52,7 @@ function AdminOptions() {
                   id="tankId"
                   element="input"
                   type="text"
-                  validators={[VALIDATOR_REQUIRE]}
+                  validators={[VALIDATOR_REQUIRE,VALIDATOR_MINLENGTH]}
                   errorText="Please Enter A Valid Tank ID!"
                   onInput={inputHandler}
                 />

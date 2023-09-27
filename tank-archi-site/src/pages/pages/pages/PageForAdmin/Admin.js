@@ -63,7 +63,7 @@ function Admin() {
           <div>
             <Grid2 container spacing={1}>
               <Grid2 xs={4}>
-                <Card>
+                <Card className="none">
                   <Text
                     element="h1"
                     value={"Hello " + loginContext.currentUser.username + "!"}
@@ -71,7 +71,7 @@ function Admin() {
                 </Card>
               </Grid2>
               <Grid2 xs={8}>
-                <Card>
+                <Card className="none">
                   <AdminDetailsBar user={loginContext.currentUser} />
                 </Card>
               </Grid2>

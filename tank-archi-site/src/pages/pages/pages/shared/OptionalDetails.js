@@ -138,7 +138,7 @@ function OptionalDetails(props) {
           </div>
         )}
         {!isLoading && loadedUser && (
-          <Card>
+          <Card className="none">
             <form onSubmit={optionalDetailsUpdateHandler}>
               <Grid2 container spacing={1}>
                 <Grid2>
@@ -252,7 +252,7 @@ function OptionalDetails(props) {
               />
                 </Grid2>
                 <Grid2>
-                  <Card>
+                  <Card className="none">
                     <Button type="submit" disabled={!formState.isValid}>
                       Save Changes
                     </Button>
